@@ -3,8 +3,13 @@ MAINTAINER frekele <leandro.freitas@softdevelop.com.br>
 
 RUN apt-get clean && \
     apt-get update && \
+    apt-get install -y git && \
+    apt-get install -y curl && \
+    apt-get install -y wget && \
+    apt-get install -y zip && \
     apt-get install -y python && \
-    apt-get install -y cron
+    apt-get install -y cron && \
+    rm -rf /var/lib/apt/lists/*
 
 RUN wget https://bootstrap.pypa.io/get-pip.py && \
     python get-pip.py
