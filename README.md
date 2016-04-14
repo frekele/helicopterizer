@@ -6,7 +6,7 @@
 
 ## Backup and Restore Docker Container
 
-[![Circle CI](https://circleci.com/gh/frekele/helicopterizer/tree/master.svg?style=svg)](https://circleci.com/gh/frekele/helicopterizer/tree/master)
+[![Circle CI](https://circleci.com/gh/frekele/helicopterizer/tree/master.svg?style=shield)](https://circleci.com/gh/frekele/helicopterizer/tree/master)
 [![Build Status](https://travis-ci.org/frekele/helicopterizer.svg?branch=master)](https://travis-ci.org/frekele/helicopterizer)
 [![GitHub issues](https://img.shields.io/github/issues/frekele/helicopterizer.svg)](https://github.com/frekele/helicopterizer/issues)
 [![GitHub forks](https://img.shields.io/github/forks/frekele/helicopterizer.svg)](https://github.com/frekele/helicopterizer/network) 
