@@ -5,10 +5,4 @@ services:
 
 script:
   - docker build -t frekele/helicopterizer .
-  - if [ ! -z "$TRAVIS_TAG" ]; then docker tag $DOCKER_IMAGE_NAME:latest $DOCKER_IMAGE_NAME:$TRAVIS_TAG; fi && docker push $DOCKER_IMAGE_NAME
 
-env:
-  - AWS_ACCESS_KEY_ID=xxxxx
-  - AWS_SECRET_ACCESS_KEY=xxxxx
-  - AWS_DEFAULT_REGION=xxxxx
-  - AWS_S3_PATH=xxxxx
