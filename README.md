@@ -1,9 +1,10 @@
+[![](https://badge.imagelayers.io/frekele/helicopterizer:latest.svg)](https://imagelayers.io/?images=frekele/helicopterizer:latest 'Get your own badge on imagelayers.io')
+
 [![][HelicopterizerImage]][website] 
 
 # Helicopterizer
 
 ## Backup and Restore Docker Container
-[![](https://badge.imagelayers.io/frekele/helicopterizer:latest.svg)](https://imagelayers.io/?images=frekele/helicopterizer:latest 'Get your own badge on imagelayers.io')
 
 [![Build Status](https://travis-ci.org/frekele/helicopterizer.svg?branch=master)](https://travis-ci.org/frekele/helicopterizer)
 [![GitHub issues](https://img.shields.io/github/issues/frekele/helicopterizer.svg)](https://github.com/frekele/helicopterizer/issues)

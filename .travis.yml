@@ -4,5 +4,8 @@ services:
   - docker
 
 script:
-  - docker build -t frekele/helicopterizer .
+  - docker build -t $DOCKER_IMAGE_NAME .
+
+env:
+  - DOCKER_IMAGE_NAME=frekele/helicopterizer
 
