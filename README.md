@@ -5,6 +5,7 @@
 ## Backup and Restore Docker Container
 [![](https://badge.imagelayers.io/frekele/helicopterizer:latest.svg)](https://imagelayers.io/?images=frekele/helicopterizer:latest 'Get your own badge on imagelayers.io')
 
+[![Build Status](https://travis-ci.org/frekele/helicopterizer.svg?branch=master)](https://travis-ci.org/frekele/helicopterizer)
 [![GitHub issues](https://img.shields.io/github/issues/frekele/helicopterizer.svg)](https://github.com/frekele/helicopterizer/issues)
 [![GitHub forks](https://img.shields.io/github/forks/frekele/helicopterizer.svg)](https://github.com/frekele/helicopterizer/network) 
 [![GitHub stars](https://img.shields.io/github/stars/frekele/helicopterizer.svg)](https://github.com/frekele/helicopterizer/stargazers)
@@ -15,3 +16,5 @@
 [MIT License]: https://github.com/frekele/helicopterizer/raw/master/LICENSE.txt
 [GitHub]: https://github.com/frekele/helicopterizer
 [website]: https://github.com/frekele/helicopterizer/
+
+
