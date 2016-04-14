@@ -4,5 +4,5 @@
 [![GitHub stars](https://img.shields.io/github/stars/frekele/helicopterizer.svg)](https://github.com/frekele/helicopterizer/stargazers)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/frekele/helicopterizer/master/LICENSE)
 
-![Helicopterizer Logo](logo.png?raw=true "Helicopterizer Logo")
+![Helicopterizer](docs/static_files/logo.png?raw=true "Helicopterizer")
 
