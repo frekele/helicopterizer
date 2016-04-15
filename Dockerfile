@@ -19,5 +19,5 @@ RUN chmod +x /helicopterizer.sh && \
     chmod +x /run-backup.sh && \
     chmod +x /run-restore.sh
 
-ENTRYPOINT ["/helicopterizer.sh"]
+ENTRYPOINT ["/scripts/helicopterizer.sh"]
 CMD [""]
