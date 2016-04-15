@@ -59,7 +59,7 @@ Image repository in the: [Docker HUB].
 
 
 ####  AWS S3 Regions:
-Name                   | Description Region                        |
+Name                   | Description the Region                    |
 ---------------------- | ------------------------------------------|
 us-east-1              | US East (Virginia)                        |
 us-west-1              | US West (N. California)                   |
@@ -80,7 +80,8 @@ us-gov-west-1          | US GovCloud West (Oregon)                 |
 There are two general approaches to handling persistent storage requirements with Docker.
 See [Managing Data in Containers](https://docs.docker.com/userguide/dockervolumes/) for additional information.
 
-  1. ###Data volume container
+  1. 
+    ####Data volume container
     *Use a data volume container*. Since data volumes are persistent until no containers use them, a container can created specifically for this purpose.
      This is the recommended approach.  
 
@@ -91,6 +92,7 @@ See [Managing Data in Containers](https://docs.docker.com/userguide/dockervolume
     docker run -d -p 8080:8080 -p 50000:50000 --name jenkins --volumes-from jenkins-data jenkinsci/jenkins:2.0
       ```
     
+    
     Example with Nexus:    
     
     ```
@@ -98,7 +100,8 @@ See [Managing Data in Containers](https://docs.docker.com/userguide/dockervolume
     docker run -d -p 8081:8081 --name nexus --volumes-from nexus-data sonatype/nexus3
     ```
 
-  2. ###Data volume
+  2. 
+    ####Data volume
     *Mount a host directory as the volume*.  This is not portable, as it relies on the directory existing with correct permissions on the host.
      However it can be useful in certain situations where this volume needs to be assigned to certain specific underlying storage.  
 
@@ -108,6 +111,7 @@ See [Managing Data in Containers](https://docs.docker.com/userguide/dockervolume
     mkdir /some/dir/jenkins-data
     docker run -d -p 8080:8080 -p 50000:50000 --name jenkins -v /some/dir/jenkins-data:/jenkins-data jenkinsci/jenkins:2.0
     ```
+    
     
     Example with Nexus:    
     
