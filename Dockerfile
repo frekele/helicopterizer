@@ -15,5 +15,5 @@ ADD /scripts/*.sh /
 
 RUN chmod +x /*.sh
 
-ENTRYPOINT ["/scripts/helicopterizer.sh"]
+ENTRYPOINT ["/helicopterizer.sh"]
 CMD [""]
