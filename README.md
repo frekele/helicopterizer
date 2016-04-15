@@ -18,8 +18,9 @@ Image repository in the: [Docker HUB].
 
 ### Usage:
 
-    docker run -d [Environment Variables] frekele/helicopterizer [backup|restore] [-v]
-
+  ```
+  docker run -d [Environment Variables] frekele/helicopterizer [backup|restore] [-v|-volumes-from]
+  ```
 
 
 #### Cloud Storage Provider Supported:
@@ -37,11 +38,11 @@ Image repository in the: [Docker HUB].
 
 | Variable Name                   | Default             | Action                | Required  | Description                                                     |
 | ------------------------------- | ------------------- | --------------------- | --------- | --------------------------------------------------------------- |
-| -e STORAGE_PROVIDER             | null                | backup,restore        | yes       | Provider name (AWS,AZURE,GOOGLE,SOFTLAYER,RACKSPACE)            |
-| -e BACKUP_NAME                  | null                | backup,restore        | no        | Backup name using: $(BACKUP_NAME)-$(BACKUP_VERSION).tar.gz      |
-| -e BACKUP_VERSION               | null                | restore               | yes       | Backup version using: $(BACKUP_VERSION).tar.gz                  |
-| -e DATA_PATH                    | /data/              | backup,restore        | no        | Data path : /data/(your files)                                  |
-| -e GZIP_COMPRESSION             | true                | backup,restore        | no        | Boolean to indicate the compression of the file .tar to .tar.gz |
+| STORAGE_PROVIDER                | null                | backup,restore        | yes       | Provider name (AWS,AZURE,GOOGLE,SOFTLAYER,RACKSPACE)            |
+| BACKUP_NAME                     | null                | backup,restore        | no        | Backup name using: $(BACKUP_NAME)-$(BACKUP_VERSION).tar.gz      |
+| BACKUP_VERSION                  | null                | restore               | yes       | Backup version using: $(BACKUP_VERSION).tar.gz                  |
+| DATA_PATH                       | /data/              | backup,restore        | no        | Data path : /data/(your files)                                  |
+| GZIP_COMPRESSION                | true                | backup,restore        | no        | Boolean to indicate the compression of the file .tar to .tar.gz |
 
 
 
@@ -49,11 +50,11 @@ Image repository in the: [Docker HUB].
 
 | Variable Name                   | Default             | Action                | Required  | Description                                                      |
 | ------------------------------- | ------------------- | --------------------- | --------- | ---------------------------------------------------------------- |
-| -e AWS_ACCESS_KEY_ID            | null                | backup,restore        | yes       | AWS access key. Eg: AKRJPMI3QYCARJCRF4VF                         |
-| -e AWS_SECRET_ACCESS_KEY        | null                | backup,restore        | yes       | AWS secret key. Eg: VCsrO7aVulGuiUdXbS31jtQA4iRTVgi4scftJAJr     |
-| -e AWS_DEFAULT_REGION           | us-east-1           | backup,restore        | no        | Default region bucket. Eg: (sa-east-1)                           |
-| -e AWS_S3_BUCKET_NAME           | null                | backup,restore        | yes       | S3 bucket name. Eg: s3://my-bucket-name/                         |
-| -e AWS_S3_PATH                  | /                   | backup,restore        | no        | Relative path for bucket S3. Eg: s3://my-bucket-name/AWS_S3_PATH |
+| AWS_ACCESS_KEY_ID               | null                | backup,restore        | yes       | AWS access key. Eg: AKRJPMI3QYCARJCRF4VF                         |
+| AWS_SECRET_ACCESS_KEY           | null                | backup,restore        | yes       | AWS secret key. Eg: VCsrO7aVulGuiUdXbS31jtQA4iRTVgi4scftJAJr     |
+| AWS_DEFAULT_REGION              | us-east-1           | backup,restore        | no        | Default region bucket. Eg: (sa-east-1)                           |
+| AWS_S3_BUCKET_NAME              | null                | backup,restore        | yes       | S3 bucket name. Eg: s3://my-bucket-name/                         |
+| AWS_S3_PATH                     | /                   | backup,restore        | no        | Relative path for bucket S3. Eg: s3://my-bucket-name/AWS_S3_PATH |
 
 
 
@@ -74,7 +75,34 @@ us-gov-west-1          | US GovCloud West (Oregon)      |
 
 
 
-### Examples:
+### Working with Persistent Data:
+
+There are two general approaches to handling persistent storage requirements with Docker.
+See [Managing Data in Containers](https://docs.docker.com/userguide/dockervolumes/) for additional information.
+
+  1. *Use a data volume container*.  Since data volumes are persistent
+  until no containers use them, a container can created specifically for 
+  this purpose.  This is the recommended approach.  
+
+  Example with jenkins (Data volume):
+  ```
+  $ docker run -d --name jenkins-data jenkinsci/jenkins:2.0 echo "data-only container for Jenkins"
+  $ docker run -d -p 8080:8080 -p 50000:50000 --name jenkins --volumes-from jenkins-data jenkinsci/jenkins:2.0
+  ```
+
+  2. *Mount a host directory as the volume*.  This is not portable, as it
+  relies on the directory existing with correct permissions on the host.
+  However it can be useful in certain situations where this volume needs
+  to be assigned to certain specific underlying storage.  
+
+  Example with jenkins (Data volume container):
+  ```
+  $ mkdir /some/dir/jenkins-data
+  $ docker run -d -p 8080:8080 -p 50000:50000 --name jenkins -v /some/dir/jenkins-data:/jenkins-data jenkinsci/jenkins:2.0
+  ```
+  
+
+### Usage Examples:
  TODO
 
 
