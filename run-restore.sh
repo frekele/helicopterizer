@@ -20,7 +20,7 @@ echo "fileName=$fileName"
 echo ""
 
 now=$(date +%s%3N)
-retoreFileName = "$now_restore_$fileName"
+retoreFileName="$now_restore_$fileName"
 echo "retoreFileName=$retoreFileName"
 echo ""
 
@@ -37,7 +37,7 @@ echo "s3Result=$s3Result"
 echo ""
 
 echo "Starting extract restore from /tmp/$retoreFileName to $DATA_PATH/"
-tar -zcf /tmp/$retoreFileName  -C $DATA_PATH/
+tar -zxf /tmp/$retoreFileName  -C $DATA_PATH/
 echo ""
 
 echo "Remove file in /tmp/$retoreFileName"
@@ -50,3 +50,4 @@ echo ""
 timeDuration=$((timeEnd - timeBegin))
 echo "timeDuration=$timeDuration second(s)"
 echo ""
+
