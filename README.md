@@ -117,8 +117,26 @@ See [Managing Data in Containers](https://docs.docker.com/userguide/dockervolume
 
 
 
+### Building:
 
-
+  Build with the usual
+  ```
+  docker build -t helicopterizer .
+  ```
+  
+  Tests are written using [bats](https://github.com/sstephenson/bats) under the `tests` dir
+  ```
+  bats tests
+  ```
+ 
+  
+  
+  
+  
+  
+  
+  
+  
 
 [HelicopterizerImage]: https://raw.githubusercontent.com/frekele/helicopterizer/master/docs/static_files/logo.png
 [MIT License]: https://github.com/frekele/helicopterizer/raw/master/LICENSE.txt

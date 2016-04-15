@@ -5,6 +5,7 @@ machine:
 dependencies:
   pre:
     - docker ps
+    - git clone https://github.com/sstephenson/bats.git
 
 test:
   post:
