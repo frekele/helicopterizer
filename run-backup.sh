@@ -24,7 +24,7 @@ echo ""
 AWS_S3_PATH=`echo "${AWS_S3_PATH}" | sed 's#/*$##'`
 DATA_PATH=`echo "${DATA_PATH}" | sed 's#/*$##'`
 
-echo "Starting compress $DATA_PATH to /tmp/$fileName"
+echo "Starting compress $DATA_PATH/ to /tmp/$fileName"
 tar -zcf /tmp/$fileName  -C $DATA_PATH/ .
 echo ""
 
