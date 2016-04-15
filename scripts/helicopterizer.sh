@@ -19,11 +19,11 @@ echo "AWS_S3_PATH=$AWS_S3_PATH"
 case $1 in
 
     backup)
-        exec /run-backup.sh
+        exec /backup-s3.sh
         ;;
 
     restore)
-        exec /run-restore.sh
+        exec /restore-s3.sh
         ;;
 
     *)

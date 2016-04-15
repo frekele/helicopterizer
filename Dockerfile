@@ -11,13 +11,9 @@ RUN wget https://bootstrap.pypa.io/get-pip.py && \
 
 RUN pip install awscli
 
-ADD helicopterizer.sh /helicopterizer.sh
-ADD run-backup.sh /run-backup.sh
-ADD run-restore.sh /run-restore.sh
+ADD /scripts/*.sh /
 
-RUN chmod +x /helicopterizer.sh && \
-    chmod +x /run-backup.sh && \
-    chmod +x /run-restore.sh
+RUN chmod +x /*.sh
 
 ENTRYPOINT ["/scripts/helicopterizer.sh"]
 CMD [""]

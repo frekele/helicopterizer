@@ -6,6 +6,8 @@
 
 set -e
 
+: ${BACKUP_VERSION:?"Environment variable BACKUP_VERSION is required!"}
+
 timeBegin=$(date +%Y%m%d%H%M%S)
 echo ""
 echo "timeBegin=$timeBegin"
