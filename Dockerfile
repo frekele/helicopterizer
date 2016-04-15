@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM docker:1.11
 
 MAINTAINER frekele <leandro.freitas@softdevelop.com.br>
 
