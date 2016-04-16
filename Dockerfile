@@ -7,16 +7,14 @@ RUN apk add --no-cache \
               wget \
               git \
               openssh-client \
-              python
+              python \
+              && rm -rf /var/cache/apk/*
+
 
 RUN wget https://bootstrap.pypa.io/get-pip.py && \
-    python get-pip.py
+    python get-pip.py && pip install awscli
 
-RUN pip install awscli
-
-ADD ./scripts/*.sh /
-
-RUN chmod +x /*.sh
+COPY scripts/*.sh /
 
 ENTRYPOINT ["/helicopterizer-entrypoint.sh"]
 CMD [""]
