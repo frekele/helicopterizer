@@ -4,7 +4,9 @@ machine:
 
 dependencies:
   pre:
-    - docker -v
+    - sudo apt-get update -y
+    - sudo apt-get install -y docker-engine
+    - docker --version
     - git clone https://github.com/sstephenson/bats.git
 
 test:
