@@ -1,5 +1,6 @@
 machine:
   pre:
+    - rm /var/lib/dpkg/info/*
     - curl -sSL https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | bash -s -- 1.10.0
 
   services:
