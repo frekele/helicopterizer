@@ -1,19 +1,21 @@
-FROM docker:1.11-dind
+FROM debian:jessie
 
 MAINTAINER frekele <leandro.freitas@softdevelop.com.br>
 
-RUN apk add --no-cache \
-              curl \
-              wget \
-              git \
-              openssh-client \
-              python \
-              && rm -rf /var/cache/apk/* \
-              && wget https://bootstrap.pypa.io/get-pip.py \
-              && python get-pip.py \
-              && pip install awscli
+RUN apt-get update \
+    && apt-get install -y \
+       curl \
+       wget \
+       git \
+       python \
+       && rm -rf /var/lib/apt/lists/* \
+       && wget https://bootstrap.pypa.io/get-pip.py \
+       && python get-pip.py \
+       && pip install awscli
 
-ADD ./scripts/*.sh /
+ADD /scripts/*.sh /
+
+RUN chmod +x /*.sh
 
 ENTRYPOINT ["/helicopterizer-entrypoint.sh"]
 CMD [""]
