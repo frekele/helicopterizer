@@ -4,7 +4,7 @@ services:
   - docker
 
 before_install:
-  - sudo apt-get update -y
+  - sudo apt-get update -y && sudo apt-get install -o Dpkg::Options::="--force-confold" --force-yes -y docker-engine
   - docker --version
   - git clone https://github.com/sstephenson/bats.git
 
