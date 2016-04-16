@@ -20,6 +20,12 @@ if [ -z "$DOCKER_HOST" -a "$DOCKER_PORT_2375_TCP" ]; then
 	export DOCKER_HOST='tcp://docker:2375'
 fi
 
+if [ "$DATA_PATH" ]; then
+    export DATA_PATH=${DATA_PATH:-$DATA_PATH}
+else
+    export DATA_PATH=${DATA_PATH:-/data/}
+fi
+
 export DATA_PATH=${DATA_PATH:-/data/}
 
 : ${AWS_ACCESS_KEY_ID:?"Environment variable AWS_ACCESS_KEY_ID is required!"}
