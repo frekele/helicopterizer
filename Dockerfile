@@ -8,13 +8,12 @@ RUN apk add --no-cache \
               git \
               openssh-client \
               python \
-              && rm -rf /var/cache/apk/*
+              && rm -rf /var/cache/apk/* \
+              && wget https://bootstrap.pypa.io/get-pip.py \
+              && python get-pip.py \
+              && pip install awscli
 
-
-RUN wget https://bootstrap.pypa.io/get-pip.py && \
-    python get-pip.py && pip install awscli
-
-COPY scripts/*.sh /
+ADD ./scripts/*.sh /
 
 ENTRYPOINT ["/helicopterizer-entrypoint.sh"]
 CMD [""]
