@@ -1,19 +1,17 @@
 machine:
   pre:
+    - sudo apt-get update -y
     - curl -sSL https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | bash -s -- 1.10.0
 
   services:
     - docker
 
 dependencies:
-  pre:
-    - sudo apt-get update -y
   override:
     - docker --version
     - git clone https://github.com/sstephenson/bats.git
 
 test:
   override:
-    - sudo apt-get update -y
     - docker --version
     - docker build --rm=true -t frekele/helicopterizer .
