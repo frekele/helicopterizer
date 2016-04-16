@@ -20,9 +20,6 @@ if [ -z "$DOCKER_HOST" -a "$DOCKER_PORT_2375_TCP" ]; then
 	export DOCKER_HOST='tcp://docker:2375'
 fi
 
-exec "$@"
-
-
 export DATA_PATH=${DATA_PATH:-/data/}
 
 : ${AWS_ACCESS_KEY_ID:?"Environment variable AWS_ACCESS_KEY_ID is required!"}
@@ -49,4 +46,3 @@ case $1 in
         echo "Error: Invalid Parameter"
         exit 1
 esac
-

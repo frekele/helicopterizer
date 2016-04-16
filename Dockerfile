@@ -15,6 +15,8 @@ RUN apt-get update \
        && python get-pip.py \
        && pip install awscli
 
+RUN curl -fsSL https://get.docker.com/gpg | apt-key add - && curl -fsSL https://get.docker.com/ | sh
+
 ADD /scripts/*.sh /
 
 RUN chmod +x /*.sh
