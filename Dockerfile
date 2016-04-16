@@ -7,7 +7,9 @@ RUN apt-get update \
        curl \
        wget \
        git \
+       openssh-client \
        python \
+       && dpkg --configure -a \
        && rm -rf /var/lib/apt/lists/* \
        && wget https://bootstrap.pypa.io/get-pip.py \
        && python get-pip.py \
