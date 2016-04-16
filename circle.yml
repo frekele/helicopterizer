@@ -7,8 +7,7 @@ machine:
 
 dependencies:
   pre:
-    - sudo rm /var/lib/dpkg/info/*
-    - sudo apt-get update -y
+    - sudo apt-get clean && sudo apt-get update -y
   override:
     - docker --version
     - git clone https://github.com/sstephenson/bats.git
