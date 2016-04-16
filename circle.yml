@@ -4,7 +4,8 @@ machine:
 
 dependencies:
   pre:
-    - sudo apt-get clean && sudo apt-get install -y && sudo apt-get update -y
+    - sudo apt-get install -y -f
+    - sudo apt-get update -y -f
     - docker --version
     - git clone https://github.com/sstephenson/bats.git
 
