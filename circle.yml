@@ -9,5 +9,5 @@ dependencies:
 
 test:
   post:
-    - docker build -t frekele/helicopterizer .
+    - docker build --rm=true -t frekele/helicopterizer .
 
