@@ -4,6 +4,8 @@ services:
   - docker
 
 before_install:
+  - sudo apt-get update
+  - sudo apt-get install docker-engine
   - docker -v
   - git clone https://github.com/sstephenson/bats.git
 
