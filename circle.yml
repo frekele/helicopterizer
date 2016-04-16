@@ -1,12 +1,12 @@
 machine:
   services:
     - docker
+  pre:
+    - sudo curl -sSL https://get.docker.com/ | sh
 
 dependencies:
   pre:
     - sudo apt-get update -y
-    - docker --version
-    - sudo curl -sSL https://get.docker.com/ | sh
     - docker --version
     - git clone https://github.com/sstephenson/bats.git
 
