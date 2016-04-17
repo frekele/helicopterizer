@@ -26,7 +26,7 @@
 ### Usage:
 
   ```
-  docker run -d [Environment Variables] frekele/helicopterizer [backup|restore] [-v|-volumes-from]
+  docker run -d [Environment Variables] [-v|-volumes-from] frekele/helicopterizer [backup|restore]
   ```
 
 
