@@ -21,15 +21,15 @@ RUN chmod -R +x /scripts
 
 ENV STORAGE_PROVIDER='' \
     BACKUP_NAME='' \
-    BACKUP_VERSION='' \
     DATA_PATH='/data/' \
     GZIP_COMPRESSION='true' \
     CLEAN_DATA_BEFORE_RESTORE='false' \
+    BACKUP_VERSION='' \
     AWS_ACCESS_KEY_ID='' \
     AWS_SECRET_ACCESS_KEY='' \
-    AWS_DEFAULT_REGION='us-east-1' \
     AWS_S3_BUCKET_NAME='' \
-    AWS_S3_PATH='/'
+    AWS_S3_PATH='/' \
+    AWS_DEFAULT_REGION='us-east-1'
 
 ENTRYPOINT ["/scripts/run.sh"]
 

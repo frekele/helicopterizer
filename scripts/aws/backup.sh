@@ -15,11 +15,14 @@ cleanTemp(){
   rm -v -f /tmp/$fileName
 }
 
+#Create backup version.
+createBackupVersion(){
+  BACKUP_VERSION=$(date --utc +%FT%TZ)
+}
+
 #Mount file name to tarball.
 mountFileName(){
-  local dateTimeUtc=$(date --utc +%FT%TZ)
-  local BACKUP_VERSION=""
-
+  local sufix=""
   if [ "$GZIP_COMPRESSION" = "true" ]; then
       sufix=".tar.gz"
   else
@@ -55,6 +58,9 @@ uploadToS3(){
   s3Result=$(aws s3 cp /tmp/$fileName $s3Uri )
 }
 
+
+#Call create backup version.
+createBackupVersion
 
 #Call to mount file name.
 mountFileName
