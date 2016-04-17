@@ -20,6 +20,8 @@
 
 ## Backup and Restore Docker Container
 
+#### Solution to Backup and Restore for Docker Container in the Cloud Providers.
+
 
 ### Usage:
 
@@ -45,10 +47,10 @@
 | ------------------------------- | ------------------- | --------------------- | --------- | --------------------------------------------------------------- |
 | STORAGE_PROVIDER                | null                | backup,restore        | yes       | Provider name (AWS,AZURE,GOOGLE,SOFTLAYER,RACKSPACE)            |
 | BACKUP_NAME                     | null                | backup,restore        | no        | Backup name using: $(BACKUP_NAME)-$(BACKUP_VERSION).tar.gz      |
-| BACKUP_VERSION                  | null                | restore               | yes       | Backup version using: $(BACKUP_VERSION).tar.gz                  |
 | DATA_PATH                       | /data/              | backup,restore        | no        | Data path : /data/(your files)                                  |
 | GZIP_COMPRESSION                | true                | backup,restore        | no        | Boolean to indicate the compression of the file .tar to .tar.gz |
-
+| CLEAN_DATA_BEFORE_RESTORE       | false               | restore               | no        | Boolean to indicate the compression of the file .tar to .tar.gz |
+| BACKUP_VERSION                  | null                | restore               | yes       | Backup version using: $(BACKUP_VERSION).tar.gz                  |
 
 
 #### Environment Variables for AWS S3:
@@ -57,10 +59,9 @@
 | ------------------------------- | ------------------- | --------------------- | --------- | ---------------------------------------------------------------- |
 | AWS_ACCESS_KEY_ID               | null                | backup,restore        | yes       | AWS access key. Eg: AKRJPMI3QYCARJCRF4VF                         |
 | AWS_SECRET_ACCESS_KEY           | null                | backup,restore        | yes       | AWS secret key. Eg: VCsrO7aVulGuiUdXbS31jtQA4iRTVgi4scftJAJr     |
-| AWS_DEFAULT_REGION              | us-east-1           | backup,restore        | no        | Default region bucket. Eg: (sa-east-1)                           |
 | AWS_S3_BUCKET_NAME              | null                | backup,restore        | yes       | S3 bucket name. Eg: s3://my-bucket-name/                         |
 | AWS_S3_PATH                     | /                   | backup,restore        | no        | Relative path for bucket S3. Eg: s3://my-bucket-name/AWS_S3_PATH |
-
+| AWS_DEFAULT_REGION              | us-east-1           | backup,restore        | no        | Default region bucket. Eg: (sa-east-1)                           |
 
 
 ####  AWS S3 Regions:
