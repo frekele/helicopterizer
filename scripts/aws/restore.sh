@@ -6,50 +6,93 @@
 
 set -e
 
-: ${BACKUP_VERSION:?"Environment variable BACKUP_VERSION is required!"}
-
 timeBegin=$(date +%Y%m%d%H%M%S)
-echo ""
-echo "timeBegin=$timeBegin"
-echo ""
+fileName=''
+restoreTempFileName=''
+s3Uri=''
 
-if [ "$BACKUP_NAME" ]; then
-    fileName="$BACKUP_NAME-$BACKUP_VERSION.tar.gz"
-else
-    fileName="$BACKUP_VERSION.tar.gz"
-fi
-echo "fileName=$fileName"
-echo ""
+validationEnvs(){
+  : ${BACKUP_VERSION:?"Environment variable BACKUP_VERSION is required!"}
+}
 
-now=$(date +%s%3N)
-retoreFileName="$now_restore_$fileName"
-echo "retoreFileName=$retoreFileName"
-echo ""
+#Mount file name to tarball.
+mountFileName(){
+  local sufix=""
 
-#Remove slash in end the URI.
-AWS_S3_PATH=`echo "${AWS_S3_PATH}" | sed 's#/*$##'`
-DATA_PATH=`echo "${DATA_PATH}" | sed 's#/*$##'`
+  if [ "$GZIP_COMPRESSION" = "true" ]; then
+      sufix=".tar.gz"
+  else
+      sufix=".tar"
+  fi
+
+  if [ "$BACKUP_NAME" ]; then
+      fileName="$BACKUP_NAME-$BACKUP_VERSION$sufix"
+  else
+      fileName="$BACKUP_VERSION$sufix"
+  fi
+}
+
+mountRestoreTempFileName(){
+  local now=$(date +%s%3N)
+  restoreTempFileName="$now-restore-$fileName"
+}
+
+mountUriS3(){
+  if [ "$AWS_S3_PATH" ]; then
+     s3Uri="$AWS_S3_BUCKET_NAME/$AWS_S3_PATH/$fileName"
+  else
+     s3Uri="$AWS_S3_BUCKET_NAME/$fileName"
+  fi
+}
+
+#Download tarball From AWS S3.
+downloadFromS3(){
+  s3Result=$(aws s3 cp $s3Uri /tmp/$restoreTempFileName)
+}
 
 
-echo "Starting download backup from $AWS_S3_PATH/$fileName to /tmp/$retoreFileName"
-s3Result=$(aws s3 cp $AWS_S3_PATH/$fileName /tmp/$retoreFileName)
-echo ""
+#Extract tarball with gzip or not.
+tarballExtract(){
+  if [ "$GZIP_COMPRESSION" = "true" ]; then
+      tar -zxvf /tmp/$restoreTempFileName  -C $DATA_PATH/
+  else
+      tar -xvf /tmp/$restoreTempFileName  -C $DATA_PATH/
+  fi
+}
 
-echo "s3Result=$s3Result"
-echo ""
+#Clean the temporary file.
+cleanTemp(){
+  rm -f /tmp/$restoreTempFileName
+}
 
-echo "Starting extract restore from /tmp/$retoreFileName to $DATA_PATH/"
-tar -zxf /tmp/$retoreFileName  -C $DATA_PATH/
-echo ""
+#Call Validation Environment Variables.
+validationEnvs
 
-echo "Remove file in /tmp/$retoreFileName"
-rm -f /tmp/$retoreFileName
+#Call to mount file name.
+mountFileName
+
+#Call to mount Restore file name for copy to /tmp.
+mountRestoreTempFileName
+
+#Call to mount uri S3.
+mountUriS3
+
+echo "Starting download backup from $s3Uri to /tmp/$restoreTempFileName"
+downloadFromS3
+
+echo "Starting extract restore from /tmp/$restoreTempFileName to $DATA_PATH/"
+tarballExtract
+
+echo "Remove file in /tmp/$restoreTempFileName"
+cleanTemp
 
 timeEnd=$(date +%Y%m%d%H%M%S)
-echo "timeEnd=$timeEnd"
-echo ""
-
 timeDuration=$((timeEnd - timeBegin))
+
+echo "fileName=$fileName"
+echo "restoreTempFileName=$restoreTempFileName"
+echo "s3Result=$s3Result"
+echo "timeBegin=$timeBegin"
+echo "timeEnd=$timeEnd"
 echo "timeDuration=$timeDuration second(s)"
-echo ""
 

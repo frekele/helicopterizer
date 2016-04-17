@@ -15,9 +15,9 @@ RUN echo "http://dl-6.alpinelinux.org/alpine/edge/community" >> /etc/apk/reposit
     && pip install --upgrade pip \
     && pip install awscli
 
-COPY ./scripts/* /
+ADD ./scripts /scripts
 
-RUN chmod -R +x /*.sh
+RUN chmod -R +x /scripts
 
 ENV STORAGE_PROVIDER='' \
     BACKUP_NAME='' \
@@ -30,7 +30,6 @@ ENV STORAGE_PROVIDER='' \
     AWS_S3_BUCKET_NAME='' \
     AWS_S3_PATH='/'
 
-
-ENTRYPOINT ["/run.sh"]
+ENTRYPOINT ["/scripts/run.sh"]
 
 CMD [""]

@@ -5,7 +5,7 @@ set -e
 echo "Starting helicopterizer ..."
 
 #Validation Environment Variables.
-validation_envs(){
+validationEnvs(){
   case $STORAGE_PROVIDER in
     "AWS")
         echo 'Cloud Provider is Amazon Simple Storage Service (S3)'
@@ -17,25 +17,25 @@ validation_envs(){
     "AZURE")
         echo 'Set Cloud Storage Provider = Microsoft Azure Storage'
         echo 'Microsoft Azure Storage Not Supported.'
-        echo 'Not Implemented Yet. :( - Planned for the future'
+        echo 'Sorry! Not Implemented Yet. :( - Planned for the future'
         exit 1
         ;;
     "GOOGLE")
         echo 'Set Cloud Storage Provider = Google Cloud Storage'
         echo 'Google Cloud Storage Not Supported.'
-        echo 'Not Implemented Yet. :( - Planned for the future'
+        echo 'Sorry! Not Implemented Yet. :( - Planned for the future'
         exit 1
         ;;
     "RACKSPACE")
         echo 'Set Cloud Storage Provider = Rackspace Storage'
         echo 'Rackspace Storage Not Supported.'
-        echo 'Not Implemented Yet. :( - Planned for the future'
+        echo 'Sorry! Not Implemented Yet. :( - Planned for the future'
         exit 1
         ;;
     "SOFTLAYER")
         echo 'Set Cloud Storage Provider = IBM SoftLayer Storage'
         echo 'IBM SoftLayer Storage Not Supported.'
-        echo 'Not Implemented Yet. :( - Planned for the future'
+        echo 'Sorry! Not Implemented Yet. :( - Planned for the future'
         exit 1
         ;;
     *)
@@ -45,7 +45,7 @@ validation_envs(){
 }
 
 #Print Environment Variables for Test.
-print_envs(){
+printEnvs(){
   echo "STORAGE_PROVIDER=$STORAGE_PROVIDER"
   echo "BACKUP_NAME=$BACKUP_NAME"
   echo "BACKUP_VERSION=$BACKUP_VERSION"
@@ -59,28 +59,36 @@ print_envs(){
 }
 
 
+#Remove slash in end the URI.
+removeSlashUri(){
+  DATA_PATH=`echo "${DATA_PATH}" | sed 's#/*$##'`
+  AWS_S3_BUCKET_NAME=`echo "${AWS_S3_BUCKET_NAME}" | sed 's#/*$##'`
+  AWS_S3_PATH=`echo "${AWS_S3_PATH}" | sed 's#/*$##'`
+}
+
+
 #Run Backup.
-run_backup(){
+runBackup(){
   case $STORAGE_PROVIDER in
     "AWS")
         echo "Starting Backup to AWS S3 ..."
-        exec /aws/backup.sh
+        exec /scripts/aws/backup.sh
         ;;
     "AZURE")
         echo "Starting Backup to AZURE ..."
-        exec /azure/backup.sh
+        exec /scripts/azure/backup.sh
         ;;
     "GOOGLE")
         echo "Starting Backup to GOOGLE ..."
-        exec /google/backup.sh
+        exec /scripts/google/backup.sh
         ;;
     "RACKSPACE")
         echo "Starting Backup to RACKSPACE ..."
-        exec /rackspace/backup.sh
+        exec /scripts/rackspace/backup.sh
         ;;
     "SOFTLAYER")
         echo "Starting Backup to SOFTLAYER ..."
-        exec /softlayer/backup.sh
+        exec /scripts/softlayer/backup.sh
         ;;
     *)
         echo "Unknown Cloud Provider for Backup!"
@@ -90,27 +98,27 @@ run_backup(){
 
 
 #Run Restore.
-run_restore(){
+runRestore(){
   case $STORAGE_PROVIDER in
     "AWS")
         echo "Starting Restore to AWS S3 ..."
-        exec /aws/restore.sh
+        exec /scripts/aws/restore.sh
         ;;
     "AZURE")
         echo "Starting Restore to AZURE ..."
-        exec /azure/restore.sh
+        exec /scripts/azure/restore.sh
         ;;
     "GOOGLE")
         echo "Starting Restore to GOOGLE ..."
-        exec /google/restore.sh
+        exec /scripts/google/restore.sh
         ;;
     "RACKSPACE")
         echo "Starting Restore to RACKSPACE ..."
-        exec /rackspace/restore.sh
+        exec /scripts/rackspace/restore.sh
         ;;
     "SOFTLAYER")
         echo "Starting Restore to SOFTLAYER ..."
-        exec /softlayer/restore.sh
+        exec /scripts/softlayer/restore.sh
         ;;
     *)
         echo "Unknown Cloud Provider for Restore!"
@@ -120,18 +128,21 @@ run_restore(){
 
 
 #Call Validation Environment Variables.
-validation_envs
+validationEnvs
 
 #Call Print Environment Variables.
-print_envs
+printEnvs
+
+#Remove slash in URI.
+removeSlashUri
 
 case $1 in
 
     backup)
-        run_backup
+        runBackup
         ;;
     restore)
-        run_restore
+        runRestore
         ;;
     *)
         echo "Error: Invalid Parameter"

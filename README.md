@@ -34,8 +34,8 @@
 | Amazon Simple Storage Service (S3)          | AWS             | yes                               |
 | Microsoft Azure Storage                     | AZURE           | no - Planned for the future       |
 | Google Cloud Storage                        | GOOGLE          | no - Planned for the future       |
-| IBM SoftLayer Storage                       | SOFTLAYER       | no - Planned for the future       |
 | Rackspace Storage                           | RACKSPACE       | no - Planned for the future       |
+| IBM SoftLayer Storage                       | SOFTLAYER       | no - Planned for the future       |
 
 
 

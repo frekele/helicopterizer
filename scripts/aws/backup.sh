@@ -7,21 +7,14 @@
 set -e
 
 timeBegin=$(date +%Y%m%d%H%M%S)
+fileName=''
+s3Uri=''
 
-#Remove slash in end the URI.
-remove_slash_uri(){
-  if [ "$DATA_PATH" = "/" ]; then
-      DATA_PATH=''
-  else
-      DATA_PATH=`echo "${DATA_PATH}" | sed 's#/*$##'`
-  fi
-  AWS_S3_PATH=`echo "${AWS_S3_PATH}" | sed 's#/*$##'`
-}
 
 #Mount file name to tarball.
 mountFileName(){
   local dateTimeUtc=$(date --utc +%FT%TZ)
-  local sufix = ""
+  local sufix=""
 
   if [ "$GZIP_COMPRESSION" = "true" ]; then
       sufix=".tar.gz"
@@ -36,8 +29,16 @@ mountFileName(){
   fi
 }
 
+mountUriS3(){
+  if [ "$AWS_S3_PATH" ]; then
+     s3Uri="$AWS_S3_BUCKET_NAME/$AWS_S3_PATH/$fileName"
+  else
+     s3Uri="$AWS_S3_BUCKET_NAME/$fileName"
+  fi
+}
+
 #Create tarball with gzip or not.
-tarball_compress(){
+tarballCompress(){
   if [ "$GZIP_COMPRESSION" = "true" ]; then
       tar -zcvf /tmp/$fileName  -C $DATA_PATH/ .
   else
@@ -46,31 +47,32 @@ tarball_compress(){
 }
 
 #Upload tarball to AWS S3.
-upload_to_s3(){
-  s3Result=$(aws s3 cp /tmp/$fileName $AWS_S3_PATH/$fileName )
+uploadToS3(){
+  s3Result=$(aws s3 cp /tmp/$fileName $s3Uri )
+}
+
+#Clean the temporary file.
+cleanTemp(){
+  rm -f /tmp/$fileName
 }
 
 #Call to mount file name.
 mountFileName
 
-#Remove slash in URI.
-remove_slash_uri
+#Call to mount uri S3.
+mountUriS3
 
 echo "Starting compress: $DATA_PATH/ to /tmp/$fileName"
-tarball_compress
+tarballCompress
 
-echo "Starting Upload from: /tmp/$fileName to $AWS_S3_PATH/$fileName"
-upload_to_s3
-echo ""
-
+echo "Starting Upload from: /tmp/$fileName to $s3Uri"
+uploadToS3
 
 echo "Remove file in Directory Tem: /tmp/$fileName"
-rm -f /tmp/$fileName
+cleanTemp
 
 timeEnd=$(date +%Y%m%d%H%M%S)
-
 timeDuration=$((timeEnd - timeBegin))
-
 
 echo "fileName=$fileName"
 echo "s3Result=$s3Result"
