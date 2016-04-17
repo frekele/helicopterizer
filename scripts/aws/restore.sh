@@ -15,6 +15,18 @@ validationEnvs(){
   : ${BACKUP_VERSION:?"Environment variable BACKUP_VERSION is required!"}
 }
 
+#Clean data before restore Only flag CLEAN_DATA_BEFORE_RESTORE equals true.
+cleanDataBeforeRestore(){
+  if [ "$CLEAN_DATA_BEFORE_RESTORE" = "true" ]; then
+      rm -v -r -f $DATA_PATH/
+  fi
+}
+
+#Clean the temporary file.
+cleanTemp(){
+  rm -v -f /tmp/$restoreTempFileName
+}
+
 #Mount file name to tarball.
 mountFileName(){
   local sufix=""
@@ -60,10 +72,6 @@ tarballExtract(){
   fi
 }
 
-#Clean the temporary file.
-cleanTemp(){
-  rm -f /tmp/$restoreTempFileName
-}
 
 #Call Validation Environment Variables.
 validationEnvs
@@ -77,6 +85,8 @@ mountRestoreTempFileName
 #Call to mount uri S3.
 mountUriS3
 
+cleanDataBeforeRestore
+
 echo "Starting download backup from $s3Uri to /tmp/$restoreTempFileName"
 downloadFromS3
 
@@ -85,6 +95,7 @@ tarballExtract
 
 echo "Remove file in /tmp/$restoreTempFileName"
 cleanTemp
+
 
 timeEnd=$(date +%Y%m%d%H%M%S)
 timeDuration=$((timeEnd - timeBegin))

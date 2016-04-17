@@ -24,6 +24,7 @@ ENV STORAGE_PROVIDER='' \
     BACKUP_VERSION='' \
     DATA_PATH='/data/' \
     GZIP_COMPRESSION='true' \
+    CLEAN_DATA_BEFORE_RESTORE='false' \
     AWS_ACCESS_KEY_ID='' \
     AWS_SECRET_ACCESS_KEY='' \
     AWS_DEFAULT_REGION='us-east-1' \

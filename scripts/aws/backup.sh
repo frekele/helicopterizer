@@ -10,11 +10,15 @@ timeBegin=$(date +%Y%m%d%H%M%S)
 fileName=''
 s3Uri=''
 
+#Clean the temporary file.
+cleanTemp(){
+  rm -v -f /tmp/$fileName
+}
 
 #Mount file name to tarball.
 mountFileName(){
   local dateTimeUtc=$(date --utc +%FT%TZ)
-  local sufix=""
+  local BACKUP_VERSION=""
 
   if [ "$GZIP_COMPRESSION" = "true" ]; then
       sufix=".tar.gz"
@@ -23,9 +27,9 @@ mountFileName(){
   fi
 
   if [ "$BACKUP_NAME" ]; then
-      fileName="$BACKUP_NAME-$dateTimeUtc$sufix"
+      fileName="$BACKUP_NAME-$BACKUP_VERSION$sufix"
   else
-      fileName="$dateTimeUtc$sufix"
+      fileName="$BACKUP_VERSION$sufix"
   fi
 }
 
@@ -51,10 +55,6 @@ uploadToS3(){
   s3Result=$(aws s3 cp /tmp/$fileName $s3Uri )
 }
 
-#Clean the temporary file.
-cleanTemp(){
-  rm -f /tmp/$fileName
-}
 
 #Call to mount file name.
 mountFileName
@@ -70,6 +70,7 @@ uploadToS3
 
 echo "Remove file in Directory Tem: /tmp/$fileName"
 cleanTemp
+
 
 timeEnd=$(date +%Y%m%d%H%M%S)
 timeDuration=$((timeEnd - timeBegin))
