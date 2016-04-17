@@ -18,7 +18,8 @@ validationEnvs(){
 #Clean data before restore Only flag CLEAN_DATA_BEFORE_RESTORE equals true.
 cleanDataBeforeRestore(){
   if [ "$CLEAN_DATA_BEFORE_RESTORE" = "true" ]; then
-      rm -v -r -f $DATA_PATH/
+      echo "Running clean data before restore in: $DATA_PATH/*"
+      rm -v -r -f $DATA_PATH/*
   fi
 }
 
