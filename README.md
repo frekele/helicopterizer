@@ -126,9 +126,31 @@ docker run -d -p 8081:8081 --name nexus -v /some/dir/nexus-data:/nexus-data sona
 ```
 
 ### Usage Examples:
- TODO
- 
 
+```
+docker run --rm \
+-e STORAGE_PROVIDER='AWS' \
+-e BACKUP_NAME='my-backup-name' \
+-e AWS_ACCESS_KEY_ID='XXXXXXXXXXXXX' \
+-e AWS_SECRET_ACCESS_KEY='XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' \
+-e AWS_S3_BUCKET_NAME='s3://my-bucket-backup/' \
+-v /my-host-data:/data \
+helicopterizer backup
+```
+ 
+```
+docker run --rm \
+-e STORAGE_PROVIDER='AWS' \
+-e BACKUP_NAME='my-backup-name' \
+-e AWS_ACCESS_KEY_ID='XXXXXXXXXXXXX' \
+-e AWS_SECRET_ACCESS_KEY='XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' \
+-e AWS_S3_BUCKET_NAME='s3://my-bucket-backup/' \
+-e BACKUP_VERSION='2016-04-17T00:34:20Z' \
+-v /my-host-data:/data \
+helicopterizer restore
+```
+
+TODO: add more possibilities here.
 
 ### Building:
 
