@@ -14,6 +14,8 @@
 
 =====================================
 
+[![Join the chat at https://gitter.im/frekele/helicopterizer](https://badges.gitter.im/frekele/helicopterizer.svg)](https://gitter.im/frekele/helicopterizer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![Helicopterizer Image][HelicopterizerImage]][website] 
 
 # Helicopterizer
