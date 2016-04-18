@@ -15,11 +15,10 @@
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/frekele/helicopterizer/master/LICENSE)
 
 
-=====================================
+# Helicopterizer
 
 [![Helicopterizer Image][HelicopterizerImage]][website] 
 
-# Helicopterizer
 
 ## Backup and Restore for Docker Container
 
@@ -168,6 +167,16 @@ docker run --rm \
 ........
 -e GZIP_COMPRESSION=false \
 helicopterizer [backup|restore]
+```
+
+Run With clean the date before the restore:
+
+***[Be careful here, you will lose all your data inside DATA_PATH directory].***
+```
+docker run --rm \
+........
+-e CLEAN_DATA_BEFORE_RESTORE=true \
+helicopterizer restore
 ```
 
 Run [Backup|Restore] with other data path:
