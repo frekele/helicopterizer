@@ -62,8 +62,8 @@
 | ------------------------------- | ------------------- | --------------------- | --------- | ---------------------------------------------------------------- |
 | AWS_ACCESS_KEY_ID               | null                | backup,restore        | yes       | AWS access key. Eg: AKRJPMI3QYCARJCRF4VF                         |
 | AWS_SECRET_ACCESS_KEY           | null                | backup,restore        | yes       | AWS secret key. Eg: VCsrO7aVulGuiUdXbS31jtQA4iRTVgi4scftJAJr     |
-| AWS_S3_BUCKET_NAME              | null                | backup,restore        | yes       | S3 bucket name. Eg: s3://my-bucket-name/                         |
-| AWS_S3_PATH                     | /                   | backup,restore        | no        | Relative path for bucket S3. Eg: s3://my-bucket-name/AWS_S3_PATH |
+| AWS_S3_BUCKET_NAME              | null                | backup,restore        | yes       | S3 bucket name. Eg: s3://my-bucket-backup/                       |
+| AWS_S3_PATH                     | /                   | backup,restore        | no        | Relative path for bucket S3. Eg: (AWS_S3_BUCKET_NAME)/jenkins/   |
 | AWS_DEFAULT_REGION              | us-east-1           | backup,restore        | no        | Default region bucket. Eg: (sa-east-1)                           |
 
 
@@ -114,37 +114,38 @@ docker run -d -p 8081:8081 --name nexus --volumes-from nexus-data sonatype/nexus
 *Mount a host directory as the volume*.  This is not portable, as it relies on the directory existing with correct permissions on the host.
 However it can be useful in certain situations where this volume needs to be assigned to certain specific underlying storage.  
 
-*Example with Jenkins:* 
-      
+*Example with Jenkins:*
+
 ```
-mkdir /some/dir/jenkins-data
-docker run -d -p 8080:8080 -p 50000:50000 --name jenkins -v /some/dir/jenkins-data:/jenkins-data jenkinsci/jenkins:2.0
+mkdir /home/jenkins-data
+docker run -d -p 8080:8080 -p 50000:50000 --name jenkins -v /home/jenkins-data:/jenkins-data jenkinsci/jenkins:2.0
 ```
-      
-*Example with Nexus:*    
-  
+
+*Example with Nexus:*
+
 ```
-mkdir /some/dir/nexus-data && chown -R 200 /some/dir/nexus-data
-docker run -d -p 8081:8081 --name nexus -v /some/dir/nexus-data:/nexus-data sonatype/nexus3
+mkdir /home/nexus-data && chown -R 200 /home/nexus-data
+docker run -d -p 8081:8081 --name nexus -v /home/nexus-data:/nexus-data sonatype/nexus3
 ```
 
 ### Usage Examples:
 
+
+Run Backup:
 ```
 docker run --rm \
 -e STORAGE_PROVIDER='AWS' \
--e BACKUP_NAME='my-backup-name' \
 -e AWS_ACCESS_KEY_ID='XXXXXXXXXXXXX' \
 -e AWS_SECRET_ACCESS_KEY='XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' \
 -e AWS_S3_BUCKET_NAME='s3://my-bucket-backup/' \
 -v /my-host-data:/data \
 helicopterizer backup
 ```
- 
+
+Run Restore:
 ```
 docker run --rm \
 -e STORAGE_PROVIDER='AWS' \
--e BACKUP_NAME='my-backup-name' \
 -e AWS_ACCESS_KEY_ID='XXXXXXXXXXXXX' \
 -e AWS_SECRET_ACCESS_KEY='XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' \
 -e AWS_S3_BUCKET_NAME='s3://my-bucket-backup/' \
@@ -153,7 +154,52 @@ docker run --rm \
 helicopterizer restore
 ```
 
-TODO: add more possibilities here.
+Run [Backup|Restore] with other AWS Region:
+```
+docker run --rm \
+........
+-e AWS_DEFAULT_REGION='sa-east-1' \
+helicopterizer [backup|restore]
+```
+
+Run [Backup|Restore] with subdirectories in AWS S3:
+```
+docker run --rm \
+........
+-e AWS_S3_PATH='/project-alpha/nexus/' \
+helicopterizer [backup|restore]
+```
+
+Run [Backup|Restore] with prefix name *$(BACKUP_NAME)-$(BACKUP_VERSION).tar.gz*:
+```
+docker run --rm \
+........
+-e BACKUP_NAME='my-backup-name' \
+helicopterizer [backup|restore]
+```
+
+Run [Backup|Restore] without gzip compression:
+```
+docker run --rm \
+........
+-e GZIP_COMPRESSION='false' \
+helicopterizer [backup|restore]
+```
+
+Run [Backup|Restore] with other data path:
+```
+docker run --rm \
+........
+-e DATA_PATH='/other-data-directory/' \
+-v /my-host-data:/other-data-directory \
+helicopterizer [backup|restore]
+```
+
+
+<!---
+   comments.
+-->
+
 
 ### Building:
 
@@ -166,13 +212,9 @@ TODO: add more possibilities here.
     bats tests
  
   
-  
-  
-  
-  
-  
-  
-  
+
+
+
 
 [HelicopterizerImage]: https://raw.githubusercontent.com/frekele/helicopterizer/master/docs/static_files/logo.png
 [MIT License]: https://github.com/frekele/helicopterizer/raw/master/LICENSE.txt
