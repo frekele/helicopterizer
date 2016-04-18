@@ -1,1 +1,9 @@
+.idea
 .gitignore
+.travis.yml
+circle.yml
+docs
+LICENSE
+README.md
+helicopterizer.iml
+helicopterizer-demo.conf
