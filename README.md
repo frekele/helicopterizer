@@ -91,8 +91,7 @@ See [Managing Data in Containers](https://docs.docker.com/userguide/dockervolume
 
 #### Data volume container
   
-*Use a data volume container*. Since data volumes are persistent until no containers use them, a container can created specifically for this purpose.
-This is the recommended approach.  
+*Use a data volume container*. Since data volumes are persistent until no containers use them, a container can created specifically for this purpose.  
 
 *Example with Jenkins:* 
        
@@ -138,7 +137,7 @@ docker run --rm \
 -e AWS_ACCESS_KEY_ID='XXXXXXXXXXXXX' \
 -e AWS_SECRET_ACCESS_KEY='XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' \
 -e AWS_S3_BUCKET_NAME='s3://my-bucket-backup/' \
--v /my-host-data:/data \
+-v /home/jenkins-data:/data \
 helicopterizer backup
 ```
 
@@ -150,7 +149,7 @@ docker run --rm \
 -e AWS_SECRET_ACCESS_KEY='XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' \
 -e AWS_S3_BUCKET_NAME='s3://my-bucket-backup/' \
 -e BACKUP_VERSION='2016-04-17T00:34:20Z' \
--v /my-host-data:/data \
+-v /home/jenkins-data:/data \
 helicopterizer restore
 ```
 
@@ -191,9 +190,22 @@ Run [Backup|Restore] with other data path:
 docker run --rm \
 ........
 -e DATA_PATH='/other-data-directory/' \
--v /my-host-data:/other-data-directory \
+-v /home/jenkins-data:/jenkins-data \
 helicopterizer [backup|restore]
 ```
+
+Run [Backup|Restore] with data volume container:
+```
+docker run --rm \
+........
+-e DATA_PATH='/var/jenkins_home/' \
+--volumes-from jenkins-data \
+helicopterizer [backup|restore]
+```
+
+
+
+
 
 
 <!---
