@@ -92,9 +92,11 @@ docker run --rm \
 -e AWS_ACCESS_KEY_ID=XXXXXXXXXXXXX \
 -e AWS_SECRET_ACCESS_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX \
 -e AWS_S3_BUCKET_NAME=s3://my-bucket-backup/ \
--v /home/jenkins-data:/data \
+-v /home/jenkins-data:/data:ro \
 helicopterizer backup
 ```
+
+ *Use ':ro' to mount the volumes in read-only mode.*
 
 Run Restore:
 ```
@@ -104,10 +106,12 @@ docker run --rm \
 -e AWS_SECRET_ACCESS_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX \
 -e AWS_S3_BUCKET_NAME=s3://my-bucket-backup/ \
 -e BACKUP_VERSION=2016-04-17T00:34:20Z \
--v /home/jenkins-data:/data \
+-v /home/jenkins-data:/data:rw \
 helicopterizer restore
 ```
-
+ *Use ':rw' to mount the volumes in read-write mode.*
+ 
+ 
 Run [Backup|Restore] with environment file:
 ```
 touch ~/helicopterizer.conf
