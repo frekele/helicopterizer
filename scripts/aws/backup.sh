@@ -42,7 +42,7 @@ mountUriS3(){
   else
      s3Uri="$AWS_S3_BUCKET_NAME/$fileName"
   fi
-  s3Uri=$(readlink -m "$s3Uri")
+  s3Uri=`echo "${s3Uri}" | sed 's#//*#/#g' | sed 's#/*$##'`
   s3Uri="s3://$s3Uri"
 }
 

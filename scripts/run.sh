@@ -60,9 +60,9 @@ printEnvs(){
 
 #Remove slash in end the URI.
 removeSlashUri(){
-  DATA_PATH=$(readlink -m "$DATA_PATH")
-  AWS_S3_BUCKET_NAME=$(readlink -m "$AWS_S3_BUCKET_NAME")
-  AWS_S3_PATH=$(readlink -m "$AWS_S3_PATH")
+  DATA_PATH=`echo "${DATA_PATH}" | sed 's#//*#/#g' | sed 's#/*$##'`
+  AWS_S3_BUCKET_NAME=`echo "${AWS_S3_BUCKET_NAME}" | sed 's#//*#/#g' | sed 's#/*$##'`
+  AWS_S3_PATH=`echo "${AWS_S3_PATH}" | sed 's#//*#/#g' | sed 's#/*$##'`
 }
 
 #Remove S3 Prefix (s3://)
