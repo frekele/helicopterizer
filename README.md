@@ -5,6 +5,7 @@
 [![ImageLayers Size](https://img.shields.io/imagelayers/image-size/frekele/helicopterizer/latest.svg)](https://hub.docker.com/r/frekele/helicopterizer/)
 [![ImageLayers Layers](https://img.shields.io/imagelayers/layers/frekele/helicopterizer/latest.svg)](https://hub.docker.com/r/frekele/helicopterizer/)
 [![Docker Stars](https://img.shields.io/docker/stars/frekele/helicopterizer.svg)](https://hub.docker.com/r/frekele/helicopterizer/)
+[![Release](https://img.shields.io/github/release/frekele/helicopterizer.svg)](https://github.com/docker/docker/releases/latest)
 
 [![Circle CI](https://circleci.com/gh/frekele/helicopterizer/tree/master.svg?style=shield)](https://circleci.com/gh/frekele/helicopterizer/tree/master)
 [![Build Status](https://travis-ci.org/frekele/helicopterizer.svg?branch=master)](https://travis-ci.org/frekele/helicopterizer)
