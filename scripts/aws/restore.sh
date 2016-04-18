@@ -28,6 +28,13 @@ cleanTemp(){
   rm -v -f /tmp/$restoreTempFileName
 }
 
+#Remove slash in end the URI.
+removeSlashUri(){
+  DATA_PATH=`echo "${DATA_PATH}" | sed 's#/*$##'`
+  AWS_S3_BUCKET_NAME=`echo "${AWS_S3_BUCKET_NAME}" | sed 's#/*$##'`
+  AWS_S3_PATH=`echo "${AWS_S3_PATH}" | sed 's#/*$##'`
+}
+
 #Mount file name to tarball.
 mountFileName(){
   local sufix=""
@@ -76,6 +83,9 @@ tarballExtract(){
 
 #Call Validation Environment Variables.
 validationEnvs
+
+#Remove slash in URI.
+removeSlashUri
 
 #Call to mount file name.
 mountFileName

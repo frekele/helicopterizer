@@ -58,15 +58,6 @@ printEnvs(){
   echo "AWS_S3_PATH=$AWS_S3_PATH"
 }
 
-
-#Remove slash in end the URI.
-removeSlashUri(){
-  DATA_PATH=`echo "${DATA_PATH}" | sed 's#/*$##'`
-  AWS_S3_BUCKET_NAME=`echo "${AWS_S3_BUCKET_NAME}" | sed 's#/*$##'`
-  AWS_S3_PATH=`echo "${AWS_S3_PATH}" | sed 's#/*$##'`
-}
-
-
 #Run Backup.
 runBackup(){
   case $STORAGE_PROVIDER in
@@ -132,9 +123,6 @@ validationEnvs
 
 #Call Print Environment Variables.
 printEnvs
-
-#Remove slash in URI.
-removeSlashUri
 
 case $1 in
 
