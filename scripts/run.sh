@@ -58,6 +58,18 @@ printEnvs(){
   echo "AWS_S3_PATH=$AWS_S3_PATH"
 }
 
+#Remove slash in end the URI.
+removeSlashUri(){
+  DATA_PATH=$(readlink -m "$DATA_PATH")
+  AWS_S3_BUCKET_NAME=$(readlink -m "$AWS_S3_BUCKET_NAME")
+  AWS_S3_PATH=$(readlink -m "$AWS_S3_PATH")
+}
+
+#Remove S3 Prefix (s3://)
+removeS3Prefix(){
+  AWS_S3_BUCKET_NAME=`echo "${AWS_S3_BUCKET_NAME}" | sed 's/s3:\/\///'`
+}
+
 #Run Backup.
 runBackup(){
   case $STORAGE_PROVIDER in
@@ -123,6 +135,12 @@ validationEnvs
 
 #Call Print Environment Variables.
 printEnvs
+
+#Remove S3 Prefix (s3://)
+removeS3Prefix
+
+#Remove slash in URI.
+removeSlashUri
 
 case $1 in
 

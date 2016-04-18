@@ -15,13 +15,6 @@ cleanTemp(){
   rm -v -f /tmp/$fileName
 }
 
-#Remove slash in end the URI.
-removeSlashUri(){
-  DATA_PATH=`echo "${DATA_PATH}" | sed 's#/*$##'`
-  AWS_S3_BUCKET_NAME=`echo "${AWS_S3_BUCKET_NAME}" | sed 's#/*$##'`
-  AWS_S3_PATH=`echo "${AWS_S3_PATH}" | sed 's#/*$##'`
-}
-
 #Create backup version.
 createBackupVersion(){
   BACKUP_VERSION=$(date --utc +%FT%TZ)
@@ -49,6 +42,8 @@ mountUriS3(){
   else
      s3Uri="$AWS_S3_BUCKET_NAME/$fileName"
   fi
+  s3Uri=$(readlink -m "$s3Uri")
+  s3Uri="s3://$s3Uri"
 }
 
 #Create tarball with gzip or not.
@@ -65,8 +60,6 @@ uploadToS3(){
   s3Result=$(aws s3 cp /tmp/$fileName $s3Uri )
 }
 
-#Remove slash in URI.
-removeSlashUri
 
 #Call create backup version.
 createBackupVersion
