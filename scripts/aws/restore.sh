@@ -62,7 +62,7 @@ mountUriS3(){
 
 #Download tarball From AWS S3.
 downloadFromS3(){
-  s3Result=$(aws s3 cp $s3Uri /tmp/$restoreTempFileName)
+  s3Result=$(aws s3 --region $AWS_DEFAULT_REGION cp $s3Uri /tmp/$restoreTempFileName)
 }
 
 

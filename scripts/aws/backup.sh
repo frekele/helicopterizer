@@ -57,7 +57,7 @@ tarballCompress(){
 
 #Upload tarball to AWS S3.
 uploadToS3(){
-  s3Result=$(aws s3 cp /tmp/$fileName $s3Uri )
+  s3Result=$(aws s3 --region $AWS_DEFAULT_REGION cp /tmp/$fileName $s3Uri )
 }
 
 
