@@ -6,13 +6,15 @@ echo "Starting helicopterizer ..."
 
 #Validation Environment Variables.
 validationEnvs(){
+  : ${DATA_PATH:?"Environment variable DATA_PATH is required!"}
+
   case $STORAGE_PROVIDER in
     "AWS")
         echo 'Cloud Provider is Amazon Simple Storage Service (S3)'
         : ${AWS_ACCESS_KEY_ID:?"Environment variable AWS_ACCESS_KEY_ID is required!"}
         : ${AWS_SECRET_ACCESS_KEY:?"Environment variable AWS_SECRET_ACCESS_KEY is required!"}
         : ${AWS_DEFAULT_REGION:?"Environment variable AWS_DEFAULT_REGION is required!"}
-        : ${AWS_S3_PATH:?"Environment variable AWS_S3_PATH is required!"}
+        : ${AWS_S3_BUCKET_NAME:?"Environment variable AWS_S3_BUCKET_NAME is required!"}
         ;;
     "AZURE")
         echo 'Set Cloud Storage Provider = Microsoft Azure Storage'
