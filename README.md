@@ -1,3 +1,9 @@
+# Helicopterizer
+
+#### Solution in Backup and Restore for Docker Container in the Cloud Providers!
+
+[![Helicopterizer Image][HelicopterizerImage]][website] 
+
 [![ImageLayers](https://badge.imagelayers.io/frekele/helicopterizer:latest.svg)](https://imagelayers.io/?images=frekele/helicopterizer:latest)
 [![Gitter](https://badges.gitter.im/frekele/helicopterizer.svg)](https://gitter.im/frekele/helicopterizer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -14,10 +20,6 @@
 [![GitHub stars](https://img.shields.io/github/stars/frekele/helicopterizer.svg)](https://github.com/frekele/helicopterizer/stargazers)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/frekele/helicopterizer/master/LICENSE)
 
-
-# Helicopterizer
-
-[![Helicopterizer Image][HelicopterizerImage]][website] 
 
 
 ## Backup and Restore for Docker Container
@@ -139,19 +141,12 @@ docker run --rm \
 helicopterizer [backup|restore]
 ```
 
-Run [Backup|Restore] with other AWS Region:
+Run [Backup|Restore] with data volume container:
 ```
 docker run --rm \
 ........
--e AWS_DEFAULT_REGION=sa-east-1 \
-helicopterizer [backup|restore]
-```
-
-Run [Backup|Restore] with subdirectories in AWS S3:
-```
-docker run --rm \
-........
--e AWS_S3_PATH=/project-alpha/nexus/ \
+-e DATA_PATH=/var/jenkins_home/ \
+--volumes-from jenkins-data \
 helicopterizer [backup|restore]
 ```
 
@@ -190,14 +185,22 @@ docker run --rm \
 helicopterizer [backup|restore]
 ```
 
-Run [Backup|Restore] with data volume container:
+Run [Backup|Restore] with other AWS Region:
 ```
 docker run --rm \
 ........
--e DATA_PATH=/var/jenkins_home/ \
---volumes-from jenkins-data \
+-e AWS_DEFAULT_REGION=sa-east-1 \
 helicopterizer [backup|restore]
 ```
+
+Run [Backup|Restore] with subdirectories in AWS S3:
+```
+docker run --rm \
+........
+-e AWS_S3_PATH=/project-alpha/nexus/ \
+helicopterizer [backup|restore]
+```
+
 
 
 
