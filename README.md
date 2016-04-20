@@ -1,3 +1,9 @@
+# Helicopterizer
+
+#### Solution in Backup and Restore for Docker Container in the Cloud Providers!
+
+[![Helicopterizer Image][HelicopterizerImage]][website] 
+
 [![ImageLayers](https://badge.imagelayers.io/frekele/helicopterizer:latest.svg)](https://imagelayers.io/?images=frekele/helicopterizer:latest)
 [![Gitter](https://badges.gitter.im/frekele/helicopterizer.svg)](https://gitter.im/frekele/helicopterizer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -5,6 +11,7 @@
 [![ImageLayers Size](https://img.shields.io/imagelayers/image-size/frekele/helicopterizer/latest.svg)](https://hub.docker.com/r/frekele/helicopterizer/)
 [![ImageLayers Layers](https://img.shields.io/imagelayers/layers/frekele/helicopterizer/latest.svg)](https://hub.docker.com/r/frekele/helicopterizer/)
 [![Docker Stars](https://img.shields.io/docker/stars/frekele/helicopterizer.svg)](https://hub.docker.com/r/frekele/helicopterizer/)
+[![Release](https://img.shields.io/github/release/frekele/helicopterizer.svg)](https://github.com/docker/docker/releases/latest)
 
 [![Circle CI](https://circleci.com/gh/frekele/helicopterizer/tree/master.svg?style=shield)](https://circleci.com/gh/frekele/helicopterizer/tree/master)
 [![Build Status](https://travis-ci.org/frekele/helicopterizer.svg?branch=master)](https://travis-ci.org/frekele/helicopterizer)
@@ -14,11 +21,6 @@
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/frekele/helicopterizer/master/LICENSE)
 
 
-=====================================
-
-[![Helicopterizer Image][HelicopterizerImage]][website] 
-
-# Helicopterizer
 
 ## Backup and Restore for Docker Container
 
@@ -40,6 +42,8 @@
 | Google Cloud Storage                        | GOOGLE          | no - Planned for the future       |
 | Rackspace Storage                           | RACKSPACE       | no - Planned for the future       |
 | IBM SoftLayer Storage                       | SOFTLAYER       | no - Planned for the future       |
+| OpenStack Swift Storage (Open source)       | OPENSTACK       | no - Planned for the future       |
+| Minio Storage (Open source)                 | MINIO           | no - Planned for the future       |
 
 
 
@@ -137,19 +141,12 @@ docker run --rm \
 helicopterizer [backup|restore]
 ```
 
-Run [Backup|Restore] with other AWS Region:
+Run [Backup|Restore] with data volume container:
 ```
 docker run --rm \
 ........
--e AWS_DEFAULT_REGION=sa-east-1 \
-helicopterizer [backup|restore]
-```
-
-Run [Backup|Restore] with subdirectories in AWS S3:
-```
-docker run --rm \
-........
--e AWS_S3_PATH=/project-alpha/nexus/ \
+-e DATA_PATH=/var/jenkins_home/ \
+--volumes-from jenkins-data \
 helicopterizer [backup|restore]
 ```
 
@@ -169,6 +166,16 @@ docker run --rm \
 helicopterizer [backup|restore]
 ```
 
+Run With clean the date before the restore:
+
+***[Be careful here, you will lose all your data inside DATA_PATH directory].***
+```
+docker run --rm \
+........
+-e CLEAN_DATA_BEFORE_RESTORE=true \
+helicopterizer restore
+```
+
 Run [Backup|Restore] with other data path:
 ```
 docker run --rm \
@@ -178,14 +185,22 @@ docker run --rm \
 helicopterizer [backup|restore]
 ```
 
-Run [Backup|Restore] with data volume container:
+Run [Backup|Restore] with other AWS Region:
 ```
 docker run --rm \
 ........
--e DATA_PATH=/var/jenkins_home/ \
---volumes-from jenkins-data \
+-e AWS_DEFAULT_REGION=sa-east-1 \
 helicopterizer [backup|restore]
 ```
+
+Run [Backup|Restore] with subdirectories in AWS S3:
+```
+docker run --rm \
+........
+-e AWS_S3_PATH=/project-alpha/nexus/ \
+helicopterizer [backup|restore]
+```
+
 
 
 

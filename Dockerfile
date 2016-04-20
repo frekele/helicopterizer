@@ -2,9 +2,8 @@ FROM alpine:3.3
 
 MAINTAINER frekele <leandro.freitas@softdevelop.com.br>
 
-RUN echo "http://dl-6.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories \
-    && apk update \
-    && apk add \
+RUN apk update --no-cache \
+    && apk add --no-cache \
        bash \
        curl \
        wget \
@@ -12,6 +11,8 @@ RUN echo "http://dl-6.alpinelinux.org/alpine/edge/community" >> /etc/apk/reposit
        python\
        py-pip \
        docker \
+    && curl -sL https://get.docker.com/builds/Linux/x86_64/docker-1.10.3 > /usr/bin/docker \
+    && chmod +x /usr/bin/docker \
     && pip install --upgrade pip \
     && pip install awscli
 
