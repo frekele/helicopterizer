@@ -55,6 +55,7 @@
 | GZIP_COMPRESSION                | true                | backup,restore        | no        | Boolean to indicate the compression of the file .tar to .tar.gz |
 | CLEAN_DATA_BEFORE_RESTORE       | false               | restore               | no        | Boolean to indicate the compression of the file .tar to .tar.gz |
 | BACKUP_VERSION                  | null                | restore               | yes       | Backup version using: $(BACKUP_VERSION).tar.gz                  |
+| CRON_SCHEDULE                   | null                | backup,restore        | no        | Cron Job Scheduler, Eg: (*/15 * * * *) run every 15 minutes     |
 
 
 
@@ -148,6 +149,34 @@ docker run --rm \
 --volumes-from jenkins-data \
 helicopterizer [backup|restore]
 ```
+
+Run [Backup|Restore] with Cron Job Scheduler:
+
+```
+docker run --rm \
+........
+-e CRON_SCHEDULE='30 4 * * *' \
+helicopterizer [backup|restore]
+
+#####################################################
+######### Examples Cron Job Scheduler Usage #########
+#####################################################
+- CRON_SCHEDULE='30 4 * * *' - Runs every day at 04:30;
+- CRON_SCHEDULE='*/15 * * * *' - Runs every 15 Minutes;
+- CRON_SCHEDULE='0 */5 * * *' - Runs every 5 Hours;
+- CRON_SCHEDULE='0 */12 * * *' - Runs every 12 Hours;
+- CRON_SCHEDULE='0 */32 * * *' - Runs every 32 Hours;
+- CRON_SCHEDULE='0 0 */2 * *' - Runs every 2 Days;
+- CRON_SCHEDULE='0 0 */7 * *' - Runs every 7 Days;
+- CRON_SCHEDULE='0 0 0 */2 *' - Runs every 2 Months;
+- CRON_SCHEDULE='@monthly' - Run once a Month, the same as: '0 0 1 * *';
+- CRON_SCHEDULE='@weekly' - Run once a Week, the same as: '0 0 * * 0';
+- CRON_SCHEDULE='@daily' - Run once a Day, the same as: '0 0 * * *';
+- CRON_SCHEDULE='@midnight' - Run once a Day, the same as: '0 0 * * *' and @daily;
+- CRON_SCHEDULE='@hourly' - Run once a Hour, the same as: '0 * * * *';
+```
+ More info to usage: [Cron Wiki].
+
 
 Run [Backup|Restore] with prefix name *$(BACKUP_NAME)-$(BACKUP_VERSION).tar.gz*:
 ```
@@ -270,5 +299,5 @@ docker run -d -p 8081:8081 --name nexus -v /home/nexus-data:/nexus-data sonatype
 [GitHub]: https://github.com/frekele/helicopterizer
 [website]: https://github.com/frekele/helicopterizer/
 [Docker HUB]: https://hub.docker.com/r/frekele/helicopterizer/
-
+[Cron Wiki]: https://en.wikipedia.org/wiki/Cron
 
