@@ -180,19 +180,33 @@ validationEnvs
 #Call Print Environment Variables.
 printEnvs
 
-#Remove S3 Prefix (s3://)
-removeS3Prefix
-
-#Remove slash in URI.
-removeSlashUri
 
 case $1 in
-
     backup)
-        runBackup
+         if [ "$CRON_SCHEDULE" ]; then
+            #Set CRON_SCHEDULE=null to protect recursive scheduler.
+            echo -e "${CRON_SCHEDULE} CRON_SCHEDULE='' /scripts/run.sh backup" > /var/spool/cron/crontabs/root && crond -l 0 -f
+         else
+            #Remove S3 Prefix (s3://)
+            removeS3Prefix
+            #Remove slash in URI.
+            removeSlashUri
+            #Run Backup.
+            runBackup
+         fi
         ;;
     restore)
-        runRestore
+        if [ "$CRON_SCHEDULE" ]; then
+            #Set CRON_SCHEDULE=null to protect recursive scheduler.
+            echo -e "${CRON_SCHEDULE} CRON_SCHEDULE='' /scripts/run.sh restore" > /var/spool/cron/crontabs/root && crond -l 0 -f
+         else
+            #Remove S3 Prefix (s3://)
+            removeS3Prefix
+            #Remove slash in URI.
+            removeSlashUri
+            #Run Backup.
+            runRestore
+         fi
         ;;
     *)
         echo "Error: Invalid Parameter"
