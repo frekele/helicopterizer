@@ -11,9 +11,6 @@ fileName=''
 restoreTempFileName=''
 s3Uri=''
 
-validationEnvs(){
-  : ${BACKUP_VERSION:?"Environment variable BACKUP_VERSION is required!"}
-}
 
 #Clean data before restore Only flag CLEAN_DATA_BEFORE_RESTORE equals true.
 cleanDataBeforeRestore(){
@@ -75,9 +72,6 @@ tarballExtract(){
   fi
 }
 
-
-#Call Validation Environment Variables.
-validationEnvs
 
 #Call to mount file name.
 mountFileName
