@@ -153,7 +153,7 @@ helicopterizer [backup|restore]
 Run [Backup|Restore] with Cron Job Scheduler:
 
 ```
-docker run --rm \
+docker run -d \
 ........
 -e CRON_SCHEDULE='30 4 * * *' \
 helicopterizer [backup|restore]
