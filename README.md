@@ -40,6 +40,7 @@
 | Google Cloud Storage                        | GOOGLE          | no - Planned for the future       |
 | Rackspace Storage                           | RACKSPACE       | no - Planned for the future       |
 | IBM SoftLayer Storage                       | SOFTLAYER       | no - Planned for the future       |
+| Oracle Cloud Storage                        | ORACLE          | no - Planned for the future       |
 | OpenStack Swift Storage (Open source)       | OPENSTACK       | no - Planned for the future       |
 | Minio Storage (Open source)                 | MINIO           | no - Planned for the future       |
 

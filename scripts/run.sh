@@ -40,6 +40,12 @@ validationEnvs(){
         echo 'Sorry! Not Implemented Yet. :( - Planned for the future'
         exit 1
         ;;
+    "ORACLE")
+        echo 'Set Cloud Storage Provider = Oracle Cloud Storage'
+        echo 'Oracle Cloud Storage Not Supported.'
+        echo 'Sorry! Not Implemented Yet. :( - Planned for the future'
+        exit 1
+        ;;
     "OPENSTACK")
         echo 'Set Cloud Storage Provider = OpenStack Swift Storage'
         echo 'OpenStack Swift Storage Not Supported.'
@@ -107,6 +113,10 @@ runBackup(){
         echo "Starting Backup to SOFTLAYER ..."
         exec /scripts/softlayer/backup.sh
         ;;
+    "ORACLE")
+        echo "Starting Backup to ORACLE ..."
+        exec /scripts/oracle/backup.sh
+        ;;
     "OPENSTACK")
         echo "Starting Backup to OPENSTACK ..."
         exec /scripts/openstack/backup.sh
@@ -144,6 +154,10 @@ runRestore(){
     "SOFTLAYER")
         echo "Starting Restore to SOFTLAYER ..."
         exec /scripts/softlayer/restore.sh
+        ;;
+    "ORACLE")
+        echo "Starting Restore to ORACLE ..."
+        exec /scripts/oracle/restore.sh
         ;;
     "OPENSTACK")
         echo "Starting Restore to OPENSTACK ..."
