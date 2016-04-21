@@ -14,4 +14,4 @@ dependencies:
 test:
   override:
     - docker --version
-    - docker build --rm=true -t frekele/helicopterizer .
+    - docker build --rm=true -t helicopterizer .
