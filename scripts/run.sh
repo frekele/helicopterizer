@@ -40,6 +40,18 @@ validationEnvs(){
         echo 'Sorry! Not Implemented Yet. :( - Planned for the future'
         exit 1
         ;;
+    "OPENSTACK")
+        echo 'Set Cloud Storage Provider = OpenStack Swift Storage'
+        echo 'OpenStack Swift Storage Not Supported.'
+        echo 'Sorry! Not Implemented Yet. :( - Planned for the future'
+        exit 1
+        ;;
+    "MINIO")
+        echo 'Set Cloud Storage Provider = Minio Storage'
+        echo 'Minio Storage Not Supported.'
+        echo 'Sorry! Not Implemented Yet. :( - Planned for the future'
+        exit 1
+        ;;
     *)
         echo "Unknown Cloud Provider!"
         exit 1
@@ -95,6 +107,14 @@ runBackup(){
         echo "Starting Backup to SOFTLAYER ..."
         exec /scripts/softlayer/backup.sh
         ;;
+    "OPENSTACK")
+        echo "Starting Backup to OPENSTACK ..."
+        exec /scripts/openstack/backup.sh
+        ;;
+    "MINIO")
+        echo "Starting Backup to MINIO ..."
+        exec /scripts/minio/backup.sh
+        ;;
     *)
         echo "Unknown Cloud Provider for Backup!"
         exit 1
@@ -124,6 +144,14 @@ runRestore(){
     "SOFTLAYER")
         echo "Starting Restore to SOFTLAYER ..."
         exec /scripts/softlayer/restore.sh
+        ;;
+    "OPENSTACK")
+        echo "Starting Restore to OPENSTACK ..."
+        exec /scripts/openstack/restore.sh
+        ;;
+    "MINIO")
+        echo "Starting Restore to MINIO ..."
+        exec /scripts/minio/restore.sh
         ;;
     *)
         echo "Unknown Cloud Provider for Restore!"
