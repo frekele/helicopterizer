@@ -2,8 +2,7 @@ FROM alpine:3.3
 
 MAINTAINER frekele <leandro.freitas@softdevelop.com.br>
 
-RUN apk update --no-cache \
-    && apk add --no-cache \
+RUN apk add --update --no-cache \
        bash \
        curl \
        wget \
