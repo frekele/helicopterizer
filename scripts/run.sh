@@ -2,10 +2,10 @@
 
 set -e
 
-echo "Starting helicopterizer ..."
+echo "Starting Helicopterizer ..."
 
-#Validation Environment Variables.
-validationEnvs(){
+#Validation General Environment Variables.
+validationGeneralEnvs(){
   : ${DATA_PATH:?"Environment variable DATA_PATH is required!"}
 
   case $STORAGE_PROVIDER in
@@ -64,12 +64,23 @@ validationEnvs(){
   esac
 }
 
+#Validation Specific Backup Environment Variables.
+validationSpecificBackupEnvs(){
+  echo ''
+}
+
+#Validation Specific Restore Environment Variables.
+validationSpecificRestoreEnvs(){
+  : ${BACKUP_VERSION:?"Environment variable BACKUP_VERSION is required!"}
+}
+
 #Print Environment Variables for Test.
 printEnvs(){
   echo "STORAGE_PROVIDER=$STORAGE_PROVIDER"
   echo "BACKUP_NAME=$BACKUP_NAME"
   echo "BACKUP_VERSION=$BACKUP_VERSION"
   echo "DATA_PATH=$DATA_PATH"
+  echo "CRON_SCHEDULE=$CRON_SCHEDULE"
   echo "GZIP_COMPRESSION=$GZIP_COMPRESSION"
   echo "AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID"
   echo "AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY"
@@ -92,6 +103,12 @@ removeS3Prefix(){
 
 #Run Backup.
 runBackup(){
+  #Remove S3 Prefix (s3://)
+  removeS3Prefix
+
+  #Remove slash in URI.
+  removeSlashUri
+
   case $STORAGE_PROVIDER in
     "AWS")
         echo "Starting Backup to AWS S3 ..."
@@ -134,6 +151,12 @@ runBackup(){
 
 #Run Restore.
 runRestore(){
+  #Remove S3 Prefix (s3://)
+  removeS3Prefix
+
+  #Remove slash in URI.
+  removeSlashUri
+
   case $STORAGE_PROVIDER in
     "AWS")
         echo "Starting Restore to AWS S3 ..."
@@ -174,8 +197,8 @@ runRestore(){
 }
 
 
-#Call Validation Environment Variables.
-validationEnvs
+#Call Validation General Environment Variables.
+validationGeneralEnvs
 
 #Call Print Environment Variables.
 printEnvs
@@ -184,32 +207,28 @@ printEnvs
 case $1 in
     backup)
          if [ "$CRON_SCHEDULE" ]; then
+            #Call Validation Specific Backup Environment Variables.
+            validationSpecificBackupEnvs
             #Set CRON_SCHEDULE=null to protect recursive scheduler.
             echo -e "${CRON_SCHEDULE} CRON_SCHEDULE='' /scripts/run.sh backup" > /var/spool/cron/crontabs/root && crond -l 0 -f
          else
-            #Remove S3 Prefix (s3://)
-            removeS3Prefix
-            #Remove slash in URI.
-            removeSlashUri
             #Run Backup.
             runBackup
          fi
         ;;
     restore)
         if [ "$CRON_SCHEDULE" ]; then
+            #Call Validation Specific Restore Environment Variables.
+            validationSpecificRestoreEnvs
             #Set CRON_SCHEDULE=null to protect recursive scheduler.
             echo -e "${CRON_SCHEDULE} CRON_SCHEDULE='' /scripts/run.sh restore" > /var/spool/cron/crontabs/root && crond -l 0 -f
          else
-            #Remove S3 Prefix (s3://)
-            removeS3Prefix
-            #Remove slash in URI.
-            removeSlashUri
-            #Run Backup.
+            #Run Restore.
             runRestore
          fi
         ;;
     *)
-        echo "Error: Invalid Parameter"
+        echo "Error: Invalid Parameter, Use (backup or restore)."
         exit 1
 esac
 
