@@ -1,6 +1,6 @@
 # Helicopterizer
 
-#### Open Source Solution in Backup and Restore for Docker Container in the Cloud Providers!
+#### Solution Open Source, in Backup and Restore for Docker Container in the Cloud Providers!
 
 [![Helicopterizer Image][HelicopterizerImage]][website] 
 
@@ -22,7 +22,7 @@
 
 ## Backup and Restore for Docker Container
 
-#### Open Source Solution in Backup and Restore for Docker Container in the Cloud Providers!
+#### Solution Open Source, in Backup and Restore for Docker Container in the Cloud Providers!
 
 
 ### Usage:
