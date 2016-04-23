@@ -101,6 +101,7 @@ removeS3Prefix(){
   AWS_S3_BUCKET_NAME=`echo "${AWS_S3_BUCKET_NAME}" | sed 's/s3:\/\///'`
 }
 
+
 #Run Backup.
 runBackup(){
   #Remove S3 Prefix (s3://)
@@ -109,43 +110,8 @@ runBackup(){
   #Remove slash in URI.
   removeSlashUri
 
-  case $STORAGE_PROVIDER in
-    "AWS")
-        echo "Starting Backup to AWS S3 ..."
-        exec /scripts/aws/backup.sh
-        ;;
-    "AZURE")
-        echo "Starting Backup to AZURE ..."
-        exec /scripts/azure/backup.sh
-        ;;
-    "GOOGLE")
-        echo "Starting Backup to GOOGLE ..."
-        exec /scripts/google/backup.sh
-        ;;
-    "RACKSPACE")
-        echo "Starting Backup to RACKSPACE ..."
-        exec /scripts/rackspace/backup.sh
-        ;;
-    "SOFTLAYER")
-        echo "Starting Backup to SOFTLAYER ..."
-        exec /scripts/softlayer/backup.sh
-        ;;
-    "ORACLE")
-        echo "Starting Backup to ORACLE ..."
-        exec /scripts/oracle/backup.sh
-        ;;
-    "OPENSTACK")
-        echo "Starting Backup to OPENSTACK ..."
-        exec /scripts/openstack/backup.sh
-        ;;
-    "MINIO")
-        echo "Starting Backup to MINIO ..."
-        exec /scripts/minio/backup.sh
-        ;;
-    *)
-        echo "Unknown Cloud Provider for Backup!"
-        exit 1
-  esac
+  #Exec core backup
+  exec /scripts/core/tarball/backup.sh
 }
 
 
@@ -157,43 +123,8 @@ runRestore(){
   #Remove slash in URI.
   removeSlashUri
 
-  case $STORAGE_PROVIDER in
-    "AWS")
-        echo "Starting Restore to AWS S3 ..."
-        exec /scripts/aws/restore.sh
-        ;;
-    "AZURE")
-        echo "Starting Restore to AZURE ..."
-        exec /scripts/azure/restore.sh
-        ;;
-    "GOOGLE")
-        echo "Starting Restore to GOOGLE ..."
-        exec /scripts/google/restore.sh
-        ;;
-    "RACKSPACE")
-        echo "Starting Restore to RACKSPACE ..."
-        exec /scripts/rackspace/restore.sh
-        ;;
-    "SOFTLAYER")
-        echo "Starting Restore to SOFTLAYER ..."
-        exec /scripts/softlayer/restore.sh
-        ;;
-    "ORACLE")
-        echo "Starting Restore to ORACLE ..."
-        exec /scripts/oracle/restore.sh
-        ;;
-    "OPENSTACK")
-        echo "Starting Restore to OPENSTACK ..."
-        exec /scripts/openstack/restore.sh
-        ;;
-    "MINIO")
-        echo "Starting Restore to MINIO ..."
-        exec /scripts/minio/restore.sh
-        ;;
-    *)
-        echo "Unknown Cloud Provider for Restore!"
-        exit 1
-  esac
+  #Exec core backup
+  exec /scripts/core/tarball/restore.sh
 }
 
 
