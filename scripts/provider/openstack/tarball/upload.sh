@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Backup to OPENSTACK
+# Upload Tarball to OPENSTACK
 # Author: frekele
 #
 

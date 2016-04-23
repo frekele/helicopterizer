@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Backup to MINIO
+# Upload Tarball to MINIO
 # Author: frekele
 #
 

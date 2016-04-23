@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Backup to ORACLE
+# Upload Tarball to ORACLE
 # Author: frekele
 #
 

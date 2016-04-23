@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Download Sync files From RACKSPACE
+# Download Tarball From RACKSPACE
 # Author: frekele
 #
 

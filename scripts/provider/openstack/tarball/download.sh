@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Restore From OPENSTACK
+# Download Tarball From OPENSTACK
 # Author: frekele
 #
 

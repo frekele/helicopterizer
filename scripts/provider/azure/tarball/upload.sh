@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Backup to AZURE
+# Upload Tarball to AZURE
 # Author: frekele
 #
 

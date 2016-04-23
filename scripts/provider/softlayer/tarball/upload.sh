@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Backup to SOFTLAYER
+# Upload Tarball to SOFTLAYER
 # Author: frekele
 #
 

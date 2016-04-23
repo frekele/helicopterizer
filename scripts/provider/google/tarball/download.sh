@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Restore From GOOGLE
+# Download Tarball From GOOGLE
 # Author: frekele
 #
 

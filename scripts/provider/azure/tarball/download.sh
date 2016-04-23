@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Restore From AZURE
+# Download Tarball From AZURE
 # Author: frekele
 #
 

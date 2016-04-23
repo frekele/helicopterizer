@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Upload Sync files to RACKSPACE
+# Upload Tarball to RACKSPACE
 # Author: frekele
 #
 

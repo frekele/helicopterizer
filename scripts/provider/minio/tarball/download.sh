@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Restore From MINIO
+# Download Tarball From MINIO
 # Author: frekele
 #
 

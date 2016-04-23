@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Restore From ORACLE
+# Download Tarball From ORACLE
 # Author: frekele
 #
 
