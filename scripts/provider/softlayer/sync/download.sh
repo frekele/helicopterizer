@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Restore From SOFTLAYER
+# Download Sync files From SOFTLAYER
 # Author: frekele
 #
 

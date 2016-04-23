@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Backup to RACKSPACE
+# Upload Sync files to RACKSPACE
 # Author: frekele
 #
 

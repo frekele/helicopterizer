@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Restore From OPENSTACK
+# Download Sync files From OPENSTACK
 # Author: frekele
 #
 

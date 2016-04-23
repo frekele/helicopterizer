@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Restore From RACKSPACE
+# Download Sync files From RACKSPACE
 # Author: frekele
 #
 

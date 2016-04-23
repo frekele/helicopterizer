@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Backup to OPENSTACK
+# Upload Sync files to OPENSTACK
 # Author: frekele
 #
 

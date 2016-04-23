@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Restore From MINIO
+# Download Sync files From  MINIO
 # Author: frekele
 #
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Backup to SOFTLAYER
+# Upload Sync files to SOFTLAYER
 # Author: frekele
 #
 

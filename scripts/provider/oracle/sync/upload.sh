@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Backup to ORACLE
+# Upload Sync files to ORACLE
 # Author: frekele
 #
 

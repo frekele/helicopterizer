@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Backup to AZURE
+# Upload Sync files to AZURE
 # Author: frekele
 #
 

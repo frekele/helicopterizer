@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Backup to GOOGLE
+# Upload Sync files to GOOGLE
 # Author: frekele
 #
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Restore From ORACLE
+# Download Sync files From ORACLE
 # Author: frekele
 #
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Backup to MINIO
+# Upload Sync files to MINIO
 # Author: frekele
 #
 
