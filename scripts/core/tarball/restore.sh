@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Restore From AWS S3
+# Restore Tarball From Provider
 # Author: frekele
 #
 

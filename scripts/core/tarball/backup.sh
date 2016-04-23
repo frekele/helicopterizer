@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Backup to AWS S3
+# Backup Tarball to Provider
 # Author: frekele
 #
 
