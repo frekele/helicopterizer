@@ -150,7 +150,7 @@ docker run --rm \
 helicopterizer [backup|restore]
 ```
 
-Run [Backup|Restore] with Cron Job Scheduler:
+Run [Backup|Restore] with Cron Job Scheduler (System Timezone is UTC):
 
 ```
 docker run -d \
@@ -160,6 +160,7 @@ helicopterizer [backup|restore]
 
 #####################################################
 ######### Examples Cron Job Scheduler Usage #########
+############## System Timezone is UTC ###############
 #####################################################
 - CRON_SCHEDULE='30 4 * * *' - Runs every day at 04:30;
 - CRON_SCHEDULE='*/15 * * * *' - Runs every 15 Minutes;
@@ -175,7 +176,7 @@ helicopterizer [backup|restore]
 - CRON_SCHEDULE='@midnight' - Run once a Day, the same as: '0 0 * * *' and @daily;
 - CRON_SCHEDULE='@hourly' - Run once a Hour, the same as: '0 * * * *';
 ```
- More info to usage: [Cron Wiki].
+More info to usage: [Cron Wiki].
 
 
 Run [Backup|Restore] with prefix name *$(BACKUP_NAME)-$(BACKUP_VERSION).tar.gz*:
