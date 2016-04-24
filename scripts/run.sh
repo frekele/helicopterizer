@@ -2,6 +2,7 @@
 
 set -e
 
+printf "\n\n\n\n"
 echo "Starting Helicopterizer ..."
 
 #Import helper.
