@@ -8,6 +8,14 @@ set -e
 
 timeBegin=$(date +%Y%m%d%H%M%S)
 
+echo "Starting Sync Backup to ${STORAGE_PROVIDER^^} ..."
+
+#Import helper.
+. /scripts/core/helper.sh
+
+#Import upload script.
+. /scripts/provider/${STORAGE_PROVIDER,,}/sync/upload.sh
+
 
 #TODO
 

@@ -10,12 +10,6 @@ echo "Starting Helicopterizer ..."
 
 #Run Backup.
 runBackup(){
-  #Remove S3 Prefix (s3://)
-  removeS3Prefix
-
-  #Remove slash in URI.
-  removeSlashUri
-
   #Exec core backup.
   case $2 in
     --tarball)
@@ -25,7 +19,7 @@ runBackup(){
         exec /scripts/core/sync/backup.sh
         ;;
     *)
-        echo "Error: Invalid Parameter, Use (tarball or sync)."
+        echo "Error: Invalid Parameter, Use (--tarball or --sync)."
         exit 1
   esac
 }
@@ -33,12 +27,6 @@ runBackup(){
 
 #Run Restore.
 runRestore(){
-  #Remove S3 Prefix (s3://)
-  removeS3Prefix
-
-  #Remove slash in URI.
-  removeSlashUri
-
   #Exec core restore.
   case $2 in
     --tarball)
@@ -48,7 +36,7 @@ runRestore(){
         exec /scripts/core/sync/restore.sh
         ;;
     *)
-        echo "Error: Invalid Parameter, Use (tarball or sync)."
+        echo "Error: Invalid Parameter, Use (--tarball or --sync)."
         exit 1
   esac
 }
@@ -59,6 +47,9 @@ validationGeneralEnvs
 
 #Call Print Environment Variables.
 printEnvs
+
+#Remove slash in DATA_PATH URI.
+DATA_PATH=$(removeSlashUri $DATA_PATH)
 
 
 case $1 in

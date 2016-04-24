@@ -100,14 +100,79 @@ printEnvs(){
 
 #Remove slash in end the URI.
 removeSlashUri(){
-  DATA_PATH=`echo "${DATA_PATH}" | sed 's#//*#/#g' | sed 's#/*$##'`
-  AWS_S3_BUCKET_NAME=`echo "${AWS_S3_BUCKET_NAME}" | sed 's#//*#/#g' | sed 's#/*$##'`
-  AWS_S3_PATH=`echo "${AWS_S3_PATH}" | sed 's#//*#/#g' | sed 's#/*$##'`
+  local uri=`echo "${1}" | sed 's#//*#/#g' | sed 's#/*$##'`
+  echo "$uri"
+}
+
+
+#Mount file name to tarball.
+mountFileName(){
+  local sufix=""
+  local fileName=""
+  if [ "$GZIP_COMPRESSION" = "true" ]; then
+      sufix=".tar.gz"
+  else
+      sufix=".tar"
+  fi
+
+  if [ "$BACKUP_NAME" ]; then
+      fileName="$BACKUP_NAME-$BACKUP_VERSION$sufix"
+  else
+      fileName="$BACKUP_VERSION$sufix"
+  fi
+  echo "$fileName"
+}
+
+
+#Create backup version.
+createBackupVersion(){
+  local backupVersion=$(date --utc +%FT%TZ)
+  echo "$backupVersion"
+}
+
+
+#Remove the temporary file.
+removeFileTemp(){
+  echo "Remove file in Directory Temp: /tmp/$1"
+  rm -v -f /tmp/$1
+}
+
+mountRestoreTempFileName(){
+  local now=$(date +%s%3N)
+  local restoreTempFileName="$now-restore-$1"
+  echo "$restoreTempFileName"
 }
 
 
 #Remove S3 Prefix (s3://)
 removeS3Prefix(){
-  AWS_S3_BUCKET_NAME=`echo "${AWS_S3_BUCKET_NAME}" | sed 's/s3:\/\///'`
+  local uri=`echo "${1}" | sed 's/s3:\/\///'`
+  echo "$uri"
 }
+
+
+mountUriS3(){
+  local fileName=$1;
+  local bucketName=$2;
+  local pathName=$3;
+  #Remove S3 Prefix (s3://)
+  local bucketName=$(removeS3Prefix $bucketName)
+
+  #Remove slash in bucketName URI.
+  bucketName=$(removeSlashUri $bucketName)
+
+  #Remove slash in pathName URI.
+  local pathName=$(removeSlashUri $pathName)
+
+  local s3Uri=""
+  if [ "$pathName" ]; then
+     s3Uri="$bucketName/$pathName/$fileName"
+  else
+     s3Uri="$bucketName/$fileName"
+  fi
+  s3Uri=`echo "${s3Uri}" | sed 's#//*#/#g' | sed 's#/*$##'`
+  s3Uri="s3://$s3Uri"
+  echo "$s3Uri"
+}
+
 

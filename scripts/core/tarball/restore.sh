@@ -7,9 +7,25 @@
 set -e
 
 timeBegin=$(date +%Y%m%d%H%M%S)
-fileName=''
-restoreTempFileName=''
-s3Uri=''
+
+echo "Starting Tarball Restore From ${STORAGE_PROVIDER^^} ..."
+
+#Import helper.
+. /scripts/core/helper.sh
+
+#Import upload script.
+. /scripts/provider/${STORAGE_PROVIDER,,}/tarball/download.sh
+
+
+#Extract tarball with gzip or not.
+extractTarball(){
+  echo "Starting extract restore from /tmp/$1 to $DATA_PATH/"
+  if [ "$GZIP_COMPRESSION" = "true" ]; then
+      tar -zxvf /tmp/$1  -C $DATA_PATH/
+  else
+      tar -xvf /tmp/$1  -C $DATA_PATH/
+  fi
+}
 
 
 #Clean data before restore Only flag CLEAN_DATA_BEFORE_RESTORE equals true.
@@ -20,78 +36,29 @@ cleanDataBeforeRestore(){
   fi
 }
 
-#Clean the temporary file.
-cleanTemp(){
-  rm -v -f /tmp/$restoreTempFileName
-}
-
-#Mount file name to tarball.
-mountFileName(){
-  local sufix=""
-
-  if [ "$GZIP_COMPRESSION" = "true" ]; then
-      sufix=".tar.gz"
-  else
-      sufix=".tar"
-  fi
-
-  if [ "$BACKUP_NAME" ]; then
-      fileName="$BACKUP_NAME-$BACKUP_VERSION$sufix"
-  else
-      fileName="$BACKUP_VERSION$sufix"
-  fi
-}
-
-mountRestoreTempFileName(){
-  local now=$(date +%s%3N)
-  restoreTempFileName="$now-restore-$fileName"
-}
-
-mountUriS3(){
-  if [ "$AWS_S3_PATH" ]; then
-     s3Uri="$AWS_S3_BUCKET_NAME/$AWS_S3_PATH/$fileName"
-  else
-     s3Uri="$AWS_S3_BUCKET_NAME/$fileName"
-  fi
-  s3Uri=`echo "${s3Uri}" | sed 's#//*#/#g' | sed 's#/*$##'`
-  s3Uri="s3://$s3Uri"
-}
-
-#Download tarball From AWS S3.
-downloadFromS3(){
-  s3Result=$(aws s3 --region $AWS_DEFAULT_REGION cp $s3Uri /tmp/$restoreTempFileName)
-}
-
-
-#Extract tarball with gzip or not.
-tarballExtract(){
-  if [ "$GZIP_COMPRESSION" = "true" ]; then
-      tar -zxvf /tmp/$restoreTempFileName  -C $DATA_PATH/
-  else
-      tar -xvf /tmp/$restoreTempFileName  -C $DATA_PATH/
-  fi
-}
-
 
 #Call to mount file name.
-mountFileName
+fileName=$(mountFileName)
+
 
 #Call to mount Restore file name for copy to /tmp.
-mountRestoreTempFileName
+restoreTempFileName=$(mountRestoreTempFileName $fileName)
 
-#Call to mount uri S3.
-mountUriS3
 
+#Clean data before restore Only flag CLEAN_DATA_BEFORE_RESTORE equals true.
 cleanDataBeforeRestore
 
-echo "Starting download backup from $s3Uri to /tmp/$restoreTempFileName"
-downloadFromS3
 
-echo "Starting extract restore from /tmp/$restoreTempFileName to $DATA_PATH/"
-tarballExtract
+#Call Download Provider.
+downloadResult=$(downloadTarball $fileName $restoreTempFileName)
 
-echo "Remove file in /tmp/$restoreTempFileName"
-cleanTemp
+
+#Call Extract tarball.
+extractTarball $restoreTempFileName
+
+
+#Call Remove File from temp dir.
+removeFileTemp "$restoreTempFileName"
 
 
 timeEnd=$(date +%Y%m%d%H%M%S)
@@ -99,7 +66,7 @@ timeDuration=$((timeEnd - timeBegin))
 
 echo "fileName=$fileName"
 echo "restoreTempFileName=$restoreTempFileName"
-echo "s3Result=$s3Result"
+echo "downloadResult=$downloadResult"
 echo "timeBegin=$timeBegin"
 echo "timeEnd=$timeEnd"
 echo "timeDuration=$timeDuration second(s)"
