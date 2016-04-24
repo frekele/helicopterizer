@@ -17,8 +17,8 @@ echo "Starting Sync Restore From ${STORAGE_PROVIDER^^} ..."
 . /scripts/provider/${STORAGE_PROVIDER,,}/sync/download.sh
 
 
-#TODO
-
+#Clean data before restore Only flag CLEAN_DATA_BEFORE_RESTORE equals true.
+cleanDataBeforeRestore $CLEAN_DATA_BEFORE_RESTORE
 
 #Call Download Provider.
 downloadResult=$(downloadSync)

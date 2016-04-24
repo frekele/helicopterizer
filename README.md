@@ -28,7 +28,7 @@
 ### Usage:
 
   ```
-  docker run -d [Environment Variables] [-v|--volumes-from] frekele/helicopterizer [backup|restore]
+  docker run -d [Environment Variables] [-v|--volumes-from] frekele/helicopterizer [backup|restore] [--tarball|--sync]
   ```
 
 
@@ -90,7 +90,7 @@ us-gov-west-1          | US GovCloud West (Oregon)                 |
 
 ### Usage Examples:
 
-Run Backup:
+Run Backup with tarball:
 ```
 docker run --rm \
 -e STORAGE_PROVIDER=AWS \
@@ -98,12 +98,23 @@ docker run --rm \
 -e AWS_SECRET_ACCESS_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX \
 -e AWS_S3_BUCKET_NAME=s3://my-bucket-backup/ \
 -v /home/jenkins-data:/data:ro \
-helicopterizer backup
+helicopterizer backup --tarball
+```
+
+Run Backup with sync filesystem:
+```
+docker run --rm \
+-e STORAGE_PROVIDER=AWS \
+-e AWS_ACCESS_KEY_ID=XXXXXXXXXXXXX \
+-e AWS_SECRET_ACCESS_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX \
+-e AWS_S3_BUCKET_NAME=s3://my-bucket-backup/ \
+-v /home/jenkins-data:/data:ro \
+helicopterizer backup --sync
 ```
 
  *Use ':ro' to mount the volumes in read-only mode.*
 
-Run Restore:
+Run Restore with tarball:
 ```
 docker run --rm \
 -e STORAGE_PROVIDER=AWS \
@@ -112,8 +123,21 @@ docker run --rm \
 -e AWS_S3_BUCKET_NAME=s3://my-bucket-backup/ \
 -e BACKUP_VERSION=2016-04-17T00:34:20Z \
 -v /home/jenkins-data:/data:rw \
-helicopterizer restore
+helicopterizer restore --tarball
 ```
+
+Run Restore with sync filesystem:
+```
+docker run --rm \
+-e STORAGE_PROVIDER=AWS \
+-e AWS_ACCESS_KEY_ID=XXXXXXXXXXXXX \
+-e AWS_SECRET_ACCESS_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX \
+-e AWS_S3_BUCKET_NAME=s3://my-bucket-backup/ \
+-e BACKUP_VERSION=2016-04-17T00:34:20Z \
+-v /home/jenkins-data:/data:rw \
+helicopterizer restore  --sync
+```
+
  *Use ':rw' to mount the volumes in read-write mode.*
  
  
@@ -134,12 +158,13 @@ AWS_SECRET_ACCESS_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 AWS_S3_BUCKET_NAME=s3://my-bucket-backup/
 AWS_S3_PATH=/
 AWS_DEFAULT_REGION=us-east-1
+AWS_S3_OPTIONS=--delete
 ##################################
 .
 docker run --rm \
 --env-file ~/helicopterizer.conf \
 -v /home/jenkins-data:/data \
-helicopterizer [backup|restore]
+helicopterizer [backup|restore] [--tarball|--sync]
 ```
 
 Run [Backup|Restore] with data volume container:
@@ -148,7 +173,7 @@ docker run --rm \
 ........
 -e DATA_PATH=/var/jenkins_home/ \
 --volumes-from jenkins-data \
-helicopterizer [backup|restore]
+helicopterizer [backup|restore] [--tarball|--sync]
 ```
 
 Run [Backup|Restore] with Cron Job Scheduler (System Timezone is UTC):
@@ -157,7 +182,7 @@ Run [Backup|Restore] with Cron Job Scheduler (System Timezone is UTC):
 docker run -d \
 ........
 -e CRON_SCHEDULE='30 4 * * *' \
-helicopterizer [backup|restore]
+helicopterizer [backup|restore] [--tarball|--sync]
 
 #####################################################
 ######### Examples Cron Job Scheduler Usage #########
@@ -185,7 +210,7 @@ Run [Backup|Restore] with prefix name *$(BACKUP_NAME)-$(BACKUP_VERSION).tar.gz*:
 docker run --rm \
 ........
 -e BACKUP_NAME=my-backup-name \
-helicopterizer [backup|restore]
+helicopterizer [backup|restore] --tarball
 ```
 
 Run [Backup|Restore] without gzip compression:
@@ -193,7 +218,7 @@ Run [Backup|Restore] without gzip compression:
 docker run --rm \
 ........
 -e GZIP_COMPRESSION=false \
-helicopterizer [backup|restore]
+helicopterizer [backup|restore] --tarball
 ```
 
 Run With clean the date before the restore:
@@ -203,7 +228,7 @@ Run With clean the date before the restore:
 docker run --rm \
 ........
 -e CLEAN_DATA_BEFORE_RESTORE=true \
-helicopterizer restore
+helicopterizer restore [--tarball|--sync]
 ```
 
 Run [Backup|Restore] with other data path:
@@ -212,7 +237,7 @@ docker run --rm \
 ........
 -e DATA_PATH=/other-data-directory/ \
 -v /home/jenkins-data:/jenkins-data \
-helicopterizer [backup|restore]
+helicopterizer [backup|restore] [--tarball|--sync]
 ```
 
 Run [Backup|Restore] with other AWS Region:
@@ -220,7 +245,7 @@ Run [Backup|Restore] with other AWS Region:
 docker run --rm \
 ........
 -e AWS_DEFAULT_REGION=sa-east-1 \
-helicopterizer [backup|restore]
+helicopterizer [backup|restore] [--tarball|--sync]
 ```
 
 Run [Backup|Restore] with subdirectories in AWS S3:
@@ -228,7 +253,7 @@ Run [Backup|Restore] with subdirectories in AWS S3:
 docker run --rm \
 ........
 -e AWS_S3_PATH=/project-alpha/nexus/ \
-helicopterizer [backup|restore]
+helicopterizer [backup|restore] [--tarball|--sync]
 ```
 
 

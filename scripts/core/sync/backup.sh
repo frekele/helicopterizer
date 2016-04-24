@@ -17,9 +17,6 @@ echo "Starting Sync Backup to ${STORAGE_PROVIDER^^} ..."
 . /scripts/provider/${STORAGE_PROVIDER,,}/sync/upload.sh
 
 
-#TODO
-
-
 #Call Upload Provider.
 uploadResult=$(uploadSync)
 
