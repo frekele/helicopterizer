@@ -55,7 +55,7 @@
 | GZIP_COMPRESSION                | true                | backup,restore        | no        | Boolean to indicate the compression of the file .tar to .tar.gz |
 | CLEAN_DATA_BEFORE_RESTORE       | false               | restore               | no        | Boolean to indicate the compression of the file .tar to .tar.gz |
 | BACKUP_VERSION                  | null                | restore               | yes       | Backup version using: $(BACKUP_VERSION).tar.gz                  |
-| CRON_SCHEDULE                   | null                | backup,restore        | no        | Cron Job Scheduler, Eg: (*/15 * * * *) run every 15 minutes     |
+| CRON_SCHEDULE                   | null                | backup,restore        | no        | Cron Job Scheduler, Eg: '*/15 * * * *' run every 15 minutes     |
 
 
 
@@ -67,6 +67,7 @@
 | AWS_S3_BUCKET_NAME              | null                | backup,restore        | yes       | S3 bucket name. Eg: s3://my-bucket-backup/                       |
 | AWS_S3_PATH                     | /                   | backup,restore        | no        | Relative path for bucket S3. Eg: (AWS_S3_BUCKET_NAME)/jenkins/   |
 | AWS_DEFAULT_REGION              | us-east-1           | backup,restore        | no        | Default region bucket. Eg: (sa-east-1)                           |
+| AWS_S3_OPTIONS                  | null                | backup,restore        | no        | AWS S3 options parameters. See in [AWS CLI S3]                   |
 
 
 
@@ -328,4 +329,4 @@ Helicopterizer is **licensed** under the **[MIT License]**. The terms of the lic
 [website]: https://github.com/frekele/helicopterizer/
 [Docker HUB]: https://hub.docker.com/r/frekele/helicopterizer/
 [Cron Wiki]: https://en.wikipedia.org/wiki/Cron
-
+[AWS CLI S3]: http://docs.aws.amazon.com/cli/latest/reference/s3/
