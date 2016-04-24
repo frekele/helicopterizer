@@ -73,7 +73,9 @@ validationSpecificEnvs(){
         echo ''
         ;;
     restore)
-        : ${BACKUP_VERSION:?"Environment variable BACKUP_VERSION is required!"}
+        if [ "$2" = "--tarball" ]; then
+           : ${BACKUP_VERSION:?"Environment variable BACKUP_VERSION is required!"}
+        fi
         ;;
     *)
   esac
