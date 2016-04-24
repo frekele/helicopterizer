@@ -56,24 +56,16 @@ printEnvs
 
 
 case $1 in
-    backup)
+    backup | restore)
          if [ "$CRON_SCHEDULE" ]; then
             #Call Validation Specific Backup Environment Variables.
-            validationSpecificBackupEnvs
+            validationSpecificEnvs ${@}
             #Set CRON_SCHEDULE=null to protect recursive scheduler.
             echo -e "${CRON_SCHEDULE} CRON_SCHEDULE='' /scripts/run.sh ${@}" > /var/spool/cron/crontabs/root && crond -l 0 -f
-         else
+         elif [ "$1" = "backup" ]; then
             #Run Backup.
             runBackup ${@}
-         fi
-        ;;
-    restore)
-        if [ "$CRON_SCHEDULE" ]; then
-            #Call Validation Specific Restore Environment Variables.
-            validationSpecificRestoreEnvs
-            #Set CRON_SCHEDULE=null to protect recursive scheduler.
-            echo -e "${CRON_SCHEDULE} CRON_SCHEDULE='' /scripts/run.sh ${@}" > /var/spool/cron/crontabs/root && crond -l 0 -f
-         else
+         elif [ "$1" = "restore" ]; then
             #Run Restore.
             runRestore ${@}
          fi

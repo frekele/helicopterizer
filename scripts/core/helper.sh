@@ -4,6 +4,7 @@
 # Author: frekele
 #
 
+
 #Validation General Environment Variables.
 validationGeneralEnvs(){
   : ${DATA_PATH:?"Environment variable DATA_PATH is required!"}
@@ -64,15 +65,20 @@ validationGeneralEnvs(){
   esac
 }
 
-#Validation Specific Backup Environment Variables.
-validationSpecificBackupEnvs(){
-  echo ''
+
+#Validation Specific Backup|Restore Environment Variables.
+validationSpecificEnvs(){
+  case $1 in
+    backup)
+        echo ''
+        ;;
+    restore)
+        : ${BACKUP_VERSION:?"Environment variable BACKUP_VERSION is required!"}
+        ;;
+    *)
+  esac
 }
 
-#Validation Specific Restore Environment Variables.
-validationSpecificRestoreEnvs(){
-  : ${BACKUP_VERSION:?"Environment variable BACKUP_VERSION is required!"}
-}
 
 #Print Environment Variables for Test.
 printEnvs(){
@@ -97,7 +103,9 @@ removeSlashUri(){
   AWS_S3_PATH=`echo "${AWS_S3_PATH}" | sed 's#//*#/#g' | sed 's#/*$##'`
 }
 
+
 #Remove S3 Prefix (s3://)
 removeS3Prefix(){
   AWS_S3_BUCKET_NAME=`echo "${AWS_S3_BUCKET_NAME}" | sed 's/s3:\/\///'`
 }
+
