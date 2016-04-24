@@ -110,8 +110,18 @@ runBackup(){
   #Remove slash in URI.
   removeSlashUri
 
-  #Exec core backup
-  exec /scripts/core/tarball/backup.sh
+  #Exec core backup.
+  case $2 in
+    tarball)
+           exec /scripts/core/tarball/backup.sh
+        ;;
+    sync)
+          exec /scripts/core/sync/backup.sh
+        ;;
+    *)
+        echo "Error: Invalid Parameter, Use (tarball or sync)."
+        exit 1
+  esac
 }
 
 
@@ -123,8 +133,18 @@ runRestore(){
   #Remove slash in URI.
   removeSlashUri
 
-  #Exec core backup
-  exec /scripts/core/tarball/restore.sh
+  #Exec core backup.
+  case $2 in
+    tarball)
+           exec /scripts/core/tarball/restore.sh
+        ;;
+    sync)
+          exec /scripts/core/sync/restore.sh
+        ;;
+    *)
+        echo "Error: Invalid Parameter, Use (tarball or sync)."
+        exit 1
+  esac
 }
 
 
@@ -141,7 +161,7 @@ case $1 in
             #Call Validation Specific Backup Environment Variables.
             validationSpecificBackupEnvs
             #Set CRON_SCHEDULE=null to protect recursive scheduler.
-            echo -e "${CRON_SCHEDULE} CRON_SCHEDULE='' /scripts/run.sh backup" > /var/spool/cron/crontabs/root && crond -l 0 -f
+            echo -e "${CRON_SCHEDULE} CRON_SCHEDULE='' /scripts/run.sh ${@}" > /var/spool/cron/crontabs/root && crond -l 0 -f
          else
             #Run Backup.
             runBackup
@@ -152,7 +172,7 @@ case $1 in
             #Call Validation Specific Restore Environment Variables.
             validationSpecificRestoreEnvs
             #Set CRON_SCHEDULE=null to protect recursive scheduler.
-            echo -e "${CRON_SCHEDULE} CRON_SCHEDULE='' /scripts/run.sh restore" > /var/spool/cron/crontabs/root && crond -l 0 -f
+            echo -e "${CRON_SCHEDULE} CRON_SCHEDULE='' /scripts/run.sh ${@}" > /var/spool/cron/crontabs/root && crond -l 0 -f
          else
             #Run Restore.
             runRestore
