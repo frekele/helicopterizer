@@ -30,7 +30,8 @@ ENV STORAGE_PROVIDER='' \
     AWS_SECRET_ACCESS_KEY='' \
     AWS_S3_BUCKET_NAME='' \
     AWS_S3_PATH='/' \
-    AWS_DEFAULT_REGION='us-east-1'
+    AWS_DEFAULT_REGION='us-east-1' \
+    AWS_S3_OPTIONS='' \
 
 ENTRYPOINT ["/scripts/run.sh"]
 

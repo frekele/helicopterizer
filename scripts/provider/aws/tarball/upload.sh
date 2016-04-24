@@ -6,7 +6,7 @@
 
 #Upload tarball to AWS S3.
 uploadToS3(){
-  local s3Result=$(aws s3 --region $AWS_DEFAULT_REGION cp /tmp/$1 $s3Uri )
+  local s3Result=$(aws s3 cp /tmp/$1 $s3Uri --region $AWS_DEFAULT_REGION $AWS_S3_OPTIONS)
   echo "$s3Result"
 }
 

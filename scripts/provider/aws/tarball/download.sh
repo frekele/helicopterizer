@@ -6,7 +6,7 @@
 
 #Download tarball From AWS S3.
 downloadFromS3(){
-  local s3Result=$(aws s3 --region $AWS_DEFAULT_REGION cp $s3Uri /tmp/$1)
+  local s3Result=$(aws s3 cp $s3Uri /tmp/$1 --region $AWS_DEFAULT_REGION $AWS_S3_OPTIONS)
   echo "$s3Result"
 }
 
