@@ -4,6 +4,7 @@
 # Author: frekele
 #
 
-set -e
 
-echo 'AWS Not Implemented Yet!'
+uploadSync(){
+  echo ''
+}

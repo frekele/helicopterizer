@@ -20,9 +20,14 @@ echo "Starting Sync Restore From ${STORAGE_PROVIDER^^} ..."
 #TODO
 
 
+#Call Download Provider.
+downloadResult=$(downloadSync)
+
+
 timeEnd=$(date +%Y%m%d%H%M%S)
 timeDuration=$((timeEnd - timeBegin))
 
+echo "downloadResult=$downloadResult"
 echo "timeBegin=$timeBegin"
 echo "timeEnd=$timeEnd"
 echo "timeDuration=$timeDuration second(s)"

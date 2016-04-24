@@ -18,7 +18,7 @@ echo "Starting Tarball Backup to ${STORAGE_PROVIDER^^} ..."
 
 
 #Create tarball with gzip or not.
-tarballCompress(){
+compressTarball(){
   echo "Starting compress: $DATA_PATH/ to /tmp/$1"
   if [ "$GZIP_COMPRESSION" = "true" ]; then
       tar -zcvf /tmp/$1  -C $DATA_PATH/ .
@@ -33,11 +33,11 @@ BACKUP_VERSION=$(createBackupVersion)
 
 
 #Call to mount file name.
-fileName=$(mountFileName)
+fileName=$(mountFileName $BACKUP_VERSION $GZIP_COMPRESSION $BACKUP_NAME)
 
 
 #Call tarball Compress.
-tarballCompress $fileName
+compressTarball $fileName
 
 
 #Call Upload Provider.

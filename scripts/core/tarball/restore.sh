@@ -28,17 +28,8 @@ extractTarball(){
 }
 
 
-#Clean data before restore Only flag CLEAN_DATA_BEFORE_RESTORE equals true.
-cleanDataBeforeRestore(){
-  if [ "$CLEAN_DATA_BEFORE_RESTORE" = "true" ]; then
-      echo "Running clean data before restore in: $DATA_PATH/*"
-      rm -v -r -f $DATA_PATH/*
-  fi
-}
-
-
 #Call to mount file name.
-fileName=$(mountFileName)
+fileName=$(mountFileName $BACKUP_VERSION $GZIP_COMPRESSION $BACKUP_NAME)
 
 
 #Call to mount Restore file name for copy to /tmp.
@@ -46,7 +37,7 @@ restoreTempFileName=$(mountRestoreTempFileName $fileName)
 
 
 #Clean data before restore Only flag CLEAN_DATA_BEFORE_RESTORE equals true.
-cleanDataBeforeRestore
+cleanDataBeforeRestore $CLEAN_DATA_BEFORE_RESTORE
 
 
 #Call Download Provider.

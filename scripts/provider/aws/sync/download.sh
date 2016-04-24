@@ -4,7 +4,8 @@
 # Author: frekele
 #
 
-set -e
 
-echo 'AWS Not Implemented Yet!'
+downloadSync(){
+  echo ''
+}
 

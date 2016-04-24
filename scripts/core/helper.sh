@@ -107,18 +107,21 @@ removeSlashUri(){
 
 #Mount file name to tarball.
 mountFileName(){
+  local backupVersion=$1;
+  local gzipCompress=$2;
+  local backupName=$3;
   local sufix=""
   local fileName=""
-  if [ "$GZIP_COMPRESSION" = "true" ]; then
+  if [ "$gzipCompress" = "true" ]; then
       sufix=".tar.gz"
   else
       sufix=".tar"
   fi
 
-  if [ "$BACKUP_NAME" ]; then
-      fileName="$BACKUP_NAME-$BACKUP_VERSION$sufix"
+  if [ "$backupName" ]; then
+      fileName="$backupName-$backupVersion$sufix"
   else
-      fileName="$BACKUP_VERSION$sufix"
+      fileName="$backupVersion$sufix"
   fi
   echo "$fileName"
 }
@@ -135,6 +138,14 @@ createBackupVersion(){
 removeFileTemp(){
   echo "Remove file in Directory Temp: /tmp/$1"
   rm -v -f /tmp/$1
+}
+
+#Clean data before restore Only flag CLEAN_DATA_BEFORE_RESTORE equals true.
+cleanDataBeforeRestore(){
+  if [ "$1" = "true" ]; then
+      echo "Running clean data before restore in: $DATA_PATH/*"
+      rm -v -r -f $DATA_PATH/*
+  fi
 }
 
 mountRestoreTempFileName(){
@@ -170,6 +181,7 @@ mountUriS3(){
   else
      s3Uri="$bucketName/$fileName"
   fi
+
   s3Uri=`echo "${s3Uri}" | sed 's#//*#/#g' | sed 's#/*$##'`
   s3Uri="s3://$s3Uri"
   echo "$s3Uri"
