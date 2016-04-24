@@ -113,10 +113,10 @@ runBackup(){
   #Exec core backup.
   case $2 in
     tarball)
-           exec /scripts/core/tarball/backup.sh
+        exec /scripts/core/tarball/backup.sh
         ;;
     sync)
-          exec /scripts/core/sync/backup.sh
+        exec /scripts/core/sync/backup.sh
         ;;
     *)
         echo "Error: Invalid Parameter, Use (tarball or sync)."
@@ -136,10 +136,10 @@ runRestore(){
   #Exec core backup.
   case $2 in
     tarball)
-           exec /scripts/core/tarball/restore.sh
+        exec /scripts/core/tarball/restore.sh
         ;;
     sync)
-          exec /scripts/core/sync/restore.sh
+        exec /scripts/core/sync/restore.sh
         ;;
     *)
         echo "Error: Invalid Parameter, Use (tarball or sync)."
@@ -164,7 +164,7 @@ case $1 in
             echo -e "${CRON_SCHEDULE} CRON_SCHEDULE='' /scripts/run.sh ${@}" > /var/spool/cron/crontabs/root && crond -l 0 -f
          else
             #Run Backup.
-            runBackup
+            runBackup ${@}
          fi
         ;;
     restore)
@@ -175,12 +175,12 @@ case $1 in
             echo -e "${CRON_SCHEDULE} CRON_SCHEDULE='' /scripts/run.sh ${@}" > /var/spool/cron/crontabs/root && crond -l 0 -f
          else
             #Run Restore.
-            runRestore
+            runRestore ${@}
          fi
         ;;
     *)
+        echo "Params: ${@}"
         echo "Error: Invalid Parameter, Use (backup or restore)."
         exit 1
 esac
-
 
