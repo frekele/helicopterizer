@@ -112,11 +112,8 @@ runBackup(){
 
   #Exec core backup.
   case $2 in
-    tarball)
-        exec /scripts/core/tarball/backup.sh
-        ;;
-    sync)
-        exec /scripts/core/sync/backup.sh
+    tarball | sync)
+        exec /scripts/core/${2}/backup.sh
         ;;
     *)
         echo "Error: Invalid Parameter, Use (tarball or sync)."
@@ -135,11 +132,8 @@ runRestore(){
 
   #Exec core backup.
   case $2 in
-    tarball)
-        exec /scripts/core/tarball/restore.sh
-        ;;
-    sync)
-        exec /scripts/core/sync/restore.sh
+    tarball | sync)
+        exec /scripts/core/${2}/restore.sh
         ;;
     *)
         echo "Error: Invalid Parameter, Use (tarball or sync)."
