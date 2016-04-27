@@ -61,6 +61,7 @@ case $1 in
             echo "Scheduling /scripts/run.sh ${@} with cron [CRON_SCHEDULE=$CRON_SCHEDULE]"
             #Set CRON_SCHEDULE=null to protect recursive scheduler.
             echo -e "${CRON_SCHEDULE} CRON_SCHEDULE='' /scripts/run.sh ${@}" > /var/spool/cron/crontabs/root && crond -l 0 -f
+            echo "OK - Cron Job Scheduled!"
          elif [ "$1" = "backup" ]; then
             #Run Backup.
             runBackup ${@}
