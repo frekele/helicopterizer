@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Backup to SOFTLAYER
+# Download Tarball From SOFTLAYER
 # Author: frekele
 #
 

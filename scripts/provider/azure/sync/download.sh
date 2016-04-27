@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Backup to AZURE
+# Download Sync files From AZURE
 # Author: frekele
 #
 

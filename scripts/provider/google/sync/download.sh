@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Restore From GOOGLE
+# Download Sync files From GOOGLE
 # Author: frekele
 #
 

@@ -1,17 +1,15 @@
 # Helicopterizer
 
-#### Solution in Backup and Restore for Docker Container in the Cloud Providers!
+#### Solution Open Source in Backup and Restore, for Docker Container in the Cloud Providers!
 
 [![Helicopterizer Image][HelicopterizerImage]][website] 
 
 [![ImageLayers](https://badge.imagelayers.io/frekele/helicopterizer:latest.svg)](https://imagelayers.io/?images=frekele/helicopterizer:latest)
-[![Gitter](https://badges.gitter.im/frekele/helicopterizer.svg)](https://gitter.im/frekele/helicopterizer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+[![Gitter](https://badges.gitter.im/frekele/helicopterizer.svg)](https://gitter.im/frekele/helicopterizer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Docker Pulls](https://img.shields.io/docker/pulls/frekele/helicopterizer.svg)](https://hub.docker.com/r/frekele/helicopterizer/)
-[![ImageLayers Size](https://img.shields.io/imagelayers/image-size/frekele/helicopterizer/latest.svg)](https://hub.docker.com/r/frekele/helicopterizer/)
-[![ImageLayers Layers](https://img.shields.io/imagelayers/layers/frekele/helicopterizer/latest.svg)](https://hub.docker.com/r/frekele/helicopterizer/)
 [![Docker Stars](https://img.shields.io/docker/stars/frekele/helicopterizer.svg)](https://hub.docker.com/r/frekele/helicopterizer/)
-[![Release](https://img.shields.io/github/release/frekele/helicopterizer.svg)](https://github.com/docker/docker/releases/latest)
+[![Release](https://img.shields.io/github/release/frekele/helicopterizer.svg)](https://github.com/frekele/helicopterizer/releases/latest)
 
 [![Circle CI](https://circleci.com/gh/frekele/helicopterizer/tree/master.svg?style=shield)](https://circleci.com/gh/frekele/helicopterizer/tree/master)
 [![Build Status](https://travis-ci.org/frekele/helicopterizer.svg?branch=master)](https://travis-ci.org/frekele/helicopterizer)
@@ -24,13 +22,13 @@
 
 ## Backup and Restore for Docker Container
 
-#### Solution in Backup and Restore for Docker Container in the Cloud Providers!
+#### Solution Open Source in Backup and Restore, for Docker Container in the Cloud Providers!
 
 
 ### Usage:
 
   ```
-  docker run -d [Environment Variables] [-v|--volumes-from] frekele/helicopterizer [backup|restore]
+  docker run -d [Environment Variables] [-v|--volumes-from] frekele/helicopterizer [backup|restore] [--tarball|--sync]
   ```
 
 
@@ -42,31 +40,34 @@
 | Google Cloud Storage                        | GOOGLE          | no - Planned for the future       |
 | Rackspace Storage                           | RACKSPACE       | no - Planned for the future       |
 | IBM SoftLayer Storage                       | SOFTLAYER       | no - Planned for the future       |
+| Oracle Cloud Storage                        | ORACLE          | no - Planned for the future       |
 | OpenStack Swift Storage (Open source)       | OPENSTACK       | no - Planned for the future       |
 | Minio Storage (Open source)                 | MINIO           | no - Planned for the future       |
 
 
 
 #### Environment Variables:
-| Variable Name                   | Default             | Action                | Required  | Description                                                     |
-| ------------------------------- | ------------------- | --------------------- | --------- | --------------------------------------------------------------- |
-| STORAGE_PROVIDER                | null                | backup,restore        | yes       | Provider name (AWS, AZURE, GOOGLE, RACKSPACE, SOFTLAYER)        |
-| BACKUP_NAME                     | null                | backup,restore        | no        | Backup name using: $(BACKUP_NAME)-$(BACKUP_VERSION).tar.gz      |
-| DATA_PATH                       | /data/              | backup,restore        | no        | Data path : /data/(your files)                                  |
-| GZIP_COMPRESSION                | true                | backup,restore        | no        | Boolean to indicate the compression of the file .tar to .tar.gz |
-| CLEAN_DATA_BEFORE_RESTORE       | false               | restore               | no        | Boolean to indicate the compression of the file .tar to .tar.gz |
-| BACKUP_VERSION                  | null                | restore               | yes       | Backup version using: $(BACKUP_VERSION).tar.gz                  |
+| Variable Name                   | Default             | Action                 | Required  | Option          | Description                                                     |
+| ------------------------------- | ------------------- | ---------------------- | --------- | --------------- | --------------------------------------------------------------- |
+| STORAGE_PROVIDER                | null                | backup, restore        | yes       | tarball, sync   | Provider name (AWS, AZURE, GOOGLE ...)                          |
+| DATA_PATH                       | /data/              | backup, restore        | no        | tarball, sync   | Data path : /data/(your files)                                  |
+| CRON_SCHEDULE                   | null                | backup, restore        | no        | tarball, sync   | Cron Job Scheduler, Eg: '*/15 * * * *' run every 15 minutes     |
+| BACKUP_NAME                     | null                | backup, restore        | no        | tarball         | Backup name using: $(BACKUP_NAME)-$(BACKUP_VERSION).tar.gz      |
+| GZIP_COMPRESSION                | true                | backup, restore        | no        | tarball         | Boolean to indicate the compression of the file .tar to .tar.gz |
+| CLEAN_DATA_BEFORE_RESTORE       | false               | restore                | no        | tarball, sync   | Boolean to indicate the compression of the file .tar to .tar.gz |
+| BACKUP_VERSION                  | null                | restore                | yes       | tarball         | Backup version using: $(BACKUP_VERSION).tar.gz                  |
 
 
 
 #### Environment Variables for AWS S3:
-| Variable Name                   | Default             | Action                | Required  | Description                                                      |
-| ------------------------------- | ------------------- | --------------------- | --------- | ---------------------------------------------------------------- |
-| AWS_ACCESS_KEY_ID               | null                | backup,restore        | yes       | AWS access key. Eg: AKRJPMI3QYCARJCRF4VF                         |
-| AWS_SECRET_ACCESS_KEY           | null                | backup,restore        | yes       | AWS secret key. Eg: VCsrO7aVulGuiUdXbS31jtQA4iRTVgi4scftJAJr     |
-| AWS_S3_BUCKET_NAME              | null                | backup,restore        | yes       | S3 bucket name. Eg: s3://my-bucket-backup/                       |
-| AWS_S3_PATH                     | /                   | backup,restore        | no        | Relative path for bucket S3. Eg: (AWS_S3_BUCKET_NAME)/jenkins/   |
-| AWS_DEFAULT_REGION              | us-east-1           | backup,restore        | no        | Default region bucket. Eg: (sa-east-1)                           |
+| Variable Name                   | Default             | Action                 | Required  | Option          | Description                                                      |
+| ------------------------------- | ------------------- | ---------------------- | --------- | --------------- | ---------------------------------------------------------------- |
+| AWS_ACCESS_KEY_ID               | null                | backup, restore        | yes       | tarball, sync   | AWS access key. Eg: AKRJPMI3QYCARJCRF4VF                         |
+| AWS_SECRET_ACCESS_KEY           | null                | backup, restore        | yes       | tarball, sync   | AWS secret key. Eg: VCsrO7aVulGuiUdXbS31jtQA4iRTVgi4scftJAJr     |
+| AWS_S3_BUCKET_NAME              | null                | backup, restore        | yes       | tarball, sync   | S3 bucket name. Eg: s3://my-bucket-backup/                       |
+| AWS_S3_PATH                     | /                   | backup, restore        | no        | tarball, sync   | Relative path for bucket S3. Eg: (AWS_S3_BUCKET_NAME)/jenkins/   |
+| AWS_DEFAULT_REGION              | us-east-1           | backup, restore        | no        | tarball, sync   | Default region bucket. Eg: (sa-east-1)                           |
+| AWS_S3_OPTIONS                  | null                | backup, restore        | no        | tarball, sync   | AWS S3 options parameters. See in [AWS CLI S3]                   |
 
 
 
@@ -89,7 +90,7 @@ us-gov-west-1          | US GovCloud West (Oregon)                 |
 
 ### Usage Examples:
 
-Run Backup:
+Run Backup with tarball:
 ```
 docker run --rm \
 -e STORAGE_PROVIDER=AWS \
@@ -97,12 +98,23 @@ docker run --rm \
 -e AWS_SECRET_ACCESS_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX \
 -e AWS_S3_BUCKET_NAME=s3://my-bucket-backup/ \
 -v /home/jenkins-data:/data:ro \
-helicopterizer backup
+helicopterizer backup --tarball
+```
+
+Run Backup with sync filesystem:
+```
+docker run --rm \
+-e STORAGE_PROVIDER=AWS \
+-e AWS_ACCESS_KEY_ID=XXXXXXXXXXXXX \
+-e AWS_SECRET_ACCESS_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX \
+-e AWS_S3_BUCKET_NAME=s3://my-bucket-backup/ \
+-v /home/jenkins-data:/data:ro \
+helicopterizer backup --sync
 ```
 
  *Use ':ro' to mount the volumes in read-only mode.*
 
-Run Restore:
+Run Restore with tarball:
 ```
 docker run --rm \
 -e STORAGE_PROVIDER=AWS \
@@ -111,8 +123,21 @@ docker run --rm \
 -e AWS_S3_BUCKET_NAME=s3://my-bucket-backup/ \
 -e BACKUP_VERSION=2016-04-17T00:34:20Z \
 -v /home/jenkins-data:/data:rw \
-helicopterizer restore
+helicopterizer restore --tarball
 ```
+
+Run Restore with sync filesystem:
+```
+docker run --rm \
+-e STORAGE_PROVIDER=AWS \
+-e AWS_ACCESS_KEY_ID=XXXXXXXXXXXXX \
+-e AWS_SECRET_ACCESS_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX \
+-e AWS_S3_BUCKET_NAME=s3://my-bucket-backup/ \
+-e BACKUP_VERSION=2016-04-17T00:34:20Z \
+-v /home/jenkins-data:/data:rw \
+helicopterizer restore  --sync
+```
+
  *Use ':rw' to mount the volumes in read-write mode.*
  
  
@@ -133,12 +158,13 @@ AWS_SECRET_ACCESS_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 AWS_S3_BUCKET_NAME=s3://my-bucket-backup/
 AWS_S3_PATH=/
 AWS_DEFAULT_REGION=us-east-1
+AWS_S3_OPTIONS=
 ##################################
 .
 docker run --rm \
 --env-file ~/helicopterizer.conf \
 -v /home/jenkins-data:/data \
-helicopterizer [backup|restore]
+helicopterizer [backup|restore] [--tarball|--sync]
 ```
 
 Run [Backup|Restore] with data volume container:
@@ -147,15 +173,44 @@ docker run --rm \
 ........
 -e DATA_PATH=/var/jenkins_home/ \
 --volumes-from jenkins-data \
-helicopterizer [backup|restore]
+helicopterizer [backup|restore] [--tarball|--sync]
 ```
+
+Run [Backup|Restore] with Cron Job Scheduler (System Timezone is UTC):
+
+```
+docker run -d \
+........
+-e CRON_SCHEDULE='30 4 * * *' \
+helicopterizer [backup|restore] [--tarball|--sync]
+
+#####################################################
+######### Examples Cron Job Scheduler Usage #########
+############## System Timezone is UTC ###############
+#####################################################
+- CRON_SCHEDULE='30 4 * * *' - Runs every day at 04:30;
+- CRON_SCHEDULE='*/15 * * * *' - Runs every 15 Minutes;
+- CRON_SCHEDULE='0 */5 * * *' - Runs every 5 Hours;
+- CRON_SCHEDULE='0 */12 * * *' - Runs every 12 Hours;
+- CRON_SCHEDULE='0 */32 * * *' - Runs every 32 Hours;
+- CRON_SCHEDULE='0 0 */2 * *' - Runs every 2 Days;
+- CRON_SCHEDULE='0 0 */7 * *' - Runs every 7 Days;
+- CRON_SCHEDULE='0 0 0 */2 *' - Runs every 2 Months;
+- CRON_SCHEDULE='@monthly' - Run once a Month, the same as: '0 0 1 * *';
+- CRON_SCHEDULE='@weekly' - Run once a Week, the same as: '0 0 * * 0';
+- CRON_SCHEDULE='@daily' - Run once a Day, the same as: '0 0 * * *';
+- CRON_SCHEDULE='@midnight' - Run once a Day, the same as: '0 0 * * *' and @daily;
+- CRON_SCHEDULE='@hourly' - Run once a Hour, the same as: '0 * * * *';
+```
+More info to usage: [Cron Wiki].
+
 
 Run [Backup|Restore] with prefix name *$(BACKUP_NAME)-$(BACKUP_VERSION).tar.gz*:
 ```
 docker run --rm \
 ........
 -e BACKUP_NAME=my-backup-name \
-helicopterizer [backup|restore]
+helicopterizer [backup|restore] --tarball
 ```
 
 Run [Backup|Restore] without gzip compression:
@@ -163,7 +218,7 @@ Run [Backup|Restore] without gzip compression:
 docker run --rm \
 ........
 -e GZIP_COMPRESSION=false \
-helicopterizer [backup|restore]
+helicopterizer [backup|restore] --tarball
 ```
 
 Run With clean the date before the restore:
@@ -173,7 +228,7 @@ Run With clean the date before the restore:
 docker run --rm \
 ........
 -e CLEAN_DATA_BEFORE_RESTORE=true \
-helicopterizer restore
+helicopterizer restore [--tarball|--sync]
 ```
 
 Run [Backup|Restore] with other data path:
@@ -182,7 +237,7 @@ docker run --rm \
 ........
 -e DATA_PATH=/other-data-directory/ \
 -v /home/jenkins-data:/jenkins-data \
-helicopterizer [backup|restore]
+helicopterizer [backup|restore] [--tarball|--sync]
 ```
 
 Run [Backup|Restore] with other AWS Region:
@@ -190,7 +245,7 @@ Run [Backup|Restore] with other AWS Region:
 docker run --rm \
 ........
 -e AWS_DEFAULT_REGION=sa-east-1 \
-helicopterizer [backup|restore]
+helicopterizer [backup|restore] [--tarball|--sync]
 ```
 
 Run [Backup|Restore] with subdirectories in AWS S3:
@@ -198,10 +253,16 @@ Run [Backup|Restore] with subdirectories in AWS S3:
 docker run --rm \
 ........
 -e AWS_S3_PATH=/project-alpha/nexus/ \
-helicopterizer [backup|restore]
+helicopterizer [backup|restore] [--tarball|--sync]
 ```
 
-
+Run [Backup|Restore] with Options [AWS CLI S3]:
+```
+docker run --rm \
+........
+-e AWS_S3_OPTIONS='--delete' \
+helicopterizer [backup|restore] [--tarball|--sync]
+```
 
 
 
@@ -263,13 +324,40 @@ docker run -d -p 8081:8081 --name nexus -v /home/nexus-data:/nexus-data sonatype
  
   
 
+### License:
+Helicopterizer is **licensed** under the **[MIT License]**. The terms of the license are as follows:
+
+    The MIT License (MIT)
+    
+    Copyright (c) 2016 Leandro Kersting de Freitas
+    
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+    
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+    
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+
+
+
 
 
 
 [HelicopterizerImage]: https://raw.githubusercontent.com/frekele/helicopterizer/master/docs/static_files/logo.png
-[MIT License]: https://github.com/frekele/helicopterizer/raw/master/LICENSE.txt
+[MIT License]: https://raw.githubusercontent.com/frekele/helicopterizer/master/LICENSE
 [GitHub]: https://github.com/frekele/helicopterizer
 [website]: https://github.com/frekele/helicopterizer/
 [Docker HUB]: https://hub.docker.com/r/frekele/helicopterizer/
-
-
+[Cron Wiki]: https://en.wikipedia.org/wiki/Cron
+[AWS CLI S3]: http://docs.aws.amazon.com/cli/latest/reference/s3/sync.html

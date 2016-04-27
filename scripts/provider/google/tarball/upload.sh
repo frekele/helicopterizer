@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Backup to GOOGLE
+# Upload Tarball to GOOGLE
 # Author: frekele
 #
 

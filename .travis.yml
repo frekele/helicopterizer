@@ -13,5 +13,5 @@ script:
   - docker build --rm=true -t $DOCKER_IMAGE_NAME .
 
 env:
-  - DOCKER_IMAGE_NAME=frekele/helicopterizer
+  - DOCKER_IMAGE_NAME=helicopterizer
 

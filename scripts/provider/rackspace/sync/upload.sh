@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Restore From RACKSPACE
+# Upload Sync files to RACKSPACE
 # Author: frekele
 #
 

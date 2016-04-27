@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Backup to RACKSPACE
+# Download Tarball From RACKSPACE
 # Author: frekele
 #
 

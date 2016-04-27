@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Restore From AZURE
+# Upload Tarball to AZURE
 # Author: frekele
 #
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Restore From SOFTLAYER
+# Upload Tarball to SOFTLAYER
 # Author: frekele
 #
 

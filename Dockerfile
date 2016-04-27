@@ -2,8 +2,7 @@ FROM alpine:3.3
 
 MAINTAINER frekele <leandro.freitas@softdevelop.com.br>
 
-RUN apk update --no-cache \
-    && apk add --no-cache \
+RUN apk add --update --no-cache \
        bash \
        curl \
        wget \
@@ -26,11 +25,13 @@ ENV STORAGE_PROVIDER='' \
     GZIP_COMPRESSION='true' \
     CLEAN_DATA_BEFORE_RESTORE='false' \
     BACKUP_VERSION='' \
+    CRON_SCHEDULE='' \
     AWS_ACCESS_KEY_ID='' \
     AWS_SECRET_ACCESS_KEY='' \
     AWS_S3_BUCKET_NAME='' \
     AWS_S3_PATH='/' \
-    AWS_DEFAULT_REGION='us-east-1'
+    AWS_DEFAULT_REGION='us-east-1' \
+    AWS_S3_OPTIONS=''
 
 ENTRYPOINT ["/scripts/run.sh"]
 
