@@ -183,7 +183,7 @@ mountUriS3(){
      s3Uri="$bucketName/$fileName"
   fi
 
-  s3Uri=`echo "${s3Uri}" | sed 's#//*#/#g' | sed 's#/*$##'`
+  s3Uri=$(removeSlashUri $s3Uri)
   s3Uri="s3://$s3Uri"
   echo "$s3Uri"
 }
