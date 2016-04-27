@@ -47,27 +47,27 @@
 
 
 #### Environment Variables:
-| Variable Name                   | Default             | Action                | Required  | Description                                                     |
-| ------------------------------- | ------------------- | --------------------- | --------- | --------------------------------------------------------------- |
-| STORAGE_PROVIDER                | null                | backup,restore        | yes       | Provider name (AWS, AZURE, GOOGLE, RACKSPACE, SOFTLAYER)        |
-| BACKUP_NAME                     | null                | backup,restore        | no        | Backup name using: $(BACKUP_NAME)-$(BACKUP_VERSION).tar.gz      |
-| DATA_PATH                       | /data/              | backup,restore        | no        | Data path : /data/(your files)                                  |
-| GZIP_COMPRESSION                | true                | backup,restore        | no        | Boolean to indicate the compression of the file .tar to .tar.gz |
-| CLEAN_DATA_BEFORE_RESTORE       | false               | restore               | no        | Boolean to indicate the compression of the file .tar to .tar.gz |
-| BACKUP_VERSION                  | null                | restore               | yes       | Backup version using: $(BACKUP_VERSION).tar.gz                  |
-| CRON_SCHEDULE                   | null                | backup,restore        | no        | Cron Job Scheduler, Eg: '*/15 * * * *' run every 15 minutes     |
+| Variable Name                   | Default             | Action                | Required  | Option         | Description                                                     |
+| ------------------------------- | ------------------- | --------------------- | --------- | -------------- | --------------------------------------------------------------- |
+| STORAGE_PROVIDER                | null                | backup,restore        | yes       | tarball,sync   | Provider name (AWS, AZURE, GOOGLE, RACKSPACE, SOFTLAYER)        |
+| DATA_PATH                       | /data/              | backup,restore        | no        | tarball,sync   | Data path : /data/(your files)                                  |
+| CRON_SCHEDULE                   | null                | backup,restore        | no        | tarball,sync   | Cron Job Scheduler, Eg: '*/15 * * * *' run every 15 minutes     |
+| BACKUP_NAME                     | null                | backup,restore        | no        | tarball        | Backup name using: $(BACKUP_NAME)-$(BACKUP_VERSION).tar.gz      |
+| GZIP_COMPRESSION                | true                | backup,restore        | no        | tarball        | Boolean to indicate the compression of the file .tar to .tar.gz |
+| CLEAN_DATA_BEFORE_RESTORE       | false               | restore               | no        | tarball,sync   | Boolean to indicate the compression of the file .tar to .tar.gz |
+| BACKUP_VERSION                  | null                | restore               | yes       | tarball        | Backup version using: $(BACKUP_VERSION).tar.gz                  |
 
 
 
 #### Environment Variables for AWS S3:
-| Variable Name                   | Default             | Action                | Required  | Description                                                      |
-| ------------------------------- | ------------------- | --------------------- | --------- | ---------------------------------------------------------------- |
-| AWS_ACCESS_KEY_ID               | null                | backup,restore        | yes       | AWS access key. Eg: AKRJPMI3QYCARJCRF4VF                         |
-| AWS_SECRET_ACCESS_KEY           | null                | backup,restore        | yes       | AWS secret key. Eg: VCsrO7aVulGuiUdXbS31jtQA4iRTVgi4scftJAJr     |
-| AWS_S3_BUCKET_NAME              | null                | backup,restore        | yes       | S3 bucket name. Eg: s3://my-bucket-backup/                       |
-| AWS_S3_PATH                     | /                   | backup,restore        | no        | Relative path for bucket S3. Eg: (AWS_S3_BUCKET_NAME)/jenkins/   |
-| AWS_DEFAULT_REGION              | us-east-1           | backup,restore        | no        | Default region bucket. Eg: (sa-east-1)                           |
-| AWS_S3_OPTIONS                  | null                | backup,restore        | no        | AWS S3 options parameters. See in [AWS CLI S3]                   |
+| Variable Name                   | Default             | Action                | Required  | Option         | Description                                                      |
+| ------------------------------- | ------------------- | --------------------- | --------- | -------------- | ---------------------------------------------------------------- |
+| AWS_ACCESS_KEY_ID               | null                | backup,restore        | yes       | tarball,sync   | AWS access key. Eg: AKRJPMI3QYCARJCRF4VF                         |
+| AWS_SECRET_ACCESS_KEY           | null                | backup,restore        | yes       | tarball,sync   | AWS secret key. Eg: VCsrO7aVulGuiUdXbS31jtQA4iRTVgi4scftJAJr     |
+| AWS_S3_BUCKET_NAME              | null                | backup,restore        | yes       | tarball,sync   | S3 bucket name. Eg: s3://my-bucket-backup/                       |
+| AWS_S3_PATH                     | /                   | backup,restore        | no        | tarball,sync   | Relative path for bucket S3. Eg: (AWS_S3_BUCKET_NAME)/jenkins/   |
+| AWS_DEFAULT_REGION              | us-east-1           | backup,restore        | no        | tarball,sync   | Default region bucket. Eg: (sa-east-1)                           |
+| AWS_S3_OPTIONS                  | null                | backup,restore        | no        | tarball,sync   | AWS S3 options parameters. See in [AWS CLI S3]                   |
 
 
 
@@ -158,7 +158,7 @@ AWS_SECRET_ACCESS_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 AWS_S3_BUCKET_NAME=s3://my-bucket-backup/
 AWS_S3_PATH=/
 AWS_DEFAULT_REGION=us-east-1
-AWS_S3_OPTIONS=--delete
+AWS_S3_OPTIONS=
 ##################################
 .
 docker run --rm \
@@ -256,7 +256,13 @@ docker run --rm \
 helicopterizer [backup|restore] [--tarball|--sync]
 ```
 
-
+Run [Backup|Restore] with Options [AWS CLI S3]:
+```
+docker run --rm \
+........
+-e AWS_S3_OPTIONS='--delete' \
+helicopterizer [backup|restore] [--tarball|--sync]
+```
 
 
 
@@ -354,4 +360,4 @@ Helicopterizer is **licensed** under the **[MIT License]**. The terms of the lic
 [website]: https://github.com/frekele/helicopterizer/
 [Docker HUB]: https://hub.docker.com/r/frekele/helicopterizer/
 [Cron Wiki]: https://en.wikipedia.org/wiki/Cron
-[AWS CLI S3]: http://docs.aws.amazon.com/cli/latest/reference/s3/
+[AWS CLI S3]: http://docs.aws.amazon.com/cli/latest/reference/s3/sync.html
