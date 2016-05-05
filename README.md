@@ -121,7 +121,7 @@ docker run --rm \
 -e AWS_ACCESS_KEY_ID=XXXXXXXXXXXXX \
 -e AWS_SECRET_ACCESS_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX \
 -e AWS_S3_BUCKET_NAME=s3://my-bucket-backup/ \
--e BACKUP_VERSION=2016-04-17T00:34:20Z \
+-e BACKUP_VERSION='2016-05-04T01:34:20Z' \
 -v /home/jenkins-data:/data:rw \
 helicopterizer restore --tarball
 ```
@@ -133,7 +133,7 @@ docker run --rm \
 -e AWS_ACCESS_KEY_ID=XXXXXXXXXXXXX \
 -e AWS_SECRET_ACCESS_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX \
 -e AWS_S3_BUCKET_NAME=s3://my-bucket-backup/ \
--e BACKUP_VERSION=2016-04-17T00:34:20Z \
+-e BACKUP_VERSION='2016-05-04T01:34:20Z' \
 -v /home/jenkins-data:/data:rw \
 helicopterizer restore  --sync
 ```
