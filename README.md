@@ -54,7 +54,7 @@
 | CRON_SCHEDULE                   | null                | backup, restore        | no        | tarball, sync   | Cron Job Scheduler, Eg: '*/15 * * * *' run every 15 minutes     |
 | BACKUP_NAME                     | null                | backup, restore        | no        | tarball         | Backup name using: $(BACKUP_NAME)-$(BACKUP_VERSION).tar.gz      |
 | GZIP_COMPRESSION                | true                | backup, restore        | no        | tarball         | Boolean to indicate the compression of the file .tar to .tar.gz |
-| CLEAN_DATA_BEFORE_RESTORE       | false               | restore                | no        | tarball, sync   | Boolean to indicate the compression of the file .tar to .tar.gz |
+| CLEAN_DATA_BEFORE_RESTORE       | false               | restore                | no        | tarball, sync   | Clear the data directory before the restore |
 | BACKUP_VERSION                  | null                | restore                | yes       | tarball         | Backup version using: $(BACKUP_VERSION).tar.gz                  |
 
 
