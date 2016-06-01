@@ -279,8 +279,8 @@ See [Managing Data in Containers](https://docs.docker.com/userguide/dockervolume
 
 *Example with Jenkins:* 
        
-```     
-docker volume create --name jenkins-data
+```
+docker run -d --name jenkins-data jenkinsci/jenkins:2.0 echo "data-only container for Jenkins"
 docker run -d -p 8080:8080 -p 50000:50000 --name jenkins --volumes-from jenkins-data jenkinsci/jenkins:2.0
 ```
     
@@ -288,7 +288,7 @@ docker run -d -p 8080:8080 -p 50000:50000 --name jenkins --volumes-from jenkins-
 *Example with Nexus:*    
     
 ```
-docker volume create --name nexus-data
+docker run -d --name nexus-data sonatype/nexus3 echo "data-only container for Nexus"
 docker run -d -p 8081:8081 --name nexus --volumes-from nexus-data sonatype/nexus3
 ```
  
@@ -301,7 +301,12 @@ However it can be useful in certain situations where this volume needs to be ass
 
 ```
 mkdir /home/jenkins-data
-docker run -d -p 8080:8080 -p 50000:50000 --name jenkins -v /home/jenkins-data:/jenkins-data jenkinsci/jenkins:2.0
+docker run -d -p 8080:8080 -p 50000:50000 --name jenkins -v /home/jenkins-data:/var/jenkins_home jenkinsci/jenkins
+
+# or
+
+docker volume create --name jenkins-data
+docker run -d -p 8080:8080 -p 50000:50000 --name jenkins -v jenkins-data:/var/jenkins_home jenkinsci/jenkins
 ```
 
 *Example with Nexus:*
@@ -309,6 +314,11 @@ docker run -d -p 8080:8080 -p 50000:50000 --name jenkins -v /home/jenkins-data:/
 ```
 mkdir /home/nexus-data && chown -R 200 /home/nexus-data
 docker run -d -p 8081:8081 --name nexus -v /home/nexus-data:/nexus-data sonatype/nexus3
+
+# or
+
+docker volume create --name nexus-data
+docker run -d -p 8081:8081 --name nexus -v nexus-data:/nexus-data sonatype/nexus3
 ```
 
 
