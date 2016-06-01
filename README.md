@@ -280,7 +280,7 @@ See [Managing Data in Containers](https://docs.docker.com/userguide/dockervolume
 *Example with Jenkins:* 
        
 ```     
-docker run -d --name jenkins-data jenkinsci/jenkins:2.0 echo "data-only container for Jenkins"
+docker volume create --name jenkins-data
 docker run -d -p 8080:8080 -p 50000:50000 --name jenkins --volumes-from jenkins-data jenkinsci/jenkins:2.0
 ```
     
@@ -288,7 +288,7 @@ docker run -d -p 8080:8080 -p 50000:50000 --name jenkins --volumes-from jenkins-
 *Example with Nexus:*    
     
 ```
-docker run -d --name nexus-data sonatype/nexus3 echo "data-only container for Nexus"
+docker volume create --name nexus-data
 docker run -d -p 8081:8081 --name nexus --volumes-from nexus-data sonatype/nexus3
 ```
  
