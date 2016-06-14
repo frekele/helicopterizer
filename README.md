@@ -300,7 +300,7 @@ However it can be useful in certain situations where this volume needs to be ass
 *Example with Jenkins:*
 
 ```
-mkdir /some/dir/jenkins-data
+mkdir /some/dir/jenkins-data && chown -R 1000:1000 /some/dir/jenkins-data
 docker run -d -p 8080:8080 -p 50000:50000 --name jenkins -v /some/dir/jenkins-data:/var/jenkins_home jenkinsci/jenkins
 
 # or
