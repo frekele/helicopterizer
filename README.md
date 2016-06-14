@@ -32,6 +32,22 @@
   docker run -d [Environment Variables] [-v|--volumes-from] frekele/helicopterizer [backup|restore] [--tarball|--sync]
   ```
 
+### Use Stable Branch for (Production)
+  ```
+  docker run -d frekele/helicopterizer:stable
+  ```
+
+### Master Branch for (Development)
+  ```
+  docker run -d frekele/helicopterizer:latest
+  # or
+  docker run -d frekele/helicopterizer
+  ```
+
+### Specific Tag Version
+```
+  docker run -d frekele/helicopterizer:v0.2.1
+  ```
 
 #### Cloud Storage Provider Supported:
 | Provider                                    | Variable Value  | Supported                         |
