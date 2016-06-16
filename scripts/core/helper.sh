@@ -110,9 +110,11 @@ removeSlashUri(){
 mountFileName(){
   local backupVersion=$1;
   local gzipCompress=$2;
-  local backupName=$3;
+  local backupPrefix=$3;
+  local backupName=$4;
   local sufix=""
   local fileName=""
+
   if [ "$gzipCompress" = "true" ]; then
       sufix=".tar.gz"
   else
@@ -120,9 +122,9 @@ mountFileName(){
   fi
 
   if [ "$backupName" ]; then
-      fileName="$backupName-$backupVersion$sufix"
+      fileName="$backupName"
   else
-      fileName="$backupVersion$sufix"
+      fileName="$backupPrefix$backupVersion$sufix"
   fi
   echo "$fileName"
 }
@@ -187,5 +189,3 @@ mountUriS3(){
   s3Uri="s3://$s3Uri"
   echo "$s3Uri"
 }
-
-
