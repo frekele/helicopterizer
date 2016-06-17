@@ -122,7 +122,7 @@ mountFileName(){
   fi
 
   if [ "$backupName" ]; then
-      fileName="$backupName"
+      fileName="$backupName$sufix"
   else
       fileName="$backupPrefix$backupVersion$sufix"
   fi
