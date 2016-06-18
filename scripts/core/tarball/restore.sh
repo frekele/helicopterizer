@@ -29,7 +29,7 @@ extractTarball(){
 
 
 #Call to mount file name.
-fileName=$(mountFileName $BACKUP_VERSION $GZIP_COMPRESSION $BACKUP_PREFIX $BACKUP_NAME)
+fileName=$(mountFileName "$BACKUP_VERSION" $GZIP_COMPRESSION "$BACKUP_PREFIX" "$BACKUP_NAME")
 
 
 #Call to mount Restore file name for copy to /tmp.
