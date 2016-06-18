@@ -121,7 +121,7 @@ mountFileName(){
       sufix=".tar"
   fi
 
-  if [ "$backupName" ]; then
+  if [ -n "$backupName" ]; then
       fileName="$backupName$sufix"
   else
       fileName="$backupPrefix$backupVersion$sufix"

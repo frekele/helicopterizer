@@ -33,7 +33,7 @@ BACKUP_VERSION=$(createBackupVersion)
 
 
 #Call to mount file name.
-fileName=$(mountFileName $BACKUP_VERSION $GZIP_COMPRESSION $BACKUP_PREFIX $BACKUP_NAME)
+fileName=$(mountFileName $BACKUP_VERSION $GZIP_COMPRESSION "$BACKUP_PREFIX" "$BACKUP_NAME")
 
 
 #Call tarball Compress.
