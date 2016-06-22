@@ -2,7 +2,7 @@
 
 #### Solution Open Source in Backup and Restore, for Docker Container in the Cloud Providers!
 
-[![Helicopterizer Image][HelicopterizerImage]][website] 
+[![Helicopterizer Image][HelicopterizerImage]][website]
 
 [![ImageLayers](https://badge.imagelayers.io/frekele/helicopterizer:latest.svg)](https://imagelayers.io/?images=frekele/helicopterizer:latest)
 
@@ -15,7 +15,7 @@
 [![Circle CI](https://circleci.com/gh/frekele/helicopterizer/tree/master.svg?style=shield)](https://circleci.com/gh/frekele/helicopterizer/tree/master)
 [![Build Status](https://travis-ci.org/frekele/helicopterizer.svg?branch=master)](https://travis-ci.org/frekele/helicopterizer)
 [![GitHub issues](https://img.shields.io/github/issues/frekele/helicopterizer.svg)](https://github.com/frekele/helicopterizer/issues)
-[![GitHub forks](https://img.shields.io/github/forks/frekele/helicopterizer.svg)](https://github.com/frekele/helicopterizer/network) 
+[![GitHub forks](https://img.shields.io/github/forks/frekele/helicopterizer.svg)](https://github.com/frekele/helicopterizer/network)
 [![GitHub stars](https://img.shields.io/github/stars/frekele/helicopterizer.svg)](https://github.com/frekele/helicopterizer/stargazers)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/frekele/helicopterizer/master/LICENSE)
 
@@ -69,9 +69,10 @@
 | STORAGE_PROVIDER                | null                | backup, restore        | yes       | tarball, sync   | Provider name (AWS, AZURE, GOOGLE ...)                          |
 | DATA_PATH                       | /data/              | backup, restore        | no        | tarball, sync   | Data path : /data/(your files)                                  |
 | CRON_SCHEDULE                   | null                | backup, restore        | no        | tarball, sync   | Cron Job Scheduler, Eg: '*/15 * * * *' run every 15 minutes     |
-| BACKUP_NAME                     | null                | backup, restore        | no        | tarball         | Backup name using: $(BACKUP_NAME)-$(BACKUP_VERSION).tar.gz      |
+| BACKUP_PREFIX                   | null                | backup, restore        | no        | tarball         | Default name schema: $(BACKUP_PREFIX)$(BACKUP_VERSION).tar.gz   |
+| BACKUP_NAME                     | null                | backup, restore        | no        | tarball         | If defined the name shcema is: $(BACKUP_NAME).tar.gz            |
 | GZIP_COMPRESSION                | true                | backup, restore        | no        | tarball         | Boolean to indicate the compression of the file .tar to .tar.gz |
-| CLEAN_DATA_BEFORE_RESTORE       | false               | restore                | no        | tarball, sync   | Clear the data directory before the restore |
+| CLEAN_DATA_BEFORE_RESTORE       | false               | restore                | no        | tarball, sync   | Clear the data directory before the restore                     |
 | BACKUP_VERSION                  | null                | restore                | yes       | tarball         | Backup version using: $(BACKUP_VERSION).tar.gz                  |
 
 
@@ -156,8 +157,8 @@ helicopterizer restore  --sync
 ```
 
  *Use ':rw' to mount the volumes in read-write mode.*
- 
- 
+
+
 Run [Backup|Restore] with environment file:
 ```
 touch ~/helicopterizer.conf
@@ -290,24 +291,24 @@ There are two general approaches to handling persistent storage requirements wit
 See [Managing Data in Containers](https://docs.docker.com/userguide/dockervolumes/) for additional information.
 
 #### Data volume container
-  
+
 *Use a data volume container*. Since data volumes are persistent until no containers use them, a container can created specifically for this purpose.  
 
-*Example with Jenkins:* 
-       
+*Example with Jenkins:*
+
 ```
 docker run -d --name jenkins-data jenkinsci/jenkins:2.0 echo "data-only container for Jenkins"
 docker run -d -p 8080:8080 -p 50000:50000 --name jenkins --volumes-from jenkins-data jenkinsci/jenkins:2.0
 ```
-    
-    
+
+
 *Example with Nexus:*    
-    
+
 ```
 docker run -d --name nexus-data sonatype/nexus3 echo "data-only container for Nexus"
 docker run -d -p 8081:8081 --name nexus --volumes-from nexus-data sonatype/nexus3
 ```
- 
+
 #### Data volume
 
 *Mount a host directory as the volume*.  This is not portable, as it relies on the directory existing with correct permissions on the host.
@@ -342,32 +343,32 @@ docker run -d -p 8081:8081 --name nexus -v nexus-data:/nexus-data sonatype/nexus
 ### Building:
 
   Build with the usual
-  
+
     docker build -t helicopterizer .
-  
+
   Tests are written using [bats](https://github.com/sstephenson/bats) under the `tests` dir
-  
+
     bats tests
- 
-  
+
+
 
 ### License:
 Helicopterizer is **licensed** under the **[MIT License]**. The terms of the license are as follows:
 
     The MIT License (MIT)
-    
+
     Copyright (c) 2016 Leandro Kersting de Freitas
-    
+
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
     in the Software without restriction, including without limitation the rights
     to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
     copies of the Software, and to permit persons to whom the Software is
     furnished to do so, subject to the following conditions:
-    
+
     The above copyright notice and this permission notice shall be included in all
     copies or substantial portions of the Software.
-    
+
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
     IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
     FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
