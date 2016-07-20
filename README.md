@@ -4,7 +4,7 @@
 
 [![Helicopterizer Image][HelicopterizerImage]][website]
 
-[![ImageLayers](https://badge.imagelayers.io/frekele/helicopterizer:latest.svg)](https://imagelayers.io/?images=frekele/helicopterizer:latest)
+[![ImageLayers](https://badge.imagelayers.io/frekele/helicopterizer:master.svg)](https://imagelayers.io/?images=frekele/helicopterizer:master)
 
 [![Gitter](https://badges.gitter.im/frekele/helicopterizer.svg)](https://gitter.im/frekele/helicopterizer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Docker Pulls](https://img.shields.io/docker/pulls/frekele/helicopterizer.svg)](https://hub.docker.com/r/frekele/helicopterizer/)
