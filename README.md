@@ -83,6 +83,7 @@
 | AWS_ACCESS_KEY_ID               | null                | backup, restore        | yes       | tarball, sync   | AWS access key. Eg: AKRJPMI3QYCARJCRF4VF                         |
 | AWS_SECRET_ACCESS_KEY           | null                | backup, restore        | yes       | tarball, sync   | AWS secret key. Eg: VCsrO7aVulGuiUdXbS31jtQA4iRTVgi4scftJAJr     |
 | AWS_S3_BUCKET_NAME              | null                | backup, restore        | yes       | tarball, sync   | S3 bucket name. Eg: s3://my-bucket-backup/                       |
+| AWS_S3_BUCKET_CREATE            | false               | backup                 | no        | tarball, sync   | Boolean to indicate if we create the bucket (if not exists)      |
 | AWS_S3_PATH                     | /                   | backup, restore        | no        | tarball, sync   | Relative path for bucket S3. Eg: (AWS_S3_BUCKET_NAME)/jenkins/   |
 | AWS_DEFAULT_REGION              | us-east-1           | backup, restore        | no        | tarball, sync   | Default region bucket. Eg: (sa-east-1)                           |
 | AWS_S3_OPTIONS                  | null                | backup, restore        | no        | tarball, sync   | AWS S3 options parameters. See in [AWS CLI S3]                   |
@@ -236,6 +237,14 @@ Run [Backup|Restore] without gzip compression:
 docker run --rm \
 ........
 -e GZIP_COMPRESSION=false \
+helicopterizer [backup|restore] --tarball
+```
+
+Run [Backup|Restore] with bucket creation (if NoSuchBucket):
+```
+docker run --rm \
+........
+-e AWS_S3_BUCKET_CREATE=true \
 helicopterizer [backup|restore] --tarball
 ```
 

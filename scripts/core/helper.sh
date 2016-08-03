@@ -93,6 +93,7 @@ printEnvs(){
   echo "AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID"
   echo "AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY"
   echo "AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION"
+  echo "AWS_S3_BUCKET_CREATE=$AWS_S3_BUCKET_CREATE"
   echo "AWS_S3_BUCKET_NAME=$AWS_S3_BUCKET_NAME"
   echo "AWS_S3_PATH=$AWS_S3_PATH"
   echo "AWS_S3_OPTIONS=$AWS_S3_OPTIONS"
@@ -188,4 +189,17 @@ mountUriS3(){
   s3Uri=$(removeSlashUri $s3Uri)
   s3Uri="s3://$s3Uri"
   echo "$s3Uri"
+}
+
+createS3Bucket(){
+  # Check if create is required
+  if [ "$AWS_S3_BUCKET_CREATE" = "true" ]; then
+    local bucketS3Uri="s3://$AWS_S3_BUCKET_NAME"
+    # Test if bucket doesn't exists
+    if aws s3 ls "s3://$AWS_S3_BUCKET_NAME" 2>&1 | grep -q 'NoSuchBucket'; then
+      # Create bucket
+      local s3BucketCreationResult=$(aws s3 mb "$bucketS3Uri")
+      echo "$s3BucketCreationResult"
+    fi
+  fi
 }
