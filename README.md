@@ -68,6 +68,7 @@
 | ------------------------------- | ------------------- | ---------------------- | --------- | --------------- | --------------------------------------------------------------- |
 | STORAGE_PROVIDER                | null                | backup, restore        | yes       | tarball, sync   | Provider name (AWS, AZURE, GOOGLE ...)                          |
 | DATA_PATH                       | /data/              | backup, restore        | no        | tarball, sync   | Data path : /data/(your files)                                  |
+| DATA_PATH_EXCLUDE               | null                | backup                 | no        | tarball         | Exclude file from data path (comma-separated)                   |
 | CRON_SCHEDULE                   | null                | backup, restore        | no        | tarball, sync   | Cron Job Scheduler, Eg: '*/15 * * * *' run every 15 minutes     |
 | BACKUP_PREFIX                   | null                | backup, restore        | no        | tarball         | Default name schema: $(BACKUP_PREFIX)$(BACKUP_VERSION).tar.gz   |
 | BACKUP_NAME                     | null                | backup, restore        | no        | tarball         | If defined the name shcema is: $(BACKUP_NAME).tar.gz            |
@@ -266,6 +267,17 @@ docker run --rm \
 -v /some/dir/jenkins-data:/var/jenkins_home \
 helicopterizer [backup|restore] [--tarball|--sync]
 ```
+
+Run [Backup] with other data path & exclude jenkins workspace:
+```
+docker run --rm \
+........
+-e DATA_PATH=/var/jenkins_home/ \
+-e DATA_PATH_EXCLUDE=workspace \
+-v /some/dir/jenkins-data:/var/jenkins_home \
+helicopterizer [backup|restore] [--tarball|--sync]
+```
+
 
 Run [Backup|Restore] with other AWS Region:
 ```

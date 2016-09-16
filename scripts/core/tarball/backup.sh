@@ -20,11 +20,20 @@ echo "Starting Tarball Backup to ${STORAGE_PROVIDER^^} ..."
 #Create tarball with gzip or not.
 compressTarball(){
   echo "Starting compress: $DATA_PATH/ to /tmp/$1"
+  # Build tar arguments
+  TAR_CMD=""
+  ## Exclude options
+  for i in $(echo "$DATA_PATH_EXCLUDE," | tr "," "\n"); do
+  	if [ -n "$i" ]; then
+  		TAR_CMD="$TAR_CMD --exclude '$i'"
+  	fi
+  done
   if [ "$GZIP_COMPRESSION" = "true" ]; then
-      tar -zcvf /tmp/$1  -C $DATA_PATH/ .
+      TAR_CMD="$TAR_CMD -zcvf /tmp/$1 -C $DATA_PATH/ ."
   else
-      tar -cvf /tmp/$1  -C $DATA_PATH/ .
+      TAR_CMD="$TAR_CMD tar -cvf /tmp/$1 -C $DATA_PATH/ ."
   fi
+  eval "tar $TAR_CMD"
 }
 
 
