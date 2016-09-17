@@ -22,6 +22,7 @@ RUN chmod -R +x /scripts
 ENV STORAGE_PROVIDER='' \
     BACKUP_NAME='' \
     DATA_PATH='/data/' \
+    DATA_PATH_EXCLUDE='' \
     GZIP_COMPRESSION='true' \
     CLEAN_DATA_BEFORE_RESTORE='false' \
     BACKUP_VERSION='' \
