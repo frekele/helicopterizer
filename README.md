@@ -26,26 +26,31 @@
 
 ### Usage:
 
-  ```
-  docker run -d [Environment Variables] [-v|--volumes-from] frekele/helicopterizer [backup|restore] [--tarball|--sync]
-  ```
+```
+docker run -d [Environment Variables] [-v|--volumes-from] frekele/helicopterizer [backup|restore] [--tarball|--sync]
+```
+
 
 ### Use Stable Branch for (Production)
-  ```
-  docker run -d frekele/helicopterizer:stable
-  ```
+```
+docker run -d frekele/helicopterizer:stable
+```
+
 
 ### Master Branch for (Development)
-  ```
-  docker run -d frekele/helicopterizer:latest
-  # or
-  docker run -d frekele/helicopterizer
-  ```
+```
+docker run -d frekele/helicopterizer:latest
+# or
+docker run -d frekele/helicopterizer
+```
+
 
 ### Specific Tag Version
+
 ```
-  docker run -d frekele/helicopterizer:v0.2.1
-  ```
+docker run -d frekele/helicopterizer:v0.2.1
+```
+
 
 #### Cloud Storage Provider Supported:
 | Provider                                    | Variable Value  | Supported                         |
@@ -109,6 +114,7 @@ us-gov-west-1          | US GovCloud West (Oregon)                 |
 ### Usage Examples:
 
 Run Backup with tarball:
+
 ```
 docker run --rm \
 -e STORAGE_PROVIDER=AWS \
@@ -119,7 +125,9 @@ docker run --rm \
 helicopterizer backup --tarball
 ```
 
+
 Run Backup with sync filesystem:
+
 ```
 docker run --rm \
 -e STORAGE_PROVIDER=AWS \
@@ -132,7 +140,9 @@ helicopterizer backup --sync
 
  *Use ':ro' to mount the volumes in read-only mode.*
 
+
 Run Restore with tarball:
+
 ```
 docker run --rm \
 -e STORAGE_PROVIDER=AWS \
@@ -144,7 +154,9 @@ docker run --rm \
 helicopterizer restore --tarball
 ```
 
+
 Run Restore with sync filesystem:
+
 ```
 docker run --rm \
 -e STORAGE_PROVIDER=AWS \
@@ -160,6 +172,7 @@ helicopterizer restore  --sync
 
 
 Run [Backup|Restore] with environment file:
+
 ```
 touch ~/helicopterizer.conf
 ##################################
@@ -185,7 +198,9 @@ docker run --rm \
 helicopterizer [backup|restore] [--tarball|--sync]
 ```
 
+
 Run [Backup|Restore] with data volume container:
+
 ```
 docker run --rm \
 ........
@@ -193,6 +208,7 @@ docker run --rm \
 --volumes-from jenkins-data \
 helicopterizer [backup|restore] [--tarball|--sync]
 ```
+
 
 Run [Backup|Restore] with Cron Job Scheduler (System Timezone is UTC):
 
@@ -220,10 +236,13 @@ helicopterizer [backup|restore] [--tarball|--sync]
 - CRON_SCHEDULE='@midnight' - Run once a Day, the same as: '0 0 * * *' and @daily;
 - CRON_SCHEDULE='@hourly' - Run once a Hour, the same as: '0 * * * *';
 ```
+
 More info to usage: [Cron Wiki].
 
 
+
 Run [Backup|Restore] with prefix name *$(BACKUP_NAME)-$(BACKUP_VERSION).tar.gz*:
+
 ```
 docker run --rm \
 ........
@@ -231,7 +250,9 @@ docker run --rm \
 helicopterizer [backup|restore] --tarball
 ```
 
+
 Run [Backup|Restore] without gzip compression:
+
 ```
 docker run --rm \
 ........
@@ -239,7 +260,9 @@ docker run --rm \
 helicopterizer [backup|restore] --tarball
 ```
 
+
 Run [Backup|Restore] with bucket creation (if NoSuchBucket):
+
 ```
 docker run --rm \
 ........
@@ -247,9 +270,11 @@ docker run --rm \
 helicopterizer [backup|restore] --tarball
 ```
 
+
 Run With clean the date before the restore:
 
 ***[Be careful here, you will lose all your data inside DATA_PATH directory].***
+
 ```
 docker run --rm \
 ........
@@ -257,7 +282,9 @@ docker run --rm \
 helicopterizer restore [--tarball|--sync]
 ```
 
+
 Run [Backup|Restore] with other data path:
+
 ```
 docker run --rm \
 ........
@@ -266,7 +293,9 @@ docker run --rm \
 helicopterizer [backup|restore] [--tarball|--sync]
 ```
 
+
 Run [Backup] with other data path & exclude jenkins workspace:
+
 ```
 docker run --rm \
 ........
@@ -278,6 +307,7 @@ helicopterizer [backup|restore] [--tarball|--sync]
 
 
 Run [Backup|Restore] with other AWS Region:
+
 ```
 docker run --rm \
 ........
@@ -285,7 +315,9 @@ docker run --rm \
 helicopterizer [backup|restore] [--tarball|--sync]
 ```
 
+
 Run [Backup|Restore] with subdirectories in AWS S3:
+
 ```
 docker run --rm \
 ........
@@ -293,7 +325,9 @@ docker run --rm \
 helicopterizer [backup|restore] [--tarball|--sync]
 ```
 
+
 Run [Backup|Restore] with Options [AWS CLI S3]:
+
 ```
 docker run --rm \
 ........
@@ -344,6 +378,7 @@ docker run -d -p 8080:8080 -p 50000:50000 --name jenkins -v /some/dir/jenkins-da
 docker volume create --name jenkins-data
 docker run -d -p 8080:8080 -p 50000:50000 --name jenkins -v jenkins-data:/var/jenkins_home jenkinsci/jenkins
 ```
+
 
 *Example with Nexus:*
 
