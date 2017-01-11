@@ -10,7 +10,7 @@ RUN apk add --update --no-cache \
        python\
        py2-pip \
        docker \
-    && curl -sL https://get.docker.com/builds/Linux/x86_64/docker-1.12.5 > /usr/bin/docker \
+    && curl -sL https://get.docker.com/builds/Linux/x86_64/docker-1.12.6 > /usr/bin/docker \
     && chmod +x /usr/bin/docker \
     && pip install --upgrade pip \
     && pip install awscli
