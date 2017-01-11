@@ -8,7 +8,7 @@ RUN apk add --update --no-cache \
        wget \
        git \
        python\
-       py-pip \
+       py2-pip \
        docker \
     && curl -sL https://get.docker.com/builds/Linux/x86_64/docker-1.12.5 > /usr/bin/docker \
     && chmod +x /usr/bin/docker \
