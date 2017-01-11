@@ -31,7 +31,7 @@ compressTarball(){
   if [ "$GZIP_COMPRESSION" = "true" ]; then
       TAR_CMD="$TAR_CMD -zcvf /tmp/$1 -C $DATA_PATH/ ."
   else
-      TAR_CMD="$TAR_CMD tar -cvf /tmp/$1 -C $DATA_PATH/ ."
+      TAR_CMD="$TAR_CMD -cvf /tmp/$1 -C $DATA_PATH/ ."
   fi
   eval "tar $TAR_CMD"
 }
