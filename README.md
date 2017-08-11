@@ -2,23 +2,22 @@
 
 #### Solution Open Source in Backup and Restore, for Docker Container in the Cloud Providers!
 
-[![Helicopterizer Image][HelicopterizerImage]][website] 
+[![Helicopterizer Image][HelicopterizerImage]][website]
 
-[![ImageLayers](https://badge.imagelayers.io/frekele/helicopterizer:latest.svg)](https://imagelayers.io/?images=frekele/helicopterizer:latest)
+[![ImageLayers](https://badge.imagelayers.io/frekele/helicopterizer:master.svg)](https://imagelayers.io/?images=frekele/helicopterizer:master)
 
 [![Gitter](https://badges.gitter.im/frekele/helicopterizer.svg)](https://gitter.im/frekele/helicopterizer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Docker Pulls](https://img.shields.io/docker/pulls/frekele/helicopterizer.svg)](https://hub.docker.com/r/frekele/helicopterizer/)
 [![Docker Stars](https://img.shields.io/docker/stars/frekele/helicopterizer.svg)](https://hub.docker.com/r/frekele/helicopterizer/)
 [![Release](https://img.shields.io/github/release/frekele/helicopterizer.svg)](https://github.com/frekele/helicopterizer/releases/latest)
 
+
 [![Circle CI](https://circleci.com/gh/frekele/helicopterizer/tree/master.svg?style=shield)](https://circleci.com/gh/frekele/helicopterizer/tree/master)
 [![Build Status](https://travis-ci.org/frekele/helicopterizer.svg?branch=master)](https://travis-ci.org/frekele/helicopterizer)
 [![GitHub issues](https://img.shields.io/github/issues/frekele/helicopterizer.svg)](https://github.com/frekele/helicopterizer/issues)
-[![GitHub forks](https://img.shields.io/github/forks/frekele/helicopterizer.svg)](https://github.com/frekele/helicopterizer/network) 
+[![GitHub forks](https://img.shields.io/github/forks/frekele/helicopterizer.svg)](https://github.com/frekele/helicopterizer/network)
 [![GitHub stars](https://img.shields.io/github/stars/frekele/helicopterizer.svg)](https://github.com/frekele/helicopterizer/stargazers)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/frekele/helicopterizer/master/LICENSE)
-
-<a href="https://zenhub.io"><img src="https://raw.githubusercontent.com/ZenHubIO/support/master/zenhub-badge.png"></a>
 
 ## Backup and Restore for Docker Container
 
@@ -27,9 +26,30 @@
 
 ### Usage:
 
-  ```
-  docker run -d [Environment Variables] [-v|--volumes-from] frekele/helicopterizer [backup|restore] [--tarball|--sync]
-  ```
+```
+docker run -d [Environment Variables] [-v|--volumes-from] frekele/helicopterizer [backup|restore] [--tarball|--sync]
+```
+
+
+### Use Stable Branch for (Production)
+```
+docker run -d frekele/helicopterizer:stable
+```
+
+
+### Master Branch for (Development)
+```
+docker run -d frekele/helicopterizer:latest
+# or
+docker run -d frekele/helicopterizer
+```
+
+
+### Specific Tag Version
+
+```
+docker run -d frekele/helicopterizer:v0.2.1
+```
 
 
 #### Cloud Storage Provider Supported:
@@ -51,10 +71,12 @@
 | ------------------------------- | ------------------- | ---------------------- | --------- | --------------- | --------------------------------------------------------------- |
 | STORAGE_PROVIDER                | null                | backup, restore        | yes       | tarball, sync   | Provider name (AWS, AZURE, GOOGLE ...)                          |
 | DATA_PATH                       | /data/              | backup, restore        | no        | tarball, sync   | Data path : /data/(your files)                                  |
+| DATA_PATH_EXCLUDE               | null                | backup                 | no        | tarball         | Exclude file from data path (comma-separated)                   |
 | CRON_SCHEDULE                   | null                | backup, restore        | no        | tarball, sync   | Cron Job Scheduler, Eg: '*/15 * * * *' run every 15 minutes     |
-| BACKUP_NAME                     | null                | backup, restore        | no        | tarball         | Backup name using: $(BACKUP_NAME)-$(BACKUP_VERSION).tar.gz      |
+| BACKUP_PREFIX                   | null                | backup, restore        | no        | tarball         | Default name schema: $(BACKUP_PREFIX)$(BACKUP_VERSION).tar.gz   |
+| BACKUP_NAME                     | null                | backup, restore        | no        | tarball         | If defined the name shcema is: $(BACKUP_NAME).tar.gz            |
 | GZIP_COMPRESSION                | true                | backup, restore        | no        | tarball         | Boolean to indicate the compression of the file .tar to .tar.gz |
-| CLEAN_DATA_BEFORE_RESTORE       | false               | restore                | no        | tarball, sync   | Clear the data directory before the restore |
+| CLEAN_DATA_BEFORE_RESTORE       | false               | restore                | no        | tarball, sync   | Clear the data directory before the restore                     |
 | BACKUP_VERSION                  | null                | restore                | yes       | tarball         | Backup version using: $(BACKUP_VERSION).tar.gz                  |
 
 
@@ -65,6 +87,7 @@
 | AWS_ACCESS_KEY_ID               | null                | backup, restore        | yes       | tarball, sync   | AWS access key. Eg: AKRJPMI3QYCARJCRF4VF                         |
 | AWS_SECRET_ACCESS_KEY           | null                | backup, restore        | yes       | tarball, sync   | AWS secret key. Eg: VCsrO7aVulGuiUdXbS31jtQA4iRTVgi4scftJAJr     |
 | AWS_S3_BUCKET_NAME              | null                | backup, restore        | yes       | tarball, sync   | S3 bucket name. Eg: s3://my-bucket-backup/                       |
+| AWS_S3_BUCKET_CREATE            | false               | backup                 | no        | tarball, sync   | Boolean to indicate if we create the bucket (if not exists)      |
 | AWS_S3_PATH                     | /                   | backup, restore        | no        | tarball, sync   | Relative path for bucket S3. Eg: (AWS_S3_BUCKET_NAME)/jenkins/   |
 | AWS_DEFAULT_REGION              | us-east-1           | backup, restore        | no        | tarball, sync   | Default region bucket. Eg: (sa-east-1)                           |
 | AWS_S3_OPTIONS                  | null                | backup, restore        | no        | tarball, sync   | AWS S3 options parameters. See in [AWS CLI S3]                   |
@@ -91,30 +114,35 @@ us-gov-west-1          | US GovCloud West (Oregon)                 |
 ### Usage Examples:
 
 Run Backup with tarball:
+
 ```
 docker run --rm \
 -e STORAGE_PROVIDER=AWS \
 -e AWS_ACCESS_KEY_ID=XXXXXXXXXXXXX \
 -e AWS_SECRET_ACCESS_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX \
 -e AWS_S3_BUCKET_NAME=s3://my-bucket-backup/ \
--v /home/jenkins-data:/data:ro \
+-v /some/dir/jenkins-data:/data:ro \
 helicopterizer backup --tarball
 ```
 
+
 Run Backup with sync filesystem:
+
 ```
 docker run --rm \
 -e STORAGE_PROVIDER=AWS \
 -e AWS_ACCESS_KEY_ID=XXXXXXXXXXXXX \
 -e AWS_SECRET_ACCESS_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX \
 -e AWS_S3_BUCKET_NAME=s3://my-bucket-backup/ \
--v /home/jenkins-data:/data:ro \
+-v /some/dir/jenkins-data:/data:ro \
 helicopterizer backup --sync
 ```
 
  *Use ':ro' to mount the volumes in read-only mode.*
 
+
 Run Restore with tarball:
+
 ```
 docker run --rm \
 -e STORAGE_PROVIDER=AWS \
@@ -122,11 +150,13 @@ docker run --rm \
 -e AWS_SECRET_ACCESS_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX \
 -e AWS_S3_BUCKET_NAME=s3://my-bucket-backup/ \
 -e BACKUP_VERSION='2016-05-04T01:34:20Z' \
--v /home/jenkins-data:/data:rw \
+-v /some/dir/jenkins-data:/data:rw \
 helicopterizer restore --tarball
 ```
 
+
 Run Restore with sync filesystem:
+
 ```
 docker run --rm \
 -e STORAGE_PROVIDER=AWS \
@@ -134,14 +164,15 @@ docker run --rm \
 -e AWS_SECRET_ACCESS_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX \
 -e AWS_S3_BUCKET_NAME=s3://my-bucket-backup/ \
 -e BACKUP_VERSION='2016-05-04T01:34:20Z' \
--v /home/jenkins-data:/data:rw \
+-v /some/dir/jenkins-data:/data:rw \
 helicopterizer restore  --sync
 ```
 
  *Use ':rw' to mount the volumes in read-write mode.*
- 
- 
+
+
 Run [Backup|Restore] with environment file:
+
 ```
 touch ~/helicopterizer.conf
 ##################################
@@ -163,11 +194,13 @@ AWS_S3_OPTIONS=
 .
 docker run --rm \
 --env-file ~/helicopterizer.conf \
--v /home/jenkins-data:/data \
+-v /some/dir/jenkins-data:/data \
 helicopterizer [backup|restore] [--tarball|--sync]
 ```
 
+
 Run [Backup|Restore] with data volume container:
+
 ```
 docker run --rm \
 ........
@@ -175,6 +208,7 @@ docker run --rm \
 --volumes-from jenkins-data \
 helicopterizer [backup|restore] [--tarball|--sync]
 ```
+
 
 Run [Backup|Restore] with Cron Job Scheduler (System Timezone is UTC):
 
@@ -202,10 +236,13 @@ helicopterizer [backup|restore] [--tarball|--sync]
 - CRON_SCHEDULE='@midnight' - Run once a Day, the same as: '0 0 * * *' and @daily;
 - CRON_SCHEDULE='@hourly' - Run once a Hour, the same as: '0 * * * *';
 ```
+
 More info to usage: [Cron Wiki].
 
 
+
 Run [Backup|Restore] with prefix name *$(BACKUP_NAME)-$(BACKUP_VERSION).tar.gz*:
+
 ```
 docker run --rm \
 ........
@@ -213,7 +250,9 @@ docker run --rm \
 helicopterizer [backup|restore] --tarball
 ```
 
+
 Run [Backup|Restore] without gzip compression:
+
 ```
 docker run --rm \
 ........
@@ -221,9 +260,21 @@ docker run --rm \
 helicopterizer [backup|restore] --tarball
 ```
 
+
+Run [Backup|Restore] with bucket creation (if NoSuchBucket):
+
+```
+docker run --rm \
+........
+-e AWS_S3_BUCKET_CREATE=true \
+helicopterizer [backup|restore] --tarball
+```
+
+
 Run With clean the date before the restore:
 
 ***[Be careful here, you will lose all your data inside DATA_PATH directory].***
+
 ```
 docker run --rm \
 ........
@@ -231,16 +282,32 @@ docker run --rm \
 helicopterizer restore [--tarball|--sync]
 ```
 
+
 Run [Backup|Restore] with other data path:
+
 ```
 docker run --rm \
 ........
--e DATA_PATH=/other-data-directory/ \
--v /home/jenkins-data:/jenkins-data \
+-e DATA_PATH=/var/jenkins_home/ \
+-v /some/dir/jenkins-data:/var/jenkins_home \
 helicopterizer [backup|restore] [--tarball|--sync]
 ```
 
+
+Run [Backup] with other data path & exclude jenkins workspace:
+
+```
+docker run --rm \
+........
+-e DATA_PATH=/var/jenkins_home/ \
+-e DATA_PATH_EXCLUDE=workspace \
+-v /some/dir/jenkins-data:/var/jenkins_home \
+helicopterizer [backup|restore] [--tarball|--sync]
+```
+
+
 Run [Backup|Restore] with other AWS Region:
+
 ```
 docker run --rm \
 ........
@@ -248,7 +315,9 @@ docker run --rm \
 helicopterizer [backup|restore] [--tarball|--sync]
 ```
 
+
 Run [Backup|Restore] with subdirectories in AWS S3:
+
 ```
 docker run --rm \
 ........
@@ -256,7 +325,9 @@ docker run --rm \
 helicopterizer [backup|restore] [--tarball|--sync]
 ```
 
+
 Run [Backup|Restore] with Options [AWS CLI S3]:
+
 ```
 docker run --rm \
 ........
@@ -273,24 +344,24 @@ There are two general approaches to handling persistent storage requirements wit
 See [Managing Data in Containers](https://docs.docker.com/userguide/dockervolumes/) for additional information.
 
 #### Data volume container
-  
+
 *Use a data volume container*. Since data volumes are persistent until no containers use them, a container can created specifically for this purpose.  
 
-*Example with Jenkins:* 
-       
-```     
+*Example with Jenkins:*
+
+```
 docker run -d --name jenkins-data jenkinsci/jenkins:2.0 echo "data-only container for Jenkins"
 docker run -d -p 8080:8080 -p 50000:50000 --name jenkins --volumes-from jenkins-data jenkinsci/jenkins:2.0
 ```
-    
-    
+
+
 *Example with Nexus:*    
-    
+
 ```
 docker run -d --name nexus-data sonatype/nexus3 echo "data-only container for Nexus"
 docker run -d -p 8081:8081 --name nexus --volumes-from nexus-data sonatype/nexus3
 ```
- 
+
 #### Data volume
 
 *Mount a host directory as the volume*.  This is not portable, as it relies on the directory existing with correct permissions on the host.
@@ -299,15 +370,26 @@ However it can be useful in certain situations where this volume needs to be ass
 *Example with Jenkins:*
 
 ```
-mkdir /home/jenkins-data
-docker run -d -p 8080:8080 -p 50000:50000 --name jenkins -v /home/jenkins-data:/jenkins-data jenkinsci/jenkins:2.0
+mkdir /some/dir/jenkins-data && chown -R 1000:1000 /some/dir/jenkins-data
+docker run -d -p 8080:8080 -p 50000:50000 --name jenkins -v /some/dir/jenkins-data:/var/jenkins_home jenkinsci/jenkins
+
+# or
+
+docker volume create --name jenkins-data
+docker run -d -p 8080:8080 -p 50000:50000 --name jenkins -v jenkins-data:/var/jenkins_home jenkinsci/jenkins
 ```
+
 
 *Example with Nexus:*
 
 ```
-mkdir /home/nexus-data && chown -R 200 /home/nexus-data
-docker run -d -p 8081:8081 --name nexus -v /home/nexus-data:/nexus-data sonatype/nexus3
+mkdir /some/dir/nexus-data && chown -R 200 /some/dir/nexus-data
+docker run -d -p 8081:8081 --name nexus -v /some/dir/nexus-data:/nexus-data sonatype/nexus3
+
+# or
+
+docker volume create --name nexus-data
+docker run -d -p 8081:8081 --name nexus -v nexus-data:/nexus-data sonatype/nexus3
 ```
 
 
@@ -315,32 +397,32 @@ docker run -d -p 8081:8081 --name nexus -v /home/nexus-data:/nexus-data sonatype
 ### Building:
 
   Build with the usual
-  
+
     docker build -t helicopterizer .
-  
+
   Tests are written using [bats](https://github.com/sstephenson/bats) under the `tests` dir
-  
+
     bats tests
- 
-  
+
+
 
 ### License:
 Helicopterizer is **licensed** under the **[MIT License]**. The terms of the license are as follows:
 
     The MIT License (MIT)
-    
+
     Copyright (c) 2016 Leandro Kersting de Freitas
-    
+
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
     in the Software without restriction, including without limitation the rights
     to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
     copies of the Software, and to permit persons to whom the Software is
     furnished to do so, subject to the following conditions:
-    
+
     The above copyright notice and this permission notice shall be included in all
     copies or substantial portions of the Software.
-    
+
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
     IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
     FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE

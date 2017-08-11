@@ -88,11 +88,13 @@ printEnvs(){
   echo "BACKUP_NAME=$BACKUP_NAME"
   echo "BACKUP_VERSION=$BACKUP_VERSION"
   echo "DATA_PATH=$DATA_PATH"
+  echo "DATA_PATH_EXCLUDE=$DATA_PATH_EXCLUDE"
   echo "CRON_SCHEDULE=$CRON_SCHEDULE"
   echo "GZIP_COMPRESSION=$GZIP_COMPRESSION"
   echo "AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID"
   echo "AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY"
   echo "AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION"
+  echo "AWS_S3_BUCKET_CREATE=$AWS_S3_BUCKET_CREATE"
   echo "AWS_S3_BUCKET_NAME=$AWS_S3_BUCKET_NAME"
   echo "AWS_S3_PATH=$AWS_S3_PATH"
   echo "AWS_S3_OPTIONS=$AWS_S3_OPTIONS"
@@ -110,19 +112,21 @@ removeSlashUri(){
 mountFileName(){
   local backupVersion=$1;
   local gzipCompress=$2;
-  local backupName=$3;
+  local backupPrefix=$3;
+  local backupName=$4;
   local sufix=""
   local fileName=""
+
   if [ "$gzipCompress" = "true" ]; then
       sufix=".tar.gz"
   else
       sufix=".tar"
   fi
 
-  if [ "$backupName" ]; then
-      fileName="$backupName-$backupVersion$sufix"
+  if [ -n "$backupName" ]; then
+      fileName="$backupName$sufix"
   else
-      fileName="$backupVersion$sufix"
+      fileName="$backupPrefix$backupVersion$sufix"
   fi
   echo "$fileName"
 }
@@ -188,4 +192,15 @@ mountUriS3(){
   echo "$s3Uri"
 }
 
-
+createS3Bucket(){
+  # Check if create is required
+  if [ "$AWS_S3_BUCKET_CREATE" = "true" ]; then
+    local bucketS3Uri="s3://$AWS_S3_BUCKET_NAME"
+    # Test if bucket doesn't exists
+    if aws s3 ls "s3://$AWS_S3_BUCKET_NAME" 2>&1 | grep -q 'NoSuchBucket'; then
+      # Create bucket
+      local s3BucketCreationResult=$(aws s3 mb "$bucketS3Uri")
+      echo "$s3BucketCreationResult"
+    fi
+  fi
+}

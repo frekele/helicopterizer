@@ -1,4 +1,4 @@
-FROM alpine:3.3
+FROM alpine:3.5
 
 MAINTAINER frekele <leandro.freitas@softdevelop.com.br>
 
@@ -8,10 +8,10 @@ RUN apk add --update --no-cache \
        wget \
        git \
        python\
-       py-pip \
+       py2-pip \
        docker \
-    && curl -sL https://get.docker.com/builds/Linux/x86_64/docker-1.10.3 > /usr/bin/docker \
-    && chmod +x /usr/bin/docker \
+    #&& curl -sL https://get.docker.com/builds/Linux/x86_64/docker-1.12.6 > /usr/bin/docker \
+    #&& chmod +x /usr/bin/docker \
     && pip install --upgrade pip \
     && pip install awscli
 
@@ -22,12 +22,14 @@ RUN chmod -R +x /scripts
 ENV STORAGE_PROVIDER='' \
     BACKUP_NAME='' \
     DATA_PATH='/data/' \
+    DATA_PATH_EXCLUDE='' \
     GZIP_COMPRESSION='true' \
     CLEAN_DATA_BEFORE_RESTORE='false' \
     BACKUP_VERSION='' \
     CRON_SCHEDULE='' \
     AWS_ACCESS_KEY_ID='' \
     AWS_SECRET_ACCESS_KEY='' \
+    AWS_S3_BUCKET_CREATE='false' \
     AWS_S3_BUCKET_NAME='' \
     AWS_S3_PATH='/' \
     AWS_DEFAULT_REGION='us-east-1' \

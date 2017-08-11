@@ -12,10 +12,12 @@ SyncUploadToS3(){
   echo "$s3Result"
 }
 
-
 uploadSync(){
   #Call to mount uri S3.
   s3Uri=$(mountUriS3 "/" $AWS_S3_BUCKET_NAME $AWS_S3_PATH)
+
+  local createS3BucketResult=$(createS3Bucket)
+  echo "$createS3BucketResult"
 
   echo "Starting Upload Sync from: $DATA_PATH/ to $s3Uri/"
   local s3Result=$(SyncUploadToS3)
