@@ -330,7 +330,7 @@ helicopterizer [backup|restore] [--tarball|--sync]
 ```
 
 
-Run \[Backup|Restore\] with Options [AWS CLI S3] xxx:
+Run `[Backup|Restore]` with Options [AWS CLI S3] vvvv:
 
 ```
 docker run --rm \
