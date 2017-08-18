@@ -5,5 +5,7 @@ circle.yml
 docs
 LICENSE
 README.md
+_config.yml
+CNAME
 helicopterizer.iml
 helicopterizer-demo.conf
