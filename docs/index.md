@@ -175,7 +175,7 @@ helicopterizer restore  --sync
  *Use ':rw' to mount the volumes in read-write mode.*
 
 
-Run [Backup|Restore] with environment file:
+Run `[Backup|Restore]` with environment file:
 
 ```
 touch ~/helicopterizer.conf
@@ -203,7 +203,7 @@ helicopterizer [backup|restore] [--tarball|--sync]
 ```
 
 
-Run [Backup|Restore] with data volume container:
+Run `[Backup|Restore]` with data volume container:
 
 ```
 docker run --rm \
@@ -214,7 +214,7 @@ helicopterizer [backup|restore] [--tarball|--sync]
 ```
 
 
-Run [Backup|Restore] with Cron Job Scheduler (System Timezone is UTC):
+Run `[Backup|Restore]` with Cron Job Scheduler (System Timezone is UTC):
 
 ```
 docker run -d \
@@ -245,7 +245,7 @@ More info to usage: [Cron Wiki].
 
 
 
-Run [Backup|Restore] with prefix name *$(BACKUP_NAME)-$(BACKUP_VERSION).tar.gz*:
+Run `[Backup|Restore]` with prefix name *$(BACKUP_NAME)-$(BACKUP_VERSION).tar.gz*:
 
 ```
 docker run --rm \
@@ -255,7 +255,7 @@ helicopterizer [backup|restore] --tarball
 ```
 
 
-Run [Backup|Restore] without gzip compression:
+Run `[Backup|Restore]` without gzip compression:
 
 ```
 docker run --rm \
@@ -265,7 +265,7 @@ helicopterizer [backup|restore] --tarball
 ```
 
 
-Run [Backup|Restore] with bucket creation (if NoSuchBucket):
+Run `[Backup|Restore]` with bucket creation (if NoSuchBucket):
 
 ```
 docker run --rm \
@@ -287,7 +287,7 @@ helicopterizer restore [--tarball|--sync]
 ```
 
 
-Run [Backup|Restore] with other data path:
+Run `[Backup|Restore]` with other data path:
 
 ```
 docker run --rm \
@@ -298,7 +298,7 @@ helicopterizer [backup|restore] [--tarball|--sync]
 ```
 
 
-Run [Backup] with other data path & exclude jenkins workspace:
+Run `[Backup]` with other data path & exclude jenkins workspace:
 
 ```
 docker run --rm \
@@ -310,7 +310,7 @@ helicopterizer [backup|restore] [--tarball|--sync]
 ```
 
 
-Run [Backup|Restore] with other AWS Region:
+Run `[Backup|Restore]` with other AWS Region:
 
 ```
 docker run --rm \
@@ -320,7 +320,7 @@ helicopterizer [backup|restore] [--tarball|--sync]
 ```
 
 
-Run [Backup|Restore] with subdirectories in AWS S3:
+Run `[Backup|Restore]` with subdirectories in AWS S3:
 
 ```
 docker run --rm \
