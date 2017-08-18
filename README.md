@@ -53,6 +53,7 @@ docker run -d frekele/helicopterizer:v0.2.1
 
 
 #### Cloud Storage Provider Supported:
+
 | Provider                                    | Variable Value  | Supported                         |
 | ------------------------------------------- | --------------- | --------------------------------- |
 | Amazon Simple Storage Service (S3)          | AWS             | yes                               |
@@ -67,6 +68,7 @@ docker run -d frekele/helicopterizer:v0.2.1
 
 
 #### Environment Variables:
+
 | Variable Name                   | Default             | Action                 | Required  | Option          | Description                                                     |
 | ------------------------------- | ------------------- | ---------------------- | --------- | --------------- | --------------------------------------------------------------- |
 | STORAGE_PROVIDER                | null                | backup, restore        | yes       | tarball, sync   | Provider name (AWS, AZURE, GOOGLE ...)                          |
@@ -82,6 +84,7 @@ docker run -d frekele/helicopterizer:v0.2.1
 
 
 #### Environment Variables for AWS S3:
+
 | Variable Name                   | Default             | Action                 | Required  | Option          | Description                                                      |
 | ------------------------------- | ------------------- | ---------------------- | --------- | --------------- | ---------------------------------------------------------------- |
 | AWS_ACCESS_KEY_ID               | null                | backup, restore        | yes       | tarball, sync   | AWS access key. Eg: AKRJPMI3QYCARJCRF4VF                         |
@@ -95,6 +98,7 @@ docker run -d frekele/helicopterizer:v0.2.1
 
 
 ####  AWS S3 Regions:
+
 Region Name            | Description the Region                    |
 ---------------------- | ------------------------------------------|
 us-east-1              | US East (Virginia)                        |
@@ -171,7 +175,7 @@ helicopterizer restore  --sync
  *Use ':rw' to mount the volumes in read-write mode.*
 
 
-Run [Backup|Restore] with environment file:
+Run `[Backup|Restore]` with environment file:
 
 ```
 touch ~/helicopterizer.conf
@@ -199,7 +203,7 @@ helicopterizer [backup|restore] [--tarball|--sync]
 ```
 
 
-Run [Backup|Restore] with data volume container:
+Run `[Backup|Restore]` with data volume container:
 
 ```
 docker run --rm \
@@ -210,7 +214,7 @@ helicopterizer [backup|restore] [--tarball|--sync]
 ```
 
 
-Run [Backup|Restore] with Cron Job Scheduler (System Timezone is UTC):
+Run `[Backup|Restore]` with Cron Job Scheduler (System Timezone is UTC):
 
 ```
 docker run -d \
@@ -241,7 +245,7 @@ More info to usage: [Cron Wiki].
 
 
 
-Run [Backup|Restore] with prefix name *$(BACKUP_NAME)-$(BACKUP_VERSION).tar.gz*:
+Run `[Backup|Restore]` with prefix name *$(BACKUP_NAME)-$(BACKUP_VERSION).tar.gz*:
 
 ```
 docker run --rm \
@@ -251,7 +255,7 @@ helicopterizer [backup|restore] --tarball
 ```
 
 
-Run [Backup|Restore] without gzip compression:
+Run `[Backup|Restore]` without gzip compression:
 
 ```
 docker run --rm \
@@ -261,7 +265,7 @@ helicopterizer [backup|restore] --tarball
 ```
 
 
-Run [Backup|Restore] with bucket creation (if NoSuchBucket):
+Run `[Backup|Restore]` with bucket creation (if NoSuchBucket):
 
 ```
 docker run --rm \
@@ -283,7 +287,7 @@ helicopterizer restore [--tarball|--sync]
 ```
 
 
-Run [Backup|Restore] with other data path:
+Run `[Backup|Restore]` with other data path:
 
 ```
 docker run --rm \
@@ -294,7 +298,7 @@ helicopterizer [backup|restore] [--tarball|--sync]
 ```
 
 
-Run [Backup] with other data path & exclude jenkins workspace:
+Run `[Backup]` with other data path & exclude jenkins workspace:
 
 ```
 docker run --rm \
@@ -306,7 +310,7 @@ helicopterizer [backup|restore] [--tarball|--sync]
 ```
 
 
-Run [Backup|Restore] with other AWS Region:
+Run `[Backup|Restore]` with other AWS Region:
 
 ```
 docker run --rm \
@@ -316,7 +320,7 @@ helicopterizer [backup|restore] [--tarball|--sync]
 ```
 
 
-Run [Backup|Restore] with subdirectories in AWS S3:
+Run `[Backup|Restore]` with subdirectories in AWS S3:
 
 ```
 docker run --rm \
@@ -326,7 +330,7 @@ helicopterizer [backup|restore] [--tarball|--sync]
 ```
 
 
-Run [Backup|Restore] with Options [AWS CLI S3]:
+Run `[Backup|Restore]` with Options [AWS CLI S3] vvvv:
 
 ```
 docker run --rm \
