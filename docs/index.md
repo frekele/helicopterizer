@@ -54,7 +54,7 @@ docker run -d frekele/helicopterizer:v0.2.1
 
 #### Cloud Storage Provider Supported:
 | Provider                                    | Variable Value  | Supported                         |
-| ------------------------------------------- | --------------- | --------------------------------- |
+|:------------------------------------------- |:--------------- |:--------------------------------- |
 | Amazon Simple Storage Service (S3)          | AWS             | yes                               |
 | Microsoft Azure Storage                     | AZURE           | no - Planned for the future       |
 | Google Cloud Storage                        | GOOGLE          | no - Planned for the future       |
