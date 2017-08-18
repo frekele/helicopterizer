@@ -53,16 +53,9 @@ docker run -d frekele/helicopterizer:v0.2.1
 
 
 #### Cloud Storage Provider Supported:
-| head1        | head two          | three |
-|:-------------|:------------------|:------|
-| ok           | good swedish fish | nice  |
-| out of stock | good and plenty   | nice  |
-| ok           | good `oreos`      | hmm   |
-| ok           | good `zoute` drop | yumm  |
-
 
 | Provider                                    | Variable Value  | Supported                         |
-|:------------------------------------------- |:--------------- |:--------------------------------- |
+| ------------------------------------------- | --------------- | --------------------------------- |
 | Amazon Simple Storage Service (S3)          | AWS             | yes                               |
 | Microsoft Azure Storage                     | AZURE           | no - Planned for the future       |
 | Google Cloud Storage                        | GOOGLE          | no - Planned for the future       |
@@ -75,6 +68,7 @@ docker run -d frekele/helicopterizer:v0.2.1
 
 
 #### Environment Variables:
+
 | Variable Name                   | Default             | Action                 | Required  | Option          | Description                                                     |
 | ------------------------------- | ------------------- | ---------------------- | --------- | --------------- | --------------------------------------------------------------- |
 | STORAGE_PROVIDER                | null                | backup, restore        | yes       | tarball, sync   | Provider name (AWS, AZURE, GOOGLE ...)                          |
@@ -90,6 +84,7 @@ docker run -d frekele/helicopterizer:v0.2.1
 
 
 #### Environment Variables for AWS S3:
+
 | Variable Name                   | Default             | Action                 | Required  | Option          | Description                                                      |
 | ------------------------------- | ------------------- | ---------------------- | --------- | --------------- | ---------------------------------------------------------------- |
 | AWS_ACCESS_KEY_ID               | null                | backup, restore        | yes       | tarball, sync   | AWS access key. Eg: AKRJPMI3QYCARJCRF4VF                         |
@@ -103,6 +98,7 @@ docker run -d frekele/helicopterizer:v0.2.1
 
 
 ####  AWS S3 Regions:
+
 Region Name            | Description the Region                    |
 ---------------------- | ------------------------------------------|
 us-east-1              | US East (Virginia)                        |
