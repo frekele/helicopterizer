@@ -26,19 +26,19 @@
 
 ### Usage:
 
-```
+```bash
 docker run -d [Environment Variables] [-v|--volumes-from] frekele/helicopterizer [backup|restore] [--tarball|--sync]
 ```
 
 
 ### Use Stable Branch for (Production)
-```
+```bash
 docker run -d frekele/helicopterizer:stable
 ```
 
 
 ### Master Branch for (Development)
-```
+```bash
 docker run -d frekele/helicopterizer:latest
 # or
 docker run -d frekele/helicopterizer
@@ -47,7 +47,7 @@ docker run -d frekele/helicopterizer
 
 ### Specific Tag Version
 
-```
+```bash
 docker run -d frekele/helicopterizer:v0.2.1
 ```
 
@@ -119,7 +119,7 @@ us-gov-west-1          | US GovCloud West (Oregon)                 |
 
 Run Backup with tarball:
 
-```
+```properties
 docker run --rm \
 -e STORAGE_PROVIDER=AWS \
 -e AWS_ACCESS_KEY_ID=XXXXXXXXXXXXX \
@@ -132,7 +132,7 @@ helicopterizer backup --tarball
 
 Run Backup with sync filesystem:
 
-```
+```properties
 docker run --rm \
 -e STORAGE_PROVIDER=AWS \
 -e AWS_ACCESS_KEY_ID=XXXXXXXXXXXXX \
@@ -147,7 +147,7 @@ helicopterizer backup --sync
 
 Run Restore with tarball:
 
-```
+```properties
 docker run --rm \
 -e STORAGE_PROVIDER=AWS \
 -e AWS_ACCESS_KEY_ID=XXXXXXXXXXXXX \
@@ -161,7 +161,7 @@ helicopterizer restore --tarball
 
 Run Restore with sync filesystem:
 
-```
+```properties
 docker run --rm \
 -e STORAGE_PROVIDER=AWS \
 -e AWS_ACCESS_KEY_ID=XXXXXXXXXXXXX \
@@ -177,7 +177,7 @@ helicopterizer restore  --sync
 
 Run `[Backup|Restore]` with environment file:
 
-```
+```properties
 touch ~/helicopterizer.conf
 ##################################
 # Set Your Environment Variables:
@@ -205,7 +205,7 @@ helicopterizer [backup|restore] [--tarball|--sync]
 
 Run `[Backup|Restore]` with data volume container:
 
-```
+```properties
 docker run --rm \
 ........
 -e DATA_PATH=/var/jenkins_home/ \
@@ -216,7 +216,7 @@ helicopterizer [backup|restore] [--tarball|--sync]
 
 Run `[Backup|Restore]` with Cron Job Scheduler (System Timezone is UTC):
 
-```
+```properties
 docker run -d \
 ........
 -e CRON_SCHEDULE='30 4 * * *' \
@@ -247,7 +247,7 @@ More info to usage: [Cron Wiki].
 
 Run `[Backup|Restore]` with prefix name *$(BACKUP_NAME)-$(BACKUP_VERSION).tar.gz*:
 
-```
+```properties
 docker run --rm \
 ........
 -e BACKUP_NAME=my-backup-name \
@@ -257,7 +257,7 @@ helicopterizer [backup|restore] --tarball
 
 Run `[Backup|Restore]` without gzip compression:
 
-```
+```properties
 docker run --rm \
 ........
 -e GZIP_COMPRESSION=false \
@@ -267,7 +267,7 @@ helicopterizer [backup|restore] --tarball
 
 Run `[Backup|Restore]` with bucket creation (if NoSuchBucket):
 
-```
+```properties
 docker run --rm \
 ........
 -e AWS_S3_BUCKET_CREATE=true \
@@ -279,7 +279,7 @@ Run With clean the date before the restore:
 
 ***[Be careful here, you will lose all your data inside DATA_PATH directory].***
 
-```
+```properties
 docker run --rm \
 ........
 -e CLEAN_DATA_BEFORE_RESTORE=true \
@@ -289,7 +289,7 @@ helicopterizer restore [--tarball|--sync]
 
 Run `[Backup|Restore]` with other data path:
 
-```
+```properties
 docker run --rm \
 ........
 -e DATA_PATH=/var/jenkins_home/ \
@@ -300,7 +300,7 @@ helicopterizer [backup|restore] [--tarball|--sync]
 
 Run `[Backup]` with other data path & exclude jenkins workspace:
 
-```
+```properties
 docker run --rm \
 ........
 -e DATA_PATH=/var/jenkins_home/ \
@@ -312,7 +312,7 @@ helicopterizer [backup|restore] [--tarball|--sync]
 
 Run `[Backup|Restore]` with other AWS Region:
 
-```
+```properties
 docker run --rm \
 ........
 -e AWS_DEFAULT_REGION=sa-east-1 \
@@ -322,7 +322,7 @@ helicopterizer [backup|restore] [--tarball|--sync]
 
 Run `[Backup|Restore]` with subdirectories in AWS S3:
 
-```
+```properties
 docker run --rm \
 ........
 -e AWS_S3_PATH=/project-alpha/nexus/ \
@@ -332,7 +332,7 @@ helicopterizer [backup|restore] [--tarball|--sync]
 
 Run `[Backup|Restore]` with Options [AWS CLI S3]:
 
-```
+```properties
 docker run --rm \
 ........
 -e AWS_S3_OPTIONS='--delete' \
@@ -353,7 +353,7 @@ See [Managing Data in Containers](https://docs.docker.com/userguide/dockervolume
 
 *Example with Jenkins:*
 
-```
+```bash
 docker run -d --name jenkins-data jenkinsci/jenkins:2.0 echo "data-only container for Jenkins"
 docker run -d -p 8080:8080 -p 50000:50000 --name jenkins --volumes-from jenkins-data jenkinsci/jenkins:2.0
 ```
@@ -361,7 +361,7 @@ docker run -d -p 8080:8080 -p 50000:50000 --name jenkins --volumes-from jenkins-
 
 *Example with Nexus:*    
 
-```
+```bash
 docker run -d --name nexus-data sonatype/nexus3 echo "data-only container for Nexus"
 docker run -d -p 8081:8081 --name nexus --volumes-from nexus-data sonatype/nexus3
 ```
@@ -373,7 +373,7 @@ However it can be useful in certain situations where this volume needs to be ass
 
 *Example with Jenkins:*
 
-```
+```bash
 mkdir /some/dir/jenkins-data && chown -R 1000:1000 /some/dir/jenkins-data
 docker run -d -p 8080:8080 -p 50000:50000 --name jenkins -v /some/dir/jenkins-data:/var/jenkins_home jenkinsci/jenkins
 
@@ -386,7 +386,7 @@ docker run -d -p 8080:8080 -p 50000:50000 --name jenkins -v jenkins-data:/var/je
 
 *Example with Nexus:*
 
-```
+```bash
 mkdir /some/dir/nexus-data && chown -R 200 /some/dir/nexus-data
 docker run -d -p 8081:8081 --name nexus -v /some/dir/nexus-data:/nexus-data sonatype/nexus3
 
