@@ -193,11 +193,13 @@ mountUriS3(){
 }
 
 createS3Bucket(){
+  local createBucket=$1;
+  local bucketS3Uri=$2;
+
   # Check if create is required
-  if [ "$AWS_S3_BUCKET_CREATE" = "true" ]; then
-    local bucketS3Uri="s3://$AWS_S3_BUCKET_NAME"
+  if [ "$createBucket" = "true" ]; then
     # Test if bucket doesn't exists
-    if aws s3 ls "s3://$AWS_S3_BUCKET_NAME" 2>&1 | grep -q 'NoSuchBucket'; then
+    if aws s3 ls "$bucketS3Uri" 2>&1 | grep -q 'NoSuchBucket'; then
       # Create bucket
       local s3BucketCreationResult=$(aws s3 mb "$bucketS3Uri")
       echo "$s3BucketCreationResult"

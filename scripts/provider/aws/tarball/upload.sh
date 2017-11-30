@@ -15,7 +15,7 @@ uploadTarball(){
   #Call to mount uri S3.
   s3Uri=$(mountUriS3 $1 $AWS_S3_BUCKET_NAME $AWS_S3_PATH)
 
-  local createS3BucketResult=$(createS3Bucket)
+  local createS3BucketResult=$(createS3Bucket $AWS_S3_BUCKET_CREATE $AWS_S3_BUCKET_NAME)
   echo "$createS3BucketResult"
 
   echo "Starting Upload Tarball from: /tmp/$1 to $s3Uri"
