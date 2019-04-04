@@ -1,6 +1,6 @@
-FROM alpine:3.5
+FROM alpine:3.9
 
-MAINTAINER frekele <leandro.freitas@softdevelop.com.br>
+MAINTAINER frekele <leandro@frekele.org>
 
 RUN apk add --update --no-cache \
        bash \
