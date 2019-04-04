@@ -48,7 +48,7 @@ docker run -d frekele/helicopterizer
 ### Specific Tag Version
 
 ```bash
-docker run -d frekele/helicopterizer:v0.2.1
+docker run -d frekele/helicopterizer:v0.3.1
 ```
 
 
@@ -415,7 +415,7 @@ Helicopterizer is **licensed** under the **[MIT License]**. The terms of the lic
 
     MIT License
 
-    Copyright (c) 2016-2018 @frekele<Leandro Kersting de Freitas>
+    Copyright (c) 2016-2019 @frekele<Leandro Kersting de Freitas>
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
