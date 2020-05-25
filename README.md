@@ -444,3 +444,4 @@ Helicopterizer is **licensed** under the **[MIT License]**. The terms of the lic
 [Docker HUB]: https://hub.docker.com/r/frekele/helicopterizer/
 [Cron Wiki]: https://en.wikipedia.org/wiki/Cron
 [AWS CLI S3]: http://docs.aws.amazon.com/cli/latest/reference/s3/sync.html
+
