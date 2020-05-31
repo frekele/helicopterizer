@@ -16,7 +16,7 @@ uploadSync(){
   #Call to mount uri S3.
   s3Uri=$(mountUriS3 "/" $AWS_S3_BUCKET_NAME $AWS_S3_PATH)
 
-  local createS3BucketResult=$(createS3Bucket)
+  local createS3BucketResult=$(createS3Bucket $AWS_S3_BUCKET_CREATE $AWS_S3_BUCKET_NAME)
   echo "$createS3BucketResult"
 
   echo "Starting Upload Sync from: $DATA_PATH/ to $s3Uri/"
